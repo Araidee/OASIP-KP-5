@@ -5,9 +5,11 @@
 <template>
 <div>
 <router-link :to="{ name: 'Home'}">Home | </router-link> 
+<router-link :to="{name: 'Schedules'}">Schedules | </router-link>
 <router-link :to="{ name: 'About'}">About us</router-link>
 
-<h1>Yo wtf why nigga</h1>
+
+
 </div>
 <div>
   <router-view></router-view>
