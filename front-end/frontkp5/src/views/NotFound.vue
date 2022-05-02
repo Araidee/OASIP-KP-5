@@ -48,7 +48,6 @@ const closeModal = () => appRouter.push ({ name: 'Home'})
   margin: 20px 0;
 }
 .modal-button {
-  display: flex;
-  justify-content: end;
+  display: flex-end;
 }
 </style>
