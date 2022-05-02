@@ -18,8 +18,15 @@ const getEvents = async() => {
  
 <template>
     <div>
-        <h1>Schedules</h1>
-        <EventList :events="events"/>
+        <div tabindex="0" class="collapse">
+  <input type="checkbox" class="peer"> 
+  <div class="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+    <h1 class='text-3xl font-bold'>Schedules</h1>
+  </div>
+  <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"> 
+    <EventList :events="events"/>
+  </div>
+</div>
     </div>
 </template>
  

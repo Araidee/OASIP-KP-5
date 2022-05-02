@@ -1,12 +1,11 @@
 <script setup>
-
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
 <div>
-<router-link :to="{ name: 'Home'}">Home | </router-link> 
-<router-link :to="{name: 'Schedules'}">Schedules | </router-link>
-<router-link :to="{ name: 'About'}">About us</router-link>
+<NavBar/>
+
 
 
 
@@ -22,6 +21,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+ 
 }
 </style>

@@ -1,5 +1,6 @@
 <script setup>
 import { ref , computed} from 'vue'
+
 const props = defineProps({
     events: {
         type: Array,
@@ -24,8 +25,9 @@ const myEvent = computed(()=> {
 </script>
  
 <template>
-    <div>
-        <table>
+<div>
+    <div class="overflow-x-auto w-4/5 place-items-center " >
+        <table class="table w-full">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -41,17 +43,27 @@ const myEvent = computed(()=> {
                     <td>{{event.eventCategory.eventCategoryName}}</td>
                     <td>{{event.eventStartTime}}</td>
                     <td>{{event.eventDuration}}</td>
-                    <td><button class="btn">details</button></td>
+                    <td><label for="detail-modal" class="btn modal-button">Details</label></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div v-show="showDetail">
+        <p>details {id}</p>
+    </div>
+    <input type="checkbox" id="detail-modal" class="modal-toggle">
+        <div class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Details {id}</h3>
+    <p class="py-4">{}</p>
+    <div class="modal-action">
+      <label for="detail-modal" class="btn">Yay!</label>
+    </div>
+  </div>
+</div>
+</div>
 </template>
  
 <style>
-table, th, td {
-  border: 1px solid;
-  border-collapse: collapse;
-  width: 50%;
-}
+
 </style>
