@@ -8,11 +8,12 @@ onBeforeMount(async() => {
 })
 
 const getEvents = async() => {
-    const res = await fetch('http://localhost:5000/events')
+    const res = await fetch('http://10.4.56.88:8080/api/events')
     if(res.status === 200){
         events.value = await res.json()
     }else console.log('Error, cannot get data')
 }
+
 </script>
  
 <template>

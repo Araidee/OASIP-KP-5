@@ -12,10 +12,12 @@ const myEvent = computed(()=> {
     props.events.forEach((element)=>{
         eventList.push({
             "id": element.id,
-            "bookName": element.bookName,
-            "category": element.category,
-            "duration": element.duration,
-            "dateTime": element.dateTime
+            "bookingEmail": element.bookingEmail,
+            "bookingName": element.bookingName,
+            "eventStartTime": element.eventStartTime,
+            "eventNotes": element.eventNotes,
+            "eventCategory": element.eventCategory,
+            "eventDuration": element.eventDuration
         })
     })
 })
@@ -29,17 +31,17 @@ const myEvent = computed(()=> {
                     <th>Name</th>
                     <th>Category</th>
                     <th>Date</th>
-                    <th>Duration</th>
+                    <th>Duration(mins)</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(event, index) in events" :key="index">
-                    <td>{{event.bookName}}</td>
-                    <td>{{event.category}}</td>
-                    <td>{{event.dateTime}}</td>
-                    <td>{{event.duration}}</td>
-                    <td><button>details</button></td>
+                    <td>{{event.bookingName}}</td>
+                    <td>{{event.eventCategory.eventCategoryName}}</td>
+                    <td>{{event.eventStartTime}}</td>
+                    <td>{{event.eventDuration}}</td>
+                    <td><button class="btn">details</button></td>
                 </tr>
             </tbody>
         </table>
