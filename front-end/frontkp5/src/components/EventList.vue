@@ -7,7 +7,7 @@ const props = defineProps({
         default: []
     }
 })
-
+let showDetail
 const myEvent = computed(()=> {
     let eventList = []
     props.events.forEach((element)=>{
@@ -22,6 +22,14 @@ const myEvent = computed(()=> {
         })
     })
 })
+
+const EventDetails = ref({})
+const getEventById = async (id) => {
+  const res = await fetch(`http://10.4.56.88:8080/api/events/${id}`);
+  if (res.status === 200) {
+    EventDetails.value = await res.json();
+  } else console.log("Error, cannot get data");
+};
 </script>
  
 <template>
@@ -38,29 +46,33 @@ const myEvent = computed(()=> {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(event, index) in events" :key="index">
+                <tr v-for="event in events" :key="event.id"> 
                     <td>{{event.bookingName}}</td>
                     <td>{{event.eventCategory.eventCategoryName}}</td>
                     <td>{{event.eventStartTime}}</td>
                     <td>{{event.eventDuration}}</td>
-                    <td><label for="detail-modal" class="btn modal-button">Details</label></td>
+                    <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div v-show="showDetail">
-        <p>details {id}</p>
+        <p>details</p>
     </div>
     <input type="checkbox" id="detail-modal" class="modal-toggle">
         <div class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Details {id}</h3>
-    <p class="py-4">{}</p>
-    <div class="modal-action">
-      <label for="detail-modal" class="btn">Yay!</label>
+            <div class="modal-box">
+                <h3 class="font-bold text-lg">Details id: {{EventDetails.id}}</h3>
+                <p class="py-4" >{{EventDetails.bookingName}}</p>
+                <p class="py-4" >{{EventDetails.bookingEmail}}</p>
+                <p class="py-4" >{{EventDetails}}</p>
+                <p class="py-4" >{{EventDetails}}</p>
+                <p class="py-4" >{{EventDetails}}</p>
+                <div class="modal-action">
+            <label for="detail-modal" class="btn">Yay!</label>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </div>
 </template>
  
