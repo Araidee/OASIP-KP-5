@@ -1,5 +1,6 @@
 <script setup>
-
+import { useRouter } from 'vue-router'
+const appRouter = useRouter()
 
 </script>
  
@@ -10,11 +11,9 @@
             Welcome to <br> OASIP
         </h1></button>
         </div>
-        
-        
         <h3 class="text-lg">Online Appointment Scheduling System for Integrated Project Clinics</h3><br>
         <button class="btn btn-primary">Booking Now!</button>
-        <button class="btn btn-secondary">Check schedules</button>
+        <button class="btn btn-secondary"  @click="appRouter.push({ path: '/schedules', replace: true})">Check schedules</button>
     </div>
     <footer class="footer p-10 bg-neutral text-neutral-content ">
   <div>

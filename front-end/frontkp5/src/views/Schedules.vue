@@ -1,25 +1,27 @@
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import EventList from "../components/EventList.vue";
 const events = ref([]);
-let isEmpty = ref(true);
-
-const checkEmptyArr = () => {
-  if (events.lenght == 0) return true;
-  else return false;
-}
 
 onBeforeMount(async () => {
   await getEvents();
 });
 
+let isEmpty = ref(true);
+
+const checkEmptyArr = (arr) => {
+  if (arr.length == 0) return true
+  else return false
+}
+
 const getEvents = async () => {
   const res = await fetch("http://10.4.56.88:8080/api/events")
   if (res.status === 200) {
     events.value = await res.json()
-    isEmpty = checkEmptyArr()
   } else console.log("Error, cannot get data");
 };
+
+isEmpty = checkEmptyArr(events)
 </script>
 
 <template>
@@ -34,8 +36,8 @@ const getEvents = async () => {
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <EventList :events="events" v-show="isEmpty"/>
-        <div class="overflow-x-auto w-4/5 place-items-center" v-show="!isEmpty">
+        <EventList :events="events" v-show="!isEmpty"/>
+        <div class="overflow-x-auto w-4/5 place-items-center" v-show="isEmpty">
           <h2>No schedules</h2>
         </div>
       </div>

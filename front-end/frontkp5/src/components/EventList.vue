@@ -8,6 +8,7 @@ const props = defineProps({
     }
 })
 let showDetail
+
 const myEvent = computed(()=> {
     let eventList = []
     props.events.forEach((element)=>{
@@ -21,6 +22,7 @@ const myEvent = computed(()=> {
             "eventDuration": element.eventDuration
         })
     })
+    return eventList;
 })
 
 const EventDetails = ref({})
@@ -30,12 +32,15 @@ const getEventById = async (id) => {
     EventDetails.value = await res.json();
   } else console.log("Error, cannot get data");
 };
+
+
+
 </script>
  
 <template>
 <div>
-    <div class="overflow-x-auto w-4/5 place-items-center " >
-        <table class="table w-full">
+    <div class="overflow-x-auto w-4/5 place-items-center ">
+        <table class="table w-full" v-show="!isEmpty">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -46,7 +51,7 @@ const getEventById = async (id) => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="event in events" :key="event.id"> 
+                <tr v-for="event in myEvent" :key="event.id"> 
                     <td>{{event.bookingName}}</td>
                     <td>{{event.eventCategory.eventCategoryName}}</td>
                     <td>{{event.eventStartTime}}</td>
@@ -55,6 +60,7 @@ const getEventById = async (id) => {
                 </tr>
             </tbody>
         </table>
+
     </div>
     <div v-show="showDetail">
         <p>details</p>
