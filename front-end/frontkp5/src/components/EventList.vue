@@ -62,12 +62,13 @@ const getEventById = async (id) => {
     <input type="checkbox" id="detail-modal" class="modal-toggle">
         <div class="modal">
             <div class="modal-box">
-                <h3 class="font-bold text-lg">Details id: {{EventDetails.id}}</h3>
-                <p class="py-4" >{{EventDetails.bookingName}}</p>
-                <p class="py-4" >{{EventDetails.bookingEmail}}</p>
-                <p class="py-4" >{{EventDetails}}</p>
-                <p class="py-4" >{{EventDetails}}</p>
-                <p class="py-4" >{{EventDetails}}</p>
+                <h3 class="font-bold text-lg">Details</h3>
+                <p class="py-4" >Name: {{EventDetails.bookingName}}</p>
+                <p class="py-4" >Email: {{EventDetails.bookingEmail}}</p>
+                <p class="py-4" >Category: {{EventDetails.eventCategory}}</p>
+                <p class="py-4" >Datetime: {{EventDetails.eventStartTime}}</p>
+                <p class="py-4" >Duration: {{EventDetails.eventDuration}}</p>
+                <p class="py-4" >Notes : {{EventDetails.eventNotes===null? '-':EventDetails.eventNotes}}</p>
                 <div class="modal-action">
             <label for="detail-modal" class="btn">Yay!</label>
             </div>
