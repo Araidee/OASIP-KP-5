@@ -54,7 +54,7 @@ const getEventById = async (id) => {
                 <tr v-for="event in myEvent" :key="event.id"> 
                     <td>{{event.bookingName}}</td>
                     <td>{{event.eventCategory.eventCategoryName}}</td>
-                    <td>{{event.eventStartTime}}</td>
+                    <td>{{new Date(event.eventStartTime).toString()}}</td>
                     <td>{{event.eventDuration}}</td>
                     <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
                 </tr>
