@@ -72,7 +72,7 @@ const getEventById = async (id) => {
                 <p class="py-4" >Name: {{EventDetails.bookingName}}</p>
                 <p class="py-4" >Email: {{EventDetails.bookingEmail}}</p>
                 <p class="py-4" >Category: {{EventDetails.eventCategory}}</p>
-                <p class="py-4" >Datetime: {{EventDetails.eventStartTime}}</p>
+                <p class="py-4" >Datetime: {{new Date(EventDetails.eventStartTime).toString()}}</p>
                 <p class="py-4" >Duration: {{EventDetails.eventDuration}}</p>
                 <p class="py-4" >Notes : {{EventDetails.eventNotes===null? '-':EventDetails.eventNotes}}</p>
                 <div class="modal-action">
