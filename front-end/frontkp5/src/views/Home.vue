@@ -12,7 +12,7 @@ const appRouter = useRouter()
         </h1></button>
         </div>
         <h3 class="text-lg">Online Appointment Scheduling System for Integrated Project Clinics</h3><br>
-        <button class="btn btn-primary">Booking Now!</button>
+        <button class="btn btn-primary" @click="appRouter.push({ path: '/booking', replace: true})">Booking Now!</button>
         <button class="btn btn-secondary"  @click="appRouter.push({ path: '/schedules', replace: true})">Check schedules</button>
     </div>
     <footer class="footer p-10 bg-neutral text-neutral-content ">
