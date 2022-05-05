@@ -56,7 +56,7 @@ const getEventById = async (id) => {
                     <td>{{event.bookingName}}</td>
                     <td>{{event.eventCategory.eventCategoryName}}</td>
                     <td>{{new Date(event.eventStartTime).toDateString()}}</td>
-                    <td>{{new Date(EventDetails.eventStartTime).toTimeString()}}</td>
+                    <td>{{new Date(event.eventStartTime).toTimeString()}}</td>
                     <td>{{event.eventDuration}}</td>
                     <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
                 </tr>
