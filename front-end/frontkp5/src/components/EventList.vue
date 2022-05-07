@@ -7,7 +7,6 @@ const props = defineProps({
         default: []
     }
 })
-let showDetail
 
 const myEvent = computed(()=> {
     let eventList = []
@@ -64,9 +63,7 @@ const getEventById = async (id) => {
         </table>
 
     </div>
-    <div v-show="showDetail">
-        <p>details</p>
-    </div>
+
     <input type="checkbox" id="detail-modal" class="modal-toggle">
         <div class="modal">
             <div class="modal-box">

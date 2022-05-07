@@ -1,3 +1,46 @@
 {
-    "events": []
+  "events": [
+    {
+      "id": 1,
+      "bookingEmail": "udomchai.n@mail.kmutt.ac.th",
+      "bookingName": "Udomchai Nirasrop(KP-5)",
+      "eventStartTime": "2022-05-30T13:00:00Z",
+      "eventNotes": "kuay",
+      "eventCategory": {
+        "id": 1,
+        "eventCategoryName": "Backend Clinic",
+        "eventCategoryDescription": "INT221 integrated project I",
+        "eventDuration": 30
+      },
+      "eventDuration": 30
+    },
+    {
+        "id": 2,
+        "bookingEmail": "sarin.kobfha@mail.kmutt.ac.th",
+        "bookingName": "Sarin Weerakun(KP-5)",
+        "eventStartTime": "2022-05-30T13:00:00Z",
+        "eventNotes": "Triple kuay",
+        "eventCategory": {
+          "id": 2,
+          "eventCategoryName": "Frontend Clinic",
+          "eventCategoryDescription": "INT221 integrated project I",
+          "eventDuration": 30
+        },
+        "eventDuration": 30
+      },
+      {
+        "id": 3,
+        "bookingEmail": "vananon@mail.kmutt.ac.th",
+        "bookingName": "Darun mahavanakun(KP-5)",
+        "eventStartTime": "2022-05-30T13:00:00Z",
+        "eventNotes": "triple kuay",
+        "eventCategory": {
+          "id": 3,
+          "eventCategoryName": "Devops Clinic",
+          "eventCategoryDescription": "INT221 integrated project I",
+          "eventDuration": 30
+        },
+        "eventDuration": 30
+      }
+  ]
 }

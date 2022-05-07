@@ -10,16 +10,26 @@ onBeforeMount(async () => {
 let isEmpty = ref(true);
 
 const checkEmptyArr = (arr) => {
-  if (arr.length == 0) return true
+  if (arr.length == 0 || arr == null) return true
   else return false
 }
-
+//GET
 const getEvents = async () => {
   const res = await fetch("http://10.4.56.88:8080/api/events")
   if (res.status === 200) {
     events.value = await res.json()
   } else console.log("Error, cannot get data");
-};
+}
+//DELETE
+const removeEvent = async (removeEventId) => {
+  const res = await fetch(`http://localhost:5000/events/${removeEventId}`, {
+    method: 'DELETE'
+  })
+  if (res.status === 200) {
+    events.value = events.value.filter((event) => event.id !== removeEventId)
+    console.log('deleted successfullly')
+  } else console.log('error, cannot delete')
+}
 
 isEmpty = checkEmptyArr(events)
 </script>
