@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import AddEvent from '../components/AddEvent.vue';
 //POST
 const createNewEvent = async (newEvent) => {
   const res = await fetch('http://localhost:5000/events', {
@@ -21,6 +22,7 @@ const createNewEvent = async (newEvent) => {
 <template>
     <div>
         <h1 class="text-3xl font-bold">Booking Pages</h1>
+        <AddEvent/>
     </div>
 </template>
  
