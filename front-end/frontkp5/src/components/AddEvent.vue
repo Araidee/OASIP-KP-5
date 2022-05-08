@@ -19,6 +19,15 @@ const eventDuration = ref('')
         Time: <input type="text" v-model="eventStartTime"><br>
         Duration: <input type="number" v-model="eventDuration"><br>
         Notes: <input type="text" v-model="eventNotes"><br>
+        <button @click="$emit('addEvent',{
+            bookingEmail: bookingEmail,
+            bookingName: bookingName,
+            eventStartTime: eventStartTime,
+            eventNotes: eventNotes,
+            eventCategory: eventCategory,
+            eventDuration: eventDuration
+            })
+            ">Book</button>
     </div>
 </div>
 </template>
