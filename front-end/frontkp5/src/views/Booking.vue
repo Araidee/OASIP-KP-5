@@ -1,6 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import AddEvent from '../components/AddEvent.vue';
+
+const events = ref([]);
+onBeforeMount(async () => {
+  await getEvents();
+});
+//GET
+const getEvents = async () => {
+  const res = await fetch("http://10.4.56.88:8080/api/events")
+  // const res = await fetch("http://intproj21.kmutt.ac.th/kp5/api/events")
+  if (res.status === 200) {
+    events.value = await res.json()
+  } else console.log("Error, cannot get data");
+}
 //POST
 const createNewEvent = async (newEvent) => {
   const res = await fetch('http://localhost:5000/events', {
@@ -22,7 +35,7 @@ const createNewEvent = async (newEvent) => {
 <template>
     <div>
         <h1 class="text-3xl font-bold">Booking Pages</h1>
-        <AddEvent/>
+        <AddEvent :events="events"/>
     </div>
 </template>
  

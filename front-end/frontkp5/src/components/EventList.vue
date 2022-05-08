@@ -1,6 +1,6 @@
 <script setup>
 import { ref , computed} from 'vue'
-
+defineEmits(['delete'])
 const props = defineProps({
     events: {
         type: Array,
@@ -38,7 +38,7 @@ const getEventById = async (id) => {
  
 <template>
 <div>
-    <div class="overflow-x-auto w-4/5 place-items-center ">
+    <div class="overflow-x-auto w-full  place-items-center ">
         <table class="table w-full" v-show="!isEmpty">
             <thead>
                 <tr>
@@ -47,6 +47,7 @@ const getEventById = async (id) => {
                     <th>Date</th>
                     <th>Time</th>
                     <th>Duration(mins)</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -58,6 +59,7 @@ const getEventById = async (id) => {
                     <td>{{new Date(event.eventStartTime).toTimeString()}}</td>
                     <td>{{event.eventDuration}}</td>
                     <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
+                    <td><label for="detail-modal" class="btn modal-button" @click="$emit('delete', event.id)">Delete</label></td>
                 </tr>
             </tbody>
         </table>

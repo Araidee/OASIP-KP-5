@@ -5,7 +5,7 @@ import NotFound from '../views/NotFound.vue'
 import Schedules from '../views/Schedules.vue'
 import Booking from '../views/Booking.vue'
 
-const history = createWebHistory();
+const history = createWebHistory('/kp5/');
 const routes = [
     {
         path: '/',

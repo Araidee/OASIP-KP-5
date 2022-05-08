@@ -22,13 +22,17 @@ const getEvents = async () => {
 }
 //DELETE
 const removeEvent = async (removeEventId) => {
-  const res = await fetch(`http://localhost:5000/events/${removeEventId}`, {
-    method: 'DELETE'
-  })
-  if (res.status === 200) {
-    events.value = events.value.filter((event) => event.id !== removeEventId)
-    console.log('deleted successfullly')
-  } else console.log('error, cannot delete')
+  let confirmDelete = ref(false)
+  confirmDelete.value = confirm(`Are you sure to delete this event?`)
+  if(confirmDelete.value){
+    const res = await fetch(`http://localhost:5000/events/${removeEventId}`, {
+      method: 'DELETE'
+    })
+    if (res.status === 200) {
+      events.value = events.value.filter((event) => event.id !== removeEventId)
+      console.log('deleted successfullly')
+    } else console.log('error, cannot delete')
+  }else console.log('Delete was canceled')
 }
 
 isEmpty = checkEmptyArr(events)
@@ -46,7 +50,7 @@ isEmpty = checkEmptyArr(events)
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <EventList :events="events" v-show="!isEmpty"/>
+        <EventList :events="events" @delete="removeEvent" v-show="!isEmpty"/>
         <div class="overflow-x-auto w-4/5 place-items-center" v-show="isEmpty">
           <h2>No schedules</h2>
         </div>
