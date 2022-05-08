@@ -5,7 +5,9 @@ import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -33,6 +35,20 @@ public class EventController {
         return this.eventService.getEventDTO(id);
     }
 
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Event createEvent(@RequestBody EventDTO newEvent) {
+//        return EventService.save(newEvent);
+
+        return eventService.save(newEvent);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,id+"Event does not exist"));
+        repository.deleteById(id);
+
+    }
 
 }
 
