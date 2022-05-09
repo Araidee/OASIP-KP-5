@@ -59,7 +59,7 @@ const getEventById = async (id) => {
                     <td>{{new Date(event.eventStartTime).toTimeString()}}</td>
                     <td>{{event.eventDuration}}</td>
                     <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
-                    <td><label for="detail-modal" class="btn modal-button" @click="$emit('delete', event.id)">Delete</label></td>
+                    <td><button class="btn modal-button" @click="$emit('delete', event.id)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
