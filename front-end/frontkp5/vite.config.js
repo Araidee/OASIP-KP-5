@@ -15,12 +15,12 @@ export default defineConfig({
   //     }
   //   }
   // }
-   proxy: {
-    '/api': {
-         target: 'https://localhost:44305',
-         changeOrigin: true,
-         secure: false,      
-         ws: true,
-     }
-    }
+  //  proxy: {
+  //   '/api': {
+  //        target: 'https://localhost:44305',
+  //        changeOrigin: true,
+  //        secure: false,      
+  //        ws: true,
+  //    }
+    
 })
