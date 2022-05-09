@@ -15,7 +15,7 @@ const checkEmptyArr = (arr) => {
 }
 //GET
 const getEvents = async () => {
-  const res = await fetch("http://10.4.56.88:8080/api/events")
+  const res = await fetch("http://202.44.9.103:8080/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json()
   } else console.log("Error, cannot get data");
