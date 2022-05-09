@@ -55,8 +55,8 @@ const getEventById = async (id) => {
                 <tr v-for="event in myEvent" :key="event.id"> 
                     <td>{{event.bookingName}}</td>
                     <td>{{event.eventCategory.eventCategoryName}}</td>
-                    <td>{{new Date(event.eventStartTime).toDateString()}}</td>
-                    <td>{{new Date(event.eventStartTime).toTimeString()}}</td>
+                    <td>{{new Date(event.eventStartTime).toLocaleDateString('th-TH')}}</td>
+                    <td>{{new Date(event.eventStartTime).toLocaleTimeString('en-TH', {hour: '2-digit', minute: '2-digit', hour12: true})}}</td>
                     <td>{{event.eventDuration}}</td>
                     <td><label for="detail-modal" class="btn modal-button" @click="getEventById(event.id)">Details</label></td>
                     <td><button class="btn modal-button" @click="$emit('delete', event.id)">Delete</button></td>
