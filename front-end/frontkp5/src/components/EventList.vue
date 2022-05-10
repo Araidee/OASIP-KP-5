@@ -26,7 +26,7 @@ const myEvent = computed(()=> {
 
 const EventDetails = ref({})
 const getEventById = async (id) => {
-  const res = await fetch(`http://10.4.56.88:8080/api/events/${id}`);
+  const res = await fetch(`http://202.44.9.103:8080/api/events/${id}`);
   if (res.status === 200) {
     EventDetails.value = await res.json();
   } else console.log("Error, cannot get data");
