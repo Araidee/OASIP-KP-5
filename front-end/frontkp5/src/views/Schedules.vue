@@ -25,7 +25,7 @@ const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false)
   confirmDelete.value = confirm(`Are you sure to delete this event?`)
   if(confirmDelete.value){
-    const res = await fetch(`http://localhost:5000/events/${removeEventId}`, {
+    const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${removeEventId}`, {
       method: 'DELETE'
     })
     if (res.status === 200) {

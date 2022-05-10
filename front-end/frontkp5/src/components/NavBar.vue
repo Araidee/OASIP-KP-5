@@ -9,7 +9,7 @@ const GoSearch = () => appRouter.push({ name: 'Home' })
 <template>
 
     <div>
-        <nav class="border-gray-200 mb-10 px-2 sm:px-5 py-5 shadow-xl sticky top-0 z-50 bg-white">
+        <nav class="border-gray-200 mb-10 px-2 sm:px-5 py-5  sticky top-0 z-50 ">
             <div class="flex flex-wrap justify-between items-center ml-5 mr-5">
                 <div class="flex flex-wrap justify-start items-center">
                     <Araideeicon />
@@ -38,5 +38,18 @@ const GoSearch = () => appRouter.push({ name: 'Home' })
 </template>
  
 <style>
-
+body {
+  font:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #E5E7E5; 
+  color: #4d4d4d;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+/* #app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  Color: #E5E7E5;
+} */
 </style>
