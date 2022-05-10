@@ -26,7 +26,8 @@ const myEvent = computed(()=> {
 
 const EventDetails = ref({})
 const getEventById = async (id) => {
-  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
+  //const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
+  const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`);
   if (res.status === 200) {
     EventDetails.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -72,7 +73,7 @@ const getEventById = async (id) => {
                 <h3 class="font-bold text-lg">Details</h3>
                 <p class="py-4" >Name: {{EventDetails.bookingName}}</p>
                 <p class="py-4" >Email: {{EventDetails.bookingEmail}}</p>
-                <p class="py-4" >Category: {{EventDetails.eventCategory}}</p>
+                <p class="py-4" >Category: {{EventDetails.eventCategory}}</p> <!-- เกมาก -->
                 <p class="py-4" >Datetime: {{new Date(EventDetails.eventStartTime).toLocaleDateString('th-TH')}}, {{new Date(EventDetails.eventStartTime).toLocaleTimeString('en-TH', {hour: '2-digit', minute: '2-digit', hour12: true})}}</p>
                 <p class="py-4" >Duration: {{EventDetails.eventDuration}} minutes</p>
                 <p class="py-4" >Notes : {{EventDetails.eventNotes===null? '-':EventDetails.eventNotes}}</p>
