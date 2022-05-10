@@ -1,11 +1,18 @@
-FROM maven:3.8.1-jdk-11 AS build
-WORKDIR /build/
-COPY /backend221/pom.xml /build/
-COPY /backend221/src /build/src/
-RUN mvn clean package
+FROM maven:3.8.5-openjdk-17-slim as build
 
-FROM openjdk:11
 WORKDIR /app
-COPY --from=build /build/target/classicmodels-service-0.0.1-SNAPSHOT.jar /app
+
+COPY pom.xml .
+COPY src/ ./src/
+
+RUN mvn -Dmaven.test.skip package
+
+FROM openjdk:17-jdk-alpine
+
+ARG JAR_FILE=/app/target/*.jar
+
+COPY --from=build ${JAR_FILE} app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "classicmodels-service-0.0.1-SNAPSHOT.jar"]
+
+ENTRYPOINT exec java -jar app.jar
