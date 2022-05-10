@@ -25,7 +25,7 @@ public class EventController {
 
     @GetMapping("")
     public List<Event> getEvents(){
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC,"eventStartTime"));
 
 
     }
