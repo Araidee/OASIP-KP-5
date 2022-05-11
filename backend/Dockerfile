@@ -2,8 +2,8 @@ FROM maven:3.8.5-openjdk-17-slim as build
 
 WORKDIR /app
 
-COPY pom.xml .
-COPY src/ ./src/
+COPY backend221/pom.xml .
+COPY backend221/src/ ./src/
 
 RUN mvn -Dmaven.test.skip package
 
