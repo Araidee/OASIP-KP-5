@@ -5,6 +5,7 @@ import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -48,6 +49,23 @@ public class EventController {
         repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,id+"Event does not exist"));
         repository.deleteById(id);
 
+    }
+
+    @PutMapping("/{id}")
+    public Event update(@RequestBody Event updateEvent,@PathVariable Integer id){
+        Event event = repository.findById(id).map(o->mapEvent(o,updateEvent))
+                .orElseGet(()->
+                {
+                    updateEvent.setId(id);
+                    return updateEvent;
+                });
+        return repository.saveAndFlush(event);
+    }
+
+    private Event mapEvent(Event existingEvent, Event updateEvent) {
+        existingEvent.setEventStartTime(updateEvent.getEventStartTime());
+        existingEvent.setEventNotes(updateEvent.getEventNotes());
+        return existingEvent;
     }
 
 }

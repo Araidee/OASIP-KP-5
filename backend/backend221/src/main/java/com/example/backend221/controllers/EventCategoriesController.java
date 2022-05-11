@@ -12,11 +12,11 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/eventCategories")
-public class EventCategoryController {
+public class EventCategoriesController {
     @Autowired
     private EventCategoryRepository repository;
     @Autowired
-    public EventCategoryController(EventCategoryRepository repository) {
+    public EventCategoriesController(EventCategoryRepository repository) {
         this.repository = repository;
     }
     @GetMapping("")
