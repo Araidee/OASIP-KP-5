@@ -40,7 +40,7 @@ const clearInput = () => {
         <div class="card-body items-center ">
         Name: <input type="text" v-model="bookingName" placeholder="Type Name here" class="input input-bordered input-success w-full max-w-xs" />
         </div>
-        <div class="card-body items-center ">
+        <div class="card-body items-center">
         Email: <input type="text" v-model="bookingEmail" placeholder="Type Email here" class="input input-bordered input-success w-full max-w-xs" /><br>
         </div>
         <div class="card-body items-center ">

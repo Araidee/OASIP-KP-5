@@ -26,9 +26,9 @@ const myEvent = computed(() => {
 
 const editEventStartTime = ref('')
 const editEventNotes = ref('')
-const EventDetails = ref({});
+const EventDetails = ref([]);
 const getEventById = async (id) => {
-//   const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
+  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
   const res = await fetch(
     `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
   );
@@ -51,7 +51,6 @@ const getEventById = async (id) => {
             <th>Duration(mins)</th>
             <th></th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -71,31 +70,32 @@ const getEventById = async (id) => {
               }}
             </td>
             <td>{{ event.eventDuration }}</td>
+            
             <td>
+              
               <label
                 for="detail-modal"
                 class="btn modal-button"
                 @click="getEventById(event.id)"
                 >Details</label
               >
-            </td>
-            <td>
+              </td>
+              <td>
+               
+          
               <label
                 for="edit-modal"
-                class="btn modal-button"
+                class="btn btn-ghost btn-circle"
                 @click="getEventById(event.id)"
               >
-                Edit
+                <img src="/edit.svg" class="h-8 w-8">
               </label>
-            </td>
-            <td>
-              <button
-                class="btn modal-button"
+    
+              <button class="btn btn-ghost btn-circle"
                 @click="$emit('delete', event.id)"
               >
-                Delete
-              </button>
-            </td>
+                <img src="/delete.svg" class="h-8 w-8" >
+              </button></td>
           </tr>
         </tbody>
       </table>
@@ -107,7 +107,7 @@ const getEventById = async (id) => {
         <h3 class="font-bold text-lg">Details</h3>
         <p class="py-4">Name: {{ EventDetails.bookingName }}</p>
         <p class="py-4">Email: {{ EventDetails.bookingEmail }}</p>
-        <p class="py-4">Category: {{ EventDetails.eventCategory }}</p>
+        <p class="py-4">Category: {{EventDetails.eventCategory}}</p>
         <!-- เกมาก -->
         <p class="py-4">
           Datetime:
