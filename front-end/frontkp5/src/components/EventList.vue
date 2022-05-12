@@ -135,6 +135,7 @@ const getEventById = async (id) => {
     <input type="checkbox" id="edit-modal" class="modal-toggle" />
     <div class="modal">
       <div class="modal-box">
+         <label for="edit-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <h3 class="font-bold text-lg">Reschedules</h3>
         <label for="appt">Select a time:</label>
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
