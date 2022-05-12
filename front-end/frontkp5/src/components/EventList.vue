@@ -30,6 +30,7 @@ const clearInput = () => {
   editEventStartTime.value = ''
   editEventNotes.value = ''
 }
+
 const EventDetails = ref([]);
 const getEventById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
@@ -54,7 +55,6 @@ const getEventById = async (id) => {
             <th>Time</th>
             <th>Duration(mins)</th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -75,18 +75,17 @@ const getEventById = async (id) => {
             </td>
             <td>{{ event.eventDuration }}</td>
             
-            <td>
-              
+         <td>
+              <div class="flex items-stretch">
+              <div>
               <label
                 for="detail-modal"
                 class="btn modal-button"
                 @click="getEventById(event.id)"
                 >Details</label
               >
-              </td>
-              <td>
-               
-          
+              </div>
+              <div class="px-4">
               <label
                 for="edit-modal"
                 class="btn btn-ghost btn-circle"
@@ -99,7 +98,9 @@ const getEventById = async (id) => {
                 @click="$emit('delete', event.id)"
               >
                 <img src="/delete.svg" class="h-8 w-8" >
-              </button></td>
+              </button></div>
+              </div>
+              </td>
           </tr>
         </tbody>
       </table>
