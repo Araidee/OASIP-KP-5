@@ -11,6 +11,8 @@ const props = defineProps({
         default: []
     }
 })
+const currentDate = ref(new Date(Date.now()).toISOString())
+console.log(currentDate)
 const bookingName = ref('')
 const bookingEmail = ref('')
 const eventStartTime = ref('')
@@ -27,7 +29,16 @@ const clearInput = () => {
     eventNotes.value = ''
 }
 
-   
+function emailValidate(){
+    let regx =   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(bookingEmail.value.match(regx)){
+        return true;
+    } 
+    else{
+        alert("Sorry! Incorrect Email Address")
+        return false;
+    }
+}   
 </script>
  
 <template>
@@ -38,13 +49,13 @@ const clearInput = () => {
         <h1 class='text-2xl font-bold card-title '>Booking</h1>
         </div>
         <div class="card-body items-center ">
-        Name: <input type="text" v-model="bookingName" placeholder="Type Name here" class="input input-bordered input-success w-full max-w-xs" />
+        Name: <input type="text" v-model="bookingName" placeholder="Type Name here" class="input input-bordered input-success w-full max-w-xs" maxlength="100" required/>
         </div>
         <div class="card-body items-center">
-        Email: <input type="text" v-model="bookingEmail" placeholder="Type Email here" class="input input-bordered input-success w-full max-w-xs" /><br>
+        Email: <input type="text" id="email" v-model="bookingEmail" placeholder="Type Email here" class="input input-bordered input-success w-full max-w-xs " required/><br>
         </div>
         <div class="card-body items-center ">
-        Category: <select class="select select-success w-full max-w-xs" v-model="eventCategory">
+        Category: <select class="select select-success w-full max-w-xs" v-model="eventCategory" required>
         <option disabled selected>-- Category --</option>
         <option v-for="eventCategory in eventCategories" :value="eventCategory.id">{{eventCategory.eventCategoryName}}</option>
         </select>
@@ -54,7 +65,7 @@ const clearInput = () => {
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
         <input class="badge badge-green badge-outline" type="datetime-local" id="meeting-time"
        name="meeting-time" v-model="eventStartTime"
-       min="2022-05-10T00:00" max="2022-12-31T00:00" required><br>
+       min="2022-05-12T17:05" max="2022-12-31T00:00" required><br>
        <!-- <input type="time" id="appt" name="appt"
        value="22:00" required>
         </div> -->
@@ -66,18 +77,17 @@ const clearInput = () => {
     </select><br>
     </div> -->
      <div class="card-body items-center  ">  
-        Notes: <input type="text" placeholder="Note here... (Optional)" class="input input-bordered input-success w-full max-w-xs" v-model="eventNotes"/><br>
+        Notes: <input type="text" placeholder="Note here... (Optional)" class="input input-bordered input-success w-full max-w-xs" v-model="eventNotes" maxlength="500"/><br>
         </div>
         <div class-="card-actions justify-end">
-        <button class="btn btn-primary btn-success" @click="$emit('addEvent',{
-         
+        <button class="btn btn-primary btn-success" @click="emailValidate()? $emit('addEvent',{
             bookingEmail: bookingEmail,
             bookingName: bookingName,
             eventStartTime: new Date(eventStartTime),
             eventNotes: eventNotes,
             eventCategory: {id: eventCategory},
             eventDuration: 20
-            })
+            }): ''
             ; clearInput()
             ">Book</button>
             </div>
