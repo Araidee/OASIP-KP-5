@@ -26,6 +26,10 @@ const myEvent = computed(() => {
 
 const editEventStartTime = ref('')
 const editEventNotes = ref('')
+const clearInput = () => {
+  editEventStartTime.value = ''
+  editEventNotes.value = ''
+}
 const EventDetails = ref([]);
 const getEventById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
@@ -135,7 +139,7 @@ const getEventById = async (id) => {
     <input type="checkbox" id="edit-modal" class="modal-toggle" />
     <div class="modal">
       <div class="modal-box">
-         <label for="edit-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+         <label for="edit-modal" class="btn btn-sm btn-circle absolute right-2 top-2" @click="clearInput()">✕</label>
         <h3 class="font-bold text-lg">Reschedules</h3>
         <label for="appt">Select a time:</label>
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
@@ -146,7 +150,7 @@ const getEventById = async (id) => {
         Notes: <input type="text" v-model="editEventNotes" placeholder="Note here... (Optional)" class="input input-bordered input-success w-full max-w-xs"/><br>
         </div>
         <div>
-          <label for="edit-modal" class="btn" @click="$emit('edit', {id: EventDetails.id ,eventStartTime: new Date(editEventStartTime), eventNotes: editEventNotes})">Edit</label>
+          <label for="edit-modal" class="btn" @click="$emit('edit', {id: EventDetails.id ,eventStartTime: new Date(editEventStartTime), eventNotes: editEventNotes});clearInput()">Edit</label>
         </div>
       </div>
     </div>
