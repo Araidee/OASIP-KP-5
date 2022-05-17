@@ -25,9 +25,9 @@ import jubby from '../components/icons/jubby.vue'
             <div class="team_member">
                 <div class="member_img"> 
                     <div class="social_media">
-                        <div class="item"><a href="https://github.com/sarinweerakun"><i class="fa-brands fa-github"></i></a></div>
-                        <div class="item"><a href="https://www.instagram.com/imhorizonn_/"><i class="fa-brands fa-instagram"></i></a></div>
-                        <div class="item"><a href="https://www.facebook.com/kobfhasarin"><i class="fa-brands fa-facebook"></i></a></div>
+                        <div class="item"><a href="https://github.com/sarinweerakun" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+                        <div class="item"><a href="https://www.instagram.com/imhorizonn_/" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+                        <div class="item"><a href="https://www.facebook.com/kobfhasarin" target="_blank"><i class="fa-brands fa-facebook"></i></a></div>
                     </div>
                     <kobfha/>
                 </div>
@@ -38,10 +38,9 @@ import jubby from '../components/icons/jubby.vue'
                 <div class="member_img">
                      <div class="social_media">
                         <div class="item">
-                            <a href="https://github.com/Navisk555"><i class="fa-brands fa-github"></i></a>
-                        </div>
-                        <div class="item"><a href="https://www.instagram.com/nonmvk_/"><i class="fa-brands fa-instagram"></i></a></div>
-                        <div class="item"><a href="https://www.facebook.com/excister"><i class="fa-brands fa-facebook"></i></a></div>
+                            <a href="https://github.com/Navisk555" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+                        <div class="item"><a href="https://www.instagram.com/nonmvk_/" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+                        <div class="item"><a href="https://www.facebook.com/excister" target="_blank"><i class="fa-brands fa-facebook"></i></a></div>
                     </div>
                     <non/>
                 </div>
@@ -51,9 +50,9 @@ import jubby from '../components/icons/jubby.vue'
             <div class="team_member">
                 <div class="member_img">
                      <div class="social_media">
-                        <div class="item"><a href="https://github.com/jubbyr"><i class="fa-brands fa-github"></i></a></div>
-                        <div class="item"><a href="https://www.instagram.com/jubby_nr/"><i class="fa-brands fa-instagram"></i></a></div>
-                        <div class="item"><a href="https://www.facebook.com/udomchai.nirasrop"><i class="fa-brands fa-facebook"></i></a></div>
+                        <div class="item"><a href="https://github.com/jubbyr" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+                        <div class="item"><a href="https://www.instagram.com/jubby_nr/" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+                        <div class="item"><a href="https://www.facebook.com/udomchai.nirasrop" target="_blank"><i class="fa-brands fa-facebook"></i></a></div>
                     </div>
                     <jubby/>
                 </div>
@@ -74,9 +73,7 @@ import jubby from '../components/icons/jubby.vue'
     box-sizing: border-box;
 }
 
-body{ 
 
-}
 
 .wrapper{
     margin-top: 60px;
