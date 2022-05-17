@@ -25,7 +25,7 @@ public class EventDTO {
         private String bookingEmail;
         @Size(min=1,max = 100 , message = "Booking name must be between 1 to 100 characters")
         private String bookingName;
-        @Size(min=1,max = 500 , message = "Notes must be between 1 to 500 characters")
+        @Size(max = 500 , message = "Notes must be lower than 500 characters")
         private String eventNotes;
         private Instant eventStartTime;
         private EventCategory eventCategory;
