@@ -6,7 +6,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "event")
 public class Event {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookingId", nullable = false)
     private Integer id;
 

@@ -7,15 +7,18 @@ import com.example.backend221.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/events")
-public class EventController {
+public class EventController implements WebMvcConfigurer {
     @Autowired
     private EventRepository repository;
     private final EventService eventService;
@@ -38,8 +41,9 @@ public class EventController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event createEvent(@RequestBody EventDTO newEvent) {
-//        return EventService.save(newEvent);
+    public Event createEvent(@Valid @RequestBody EventDTO newEvent) {
+//        return EventService.save(newEvent)
+//        return ResponseEntity.ok("User is valid");
 
         return eventService.save(newEvent);
     }
