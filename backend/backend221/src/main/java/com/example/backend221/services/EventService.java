@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.modelmapper.ModelMapper;
+
+import java.time.Instant;
+
 @Service
 public class EventService {
 
@@ -42,5 +45,12 @@ public class EventService {
     public Event save(EventDTO newEvent) {
         Event e = modelMapper.map(newEvent,Event.class);
         return repository.saveAndFlush(e);
+    }
+    public boolean validateFuture(Instant eventStartTime){
+            long milliStartTime = eventStartTime.toEpochMilli(); //แปลงเป็นmilli second
+            long realTime = Instant.now().toEpochMilli();
+            if (milliStartTime > realTime){
+                return true;
+            }return false;
     }
 }
