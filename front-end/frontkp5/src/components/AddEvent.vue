@@ -17,7 +17,7 @@ const bookingName = ref('')
 const bookingEmail = ref('')
 const eventStartTime = ref('')
 const eventNotes = ref('')
-const eventCategory = ref('')
+const eventCategory = ref({})
 // const eventDuration = computed((id)=> {
 
 // })
@@ -57,7 +57,7 @@ function emailValidate(){
         <div class="card-body items-center ">
         Category: <select class="select select-success w-full max-w-xs" v-model="eventCategory" required>
         <option disabled selected>-- Category --</option>
-        <option v-for="eventCategory in eventCategories" :value="eventCategory.id">{{eventCategory.eventCategoryName}}</option>
+        <option v-for="eventCategory in eventCategories" :value="{'id': eventCategory.id, 'eventDuration': eventCategory.eventDuration}">{{eventCategory.eventCategoryName}}</option>
         </select>
         </div>
         <div class="card-body items-center ">
@@ -85,8 +85,8 @@ function emailValidate(){
             bookingName: bookingName,
             eventStartTime: new Date(eventStartTime),
             eventNotes: eventNotes,
-            eventCategory: {id: eventCategory},
-            eventDuration: 20
+            eventCategory: {id: eventCategory.id},
+            eventDuration: eventCategory.eventDuration
             }): ''
             ; clearInput()
             ">Book</button>
