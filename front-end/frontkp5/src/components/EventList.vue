@@ -40,7 +40,7 @@ const getEventById = async (id) => {
   if (res.status === 200) {
     EventDetails.value = await res.json();
   } else console.log("Error, cannot get data");
-};
+}
 </script>
 
 <template>

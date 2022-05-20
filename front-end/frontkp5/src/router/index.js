@@ -4,6 +4,7 @@ import About from '../views/About.vue'
 import NotFound from '../views/NotFound.vue'
 import Schedules from '../views/Schedules.vue'
 import Booking from '../views/Booking.vue'
+import EventCategory from '../views/EventCategory.vue'
 
 const history = createWebHistory('/kp5/');
 const routes = [
@@ -26,6 +27,12 @@ const routes = [
         path: '/booking',
         name: 'Booking',
         component: Booking
+    },
+    {
+        path: '/eventCategory',
+        name: 'EventCategory',
+        component: EventCategory,
+        Comment: "list component"
     },
     {
         path: '/:catchNotMatchPath(.*)',
