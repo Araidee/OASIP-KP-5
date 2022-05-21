@@ -31,14 +31,15 @@ const editEventCategory = async (editingEventCategory) => {
 
   if (res.status === 200) {
     const moddedEventCategory = await res.json();
-    events.value = events.value.map((event) =>
-      event.id === moddedEventCategory.id
+    eventCategories.value = eventCategories.value.map((eventCategory) =>
+      eventCategory.id === moddedEventCategory.id
         ? {
-            ...event,
-            eventStartTime: moddedEventCategory.eventCategoryName,
-            eventNotes: moddedEventCategory.eventCategoryNotes,
+            ...eventCategory,
+            eventCategoryName: moddedEventCategory.eventCategoryName,
+            eventCategoryDescription: moddedEventCategory.eventCategoryDescription,
+            eventDuration: moddedEventCategory.eventDuration
           }
-        : event
+        : eventCategory
     );
 
     console.log("edited successfully");
