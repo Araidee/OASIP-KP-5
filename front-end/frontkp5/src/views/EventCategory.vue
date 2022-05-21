@@ -5,6 +5,7 @@ const eventCategories = ref([])
 onBeforeMount(async () => {
   await getEventCategories();
 });
+//GET
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories")
    const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")

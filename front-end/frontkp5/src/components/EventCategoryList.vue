@@ -16,7 +16,7 @@ const getEventCategoryById = async (id) => {
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
   // );
   const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
+    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
   );
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
