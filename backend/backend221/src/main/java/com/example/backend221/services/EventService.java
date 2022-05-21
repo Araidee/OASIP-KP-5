@@ -3,6 +3,7 @@ package com.example.backend221.services;
 import com.example.backend221.dtos.EventDTO;
 import com.example.backend221.dtos.SimpleEventDTO;
 import com.example.backend221.entities.Event;
+import com.example.backend221.repositories.EventCategoryRepository;
 import com.example.backend221.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ public class EventService {
 
         @Autowired
         private EventRepository repository;
+        @Autowired
+        private EventCategoryRepository eventCategoryRepository;
         @Autowired
         private ModelMapper modelMapper;
 
@@ -43,6 +46,7 @@ public class EventService {
         return this.modelMapper.map(event, EventDTO.class);
     }
     public Event save(EventDTO newEvent) {
+            newEvent.setEventDuration(eventCategoryRepository.getById(newEvent.getEventCategory().getId()).getEventDuration());
         Event e = modelMapper.map(newEvent,Event.class);
         return repository.saveAndFlush(e);
     }
