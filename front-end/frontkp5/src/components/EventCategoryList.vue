@@ -79,7 +79,7 @@ const getEventCategoryById = async (id) => {
           <input
             type="text"
             v-model="editEventCategoryName"
-            placeholder="Category name... (Optional)"
+            placeholder="Category name..."
             class="input input-bordered input-success w-full max-w-xs"
           />
           Duration:
@@ -88,14 +88,14 @@ const getEventCategoryById = async (id) => {
             v-model="editEventCategoryDuration"
             min="1"
             max="480"
-            placeholder="Duration... (Optional)"
+            placeholder="Duration... (1-480 mins)"
             class="input input-bordered input-success w-full max-w-xs"
           />
             Description:
             <input
               type="text"
               v-model="editEventCategoryDescription"
-              placeholder="Description here... (Optional)"
+              placeholder="Description..."
               class="input input-bordered input-success w-full max-w-xs"
             /><br />
           </div>

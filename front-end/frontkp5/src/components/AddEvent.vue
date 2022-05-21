@@ -18,9 +18,11 @@ const bookingEmail = ref('')
 const eventStartTime = ref('')
 const eventNotes = ref('')
 const eventCategory = ref({})
+
 // const eventDuration = computed((id)=> {
 
 // })
+
 const clearInput = () => {
     bookingName.value = ''
     bookingEmail.value = ''

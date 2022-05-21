@@ -26,6 +26,8 @@ const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false);
   confirmDelete.value = confirm(`Are you sure to delete this event?`);
   if (confirmDelete.value) {
+    // const res = await fetch(
+    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
     const res = await fetch(
       `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
       {
@@ -40,6 +42,8 @@ const removeEvent = async (removeEventId) => {
 };
 //PUT
 const editEvent = async (editingEvent) => {
+  // const res = await fetch(
+  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
   const res = await fetch(
     `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
     {
