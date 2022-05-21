@@ -21,7 +21,7 @@ const getEventCategoryById = async (id) => {
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
     editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName
-    editEventCategoryDescription.value = eventCategoryDetails.value.editEventCategoryDescription
+    editEventCategoryDescription.value = eventCategoryDetails.value.eventCategoryDescription
     editEventCategoryDuration.value = eventCategoryDetails.value.eventDuration
   } else console.log("Error, cannot get data");
 };
