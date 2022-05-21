@@ -8,9 +8,9 @@ const props = defineProps({
   },
 });
 const eventCategoryDetails = ref({});
-const editEventCategoryName = ref(`${eventCategoryDetails.editEventCategoryName}`);
-const editEventCategoryDescription = ref("");
-const editEventCategoryDuration = ref('')
+const editEventCategoryName = ref(`${eventCategoryDetails.eventCategoryName}`);
+const editEventCategoryDescription = ref(`${eventCategoryDetails.eventCategoryDescription}`);
+const editEventCategoryDuration = ref(`${eventCategoryDetails.eventDuration}`)
 const getEventCategoryById = async (id) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
