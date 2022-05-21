@@ -86,7 +86,7 @@ const getEventCategoryById = async (id) => {
           <input
             type="number"
             v-model="editEventCategoryDuration"
-            min="0"
+            min="1"
             max="480"
             placeholder="Duration... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
