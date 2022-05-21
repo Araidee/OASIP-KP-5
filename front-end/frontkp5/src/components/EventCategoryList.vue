@@ -7,10 +7,10 @@ const props = defineProps({
     default: [],
   },
 });
-const editEventCategoryName = ref("");
+const eventCategoryDetails = ref({});
+const editEventCategoryName = ref(`${eventCategoryDetails.editEventCategoryName}`);
 const editEventCategoryDescription = ref("");
 const editEventCategoryDuration = ref('')
-const eventCategoryDetails = ref({});
 const getEventCategoryById = async (id) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
@@ -76,7 +76,6 @@ const getEventCategoryById = async (id) => {
           <input
             type="text"
             v-model="editEventCategoryName"
-            placeholder="category name... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
           />
           Duration:
