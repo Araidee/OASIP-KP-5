@@ -8,9 +8,9 @@ const props = defineProps({
   },
 });
 const eventCategoryDetails = ref({});
-let editEventCategoryName = ref('');
-let editEventCategoryDescription = ref('');
-let editEventCategoryDuration = ref('')
+const editEventCategoryName = ref('');
+const editEventCategoryDescription = ref('');
+const editEventCategoryDuration = ref('')
 const getEventCategoryById = async (id) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
@@ -20,9 +20,9 @@ const getEventCategoryById = async (id) => {
   );
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
-    editEventCategoryName = eventCategoryDetails.eventCategoryName
-    editEventCategoryDescription = eventCategoryDetails.editEventCategoryDescription
-    editEventCategoryDuration = eventCategoryDetails.eventDuration
+    editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName
+    editEventCategoryDescription.value = eventCategoryDetails.value.editEventCategoryDescription
+    editEventCategoryDuration.value = eventCategoryDetails.value.eventDuration
   } else console.log("Error, cannot get data");
 };
 // const clearInput = () => {
