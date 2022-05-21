@@ -16,7 +16,7 @@ const getEventCategories = async () => {
 //PUT
 const editEventCategory = async (editingEventCategory) => {
   const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.id}`,
+    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.eventCategoryId}`,
     {
       method: "PUT",
       headers: {

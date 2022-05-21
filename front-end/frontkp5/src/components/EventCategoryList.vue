@@ -83,6 +83,8 @@ const getEventCategoryById = async (id) => {
           <input
             type="number"
             v-model="editEventCategoryDuration"
+            min="0"
+            max="480"
             placeholder="duration... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
           />
@@ -100,7 +102,7 @@ const getEventCategoryById = async (id) => {
               class="btn"
               @click="
                 $emit('editCategory', {
-                  id: eventCategoryDetails.id,
+                  eventCategoryId: eventCategoryDetails.eventCategoryId,
                   eventCategoryName: editEventCategoryName,
                   eventCategoryDescription: editEventCategoryDescription,
                   eventDuration: editEventCategoryDuration
