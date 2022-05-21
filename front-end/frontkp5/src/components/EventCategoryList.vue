@@ -9,7 +9,6 @@ const props = defineProps({
 });
 const editEventCategoryName = ref("");
 const editEventCategoryDescription = ref("");
-const editEventCategoryDetails = ref("");
 const editEventCategoryDuration = ref('')
 const eventCategoryDetails = ref([]);
 const getEventCategoryById = async (id) => {
