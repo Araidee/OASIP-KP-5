@@ -12,11 +12,43 @@ const getEventCategories = async () => {
     eventCategories.value = await res.json()
   } else console.log("Error, cannot get data");
 }
+//PUT
+const editEventCategory = async (editingEventCategory) => {
+  const res = await fetch(
+    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        eventCategoryName: editingEventCategory.eventCategoryName,
+        eventCategoryDescription: editingEventCategory.eventCategoryDescription,
+        eventDuration: editingEventCategory.eventDuration
+      }),
+    }
+  );
+
+  if (res.status === 200) {
+    const moddedEventCategory = await res.json();
+    events.value = events.value.map((event) =>
+      event.id === moddedEventCategory.id
+        ? {
+            ...event,
+            eventStartTime: moddedEventCategory.eventCategoryName,
+            eventNotes: moddedEventCategory.eventCategoryNotes,
+          }
+        : event
+    );
+
+    console.log("edited successfully");
+  } else console.log("error, cannot edit");
+};
 </script>
  
 <template>
 <div>
-    <EventCategoryList :eventCategories="eventCategories"/>
+    <EventCategoryList :eventCategories="eventCategories" @editCategory="editEventCategory"/>
 </div>
 </template>
  

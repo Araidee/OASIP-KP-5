@@ -24,12 +24,12 @@ const myEvent = computed(() => {
   return eventList;
 });
 
-const editEventStartTime = ref('')
-const editEventNotes = ref('')
+const editEventStartTime = ref("");
+const editEventNotes = ref("");
 const clearInput = () => {
-  editEventStartTime.value = ''
-  editEventNotes.value = ''
-}
+  editEventStartTime.value = "";
+  editEventNotes.value = "";
+};
 
 const EventDetails = ref([]);
 const getEventById = async (id) => {
@@ -40,7 +40,7 @@ const getEventById = async (id) => {
   if (res.status === 200) {
     EventDetails.value = await res.json();
   } else console.log("Error, cannot get data");
-}
+};
 </script>
 
 <template>
@@ -74,33 +74,35 @@ const getEventById = async (id) => {
               }}
             </td>
             <td>{{ event.eventDuration }}</td>
-            
-         <td>
+
+            <td>
               <div class="flex items-stretch">
-              <div>
-              <label
-                for="detail-modal"
-                class="btn modal-button"
-                @click="getEventById(event.id)"
-                >Details</label
-              >
+                <div>
+                  <label
+                    for="detail-modal"
+                    class="btn modal-button"
+                    @click="getEventById(event.id)"
+                    >Details</label
+                  >
+                </div>
+                <div class="px-4">
+                  <label
+                    for="edit-modal"
+                    class="btn btn-ghost btn-circle"
+                    @click="getEventById(event.id)"
+                  >
+                    <img src="/edit.svg" class="h-8 w-8" />
+                  </label>
+
+                  <button
+                    class="btn btn-ghost btn-circle"
+                    @click="$emit('delete', event.id)"
+                  >
+                    <img src="/delete.svg" class="h-8 w-8" />
+                  </button>
+                </div>
               </div>
-              <div class="px-4">
-              <label
-                for="edit-modal"
-                class="btn btn-ghost btn-circle"
-                @click="getEventById(event.id)"
-              >
-                <img src="/edit.svg" class="h-8 w-8">
-              </label>
-    
-              <button class="btn btn-ghost btn-circle"
-                @click="$emit('delete', event.id)"
-              >
-                <img src="/delete.svg" class="h-8 w-8" >
-              </button></div>
-              </div>
-              </td>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -112,7 +114,7 @@ const getEventById = async (id) => {
         <h3 class="font-bold text-lg">Details</h3>
         <p class="py-4">Name: {{ EventDetails.bookingName }}</p>
         <p class="py-4">Email: {{ EventDetails.bookingEmail }}</p>
-        <p class="py-4">Category: {{EventDetails.eventCategory}}</p>
+        <p class="py-4">Category: {{ EventDetails.eventCategory }}</p>
         <!-- เกมาก -->
         <p class="py-4">
           Datetime:
@@ -140,18 +142,48 @@ const getEventById = async (id) => {
     <input type="checkbox" id="edit-modal" class="modal-toggle" />
     <div class="modal">
       <div class="modal-box">
-         <label for="edit-modal" class="btn btn-sm btn-circle absolute right-2 top-2" @click="clearInput()">✕</label>
+        <label
+          for="edit-modal"
+          class="btn btn-sm btn-circle absolute right-2 top-2"
+          @click="clearInput()"
+          >✕</label
+        >
         <h3 class="font-bold text-lg">Reschedules</h3>
         <label for="appt">Select a time:</label>
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
-        <input class="badge badge-green badge-outline" type="datetime-local" id="meeting-time"
-       name="meeting-time" 
-       min="2022-05-10T00:00" max="2022-12-31T00:00" required v-model="editEventStartTime"><br>
-       <div class="card-body items-center  ">  
-        Notes: <input type="text" v-model="editEventNotes" placeholder="Note here... (Optional)" class="input input-bordered input-success w-full max-w-xs"/><br>
+        <input
+          class="badge badge-green badge-outline"
+          type="datetime-local"
+          id="meeting-time"
+          name="meeting-time"
+          min="2022-05-10T00:00"
+          max="2022-12-31T00:00"
+          required
+          v-model="editEventStartTime"
+        /><br />
+        <div class="card-body items-center">
+          Notes:
+          <input
+            type="text"
+            v-model="editEventNotes"
+            placeholder="Note here... (Optional)"
+            class="input input-bordered input-success w-full max-w-xs"
+          /><br />
         </div>
         <div>
-          <label for="edit-modal" class="btn" @click="$emit('edit', {id: EventDetails.id ,eventStartTime: new Date(editEventStartTime), eventNotes: editEventNotes});clearInput()">Edit</label>
+          <label
+            for="edit-modal"
+            class="btn"
+            @click="
+              $emit('edit', {
+                id: EventDetails.id,
+                eventStartTime: new Date(editEventStartTime),
+                eventNotes: editEventNotes,
+              });
+              clearInput();
+            "
+            >Edit</label
+          >
         </div>
       </div>
     </div>
