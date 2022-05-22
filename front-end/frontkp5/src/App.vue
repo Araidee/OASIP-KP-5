@@ -1,18 +1,14 @@
 <script setup>
-import NavBar from './components/NavBar.vue'
+import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
-<div>
-<NavBar/>
-
-
-
-
-</div>
-<div>
-  <router-view></router-view>
-</div>
+  <div>
+    <NavBar />
+  </div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <style>
@@ -23,13 +19,13 @@ import NavBar from './components/NavBar.vue'
   color: #2d353d;
 }
 body {
-  background-color: #E5E7E5;
+  background-color: #e5e7e5;
 }
 
 h1 {
   color: black;
   text-align: center;
-  font-family:"Lucida Console";
+  font-family: "Lucida Console";
 }
 
 p {

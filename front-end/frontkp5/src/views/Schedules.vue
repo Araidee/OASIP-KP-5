@@ -7,16 +7,10 @@ onBeforeMount(async () => {
   await getEvents();
 });
 
-let isEmpty = ref(true);
-
-const checkEmptyArr = (arr) => {
-  if (arr.length == 0 || arr == null) return true;
-  else return false;
-};
 //GET
 const getEvents = async () => {
-  // const res = await fetch("http://202.44.9.103:8080/kp5/api/events")
-  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
+  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -26,26 +20,27 @@ const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false);
   confirmDelete.value = confirm(`Are you sure to delete this event?`);
   if (confirmDelete.value) {
-    // const res = await fetch(
-    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
     const res = await fetch(
-      `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
+      `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
+      // const res = await fetch(
+      //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
       {
         method: "DELETE",
       }
     );
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== removeEventId);
+      alert('Event removed!')
       console.log("deleted successfullly");
     } else console.log("error, cannot delete");
   } else console.log("Delete was canceled");
 };
 //PUT
 const editEvent = async (editingEvent) => {
-  // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
   const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
+    `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
+    // const res = await fetch(
+    //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
     {
       method: "PUT",
       headers: {
@@ -69,11 +64,13 @@ const editEvent = async (editingEvent) => {
           }
         : event
     );
-
+    alert('Edited!')
     console.log("edited successfully");
   } else console.log("error, cannot edit");
 };
-isEmpty = checkEmptyArr(events);
+// const filterCategory = (Category) => {
+//   EventList.
+// }
 </script>
 
 <template>
@@ -88,8 +85,11 @@ isEmpty = checkEmptyArr(events);
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <EventList :events="events" @delete="removeEvent" @edit="editEvent" v-show="!isEmpty" />
-        <div class="overflow-x-auto w-4/5 place-items-center" v-show="isEmpty">
+        <EventList :events="events" @delete="removeEvent" @edit="editEvent" />
+        <div
+          class="overflow-x-auto w-4/5 place-items-center"
+          v-show="events.length == 0"
+        >
           <h2>No schedules</h2>
         </div>
       </div>

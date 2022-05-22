@@ -8,21 +8,22 @@ const props = defineProps({
   },
 });
 const eventCategoryDetails = ref({});
-const editEventCategoryName = ref('');
-const editEventCategoryDescription = ref('');
-const editEventCategoryDuration = ref('')
+const editEventCategoryName = ref("");
+const editEventCategoryDescription = ref("");
+const editEventCategoryDuration = ref("");
 const getEventCategoryById = async (id) => {
-  // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
-  // );
   const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
+    `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
   );
+  // const res = await fetch(
+  //   `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
+  // );
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
-    editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName
-    editEventCategoryDescription.value = eventCategoryDetails.value.eventCategoryDescription
-    editEventCategoryDuration.value = eventCategoryDetails.value.eventDuration
+    editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName;
+    editEventCategoryDescription.value =
+      eventCategoryDetails.value.eventCategoryDescription;
+    editEventCategoryDuration.value = eventCategoryDetails.value.eventDuration;
   } else console.log("Error, cannot get data");
 };
 // const clearInput = () => {
@@ -37,11 +38,11 @@ const getEventCategoryById = async (id) => {
 <template>
   <div>
     <div class="overflow-x-auto w-full place-items-center">
-      <table class="table w-full" v-show="!isEmpty">
+      <table class="table w-full">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Notes</th>
+            <th>Description</th>
             <th>Duration(mins)</th>
             <th></th>
           </tr>
@@ -74,23 +75,23 @@ const getEventCategoryById = async (id) => {
             >✕</label
           >
           <div class="card-body items-center">
-          <h3 class="font-bold text-lg">Edit Category</h3>
-          Category Name:
-          <input
-            type="text"
-            v-model="editEventCategoryName"
-            placeholder="Category name..."
-            class="input input-bordered input-success w-full max-w-xs"
-          />
-          Duration:
-          <input
-            type="number"
-            v-model="editEventCategoryDuration"
-            min="1"
-            max="480"
-            placeholder="Duration... (1-480 mins)"
-            class="input input-bordered input-success w-full max-w-xs"
-          />
+            <h3 class="font-bold text-lg">Edit Category</h3>
+            Category Name:
+            <input
+              type="text"
+              v-model="editEventCategoryName"
+              placeholder="Category name..."
+              class="input input-bordered input-success w-full max-w-xs"
+            />
+            Duration:
+            <input
+              type="number"
+              v-model="editEventCategoryDuration"
+              min="1"
+              max="480"
+              placeholder="Duration... (1-480 mins)"
+              class="input input-bordered input-success w-full max-w-xs"
+            />
             Description:
             <input
               type="text"
@@ -108,7 +109,7 @@ const getEventCategoryById = async (id) => {
                   eventCategoryId: eventCategoryDetails.eventCategoryId,
                   eventCategoryName: editEventCategoryName,
                   eventCategoryDescription: editEventCategoryDescription,
-                  eventDuration: editEventCategoryDuration
+                  eventDuration: editEventCategoryDuration,
                 })
               "
               >Edit</label
