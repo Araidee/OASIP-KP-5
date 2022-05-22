@@ -34,10 +34,10 @@ const clearInput = () => {
 
 const EventDetails = ref({});
 const getEventById = async (id) => {
-  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
-  const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
-  );
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
+  // const res = await fetch(
+  //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
+  // );
   if (res.status === 200) {
     EventDetails.value = await res.json();
     editEventNotes.value = EventDetails.value.eventNotes;

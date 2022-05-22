@@ -11,8 +11,7 @@ const props = defineProps({
     default: [],
   },
 });
-const currentDate = ref(new Date(Date.now()).toISOString());
-console.log(currentDate);
+
 const bookingName = ref("");
 const bookingEmail = ref("");
 const eventStartTime = ref("");
