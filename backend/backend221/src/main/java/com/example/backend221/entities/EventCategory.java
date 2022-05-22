@@ -1,6 +1,10 @@
 package com.example.backend221.entities;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "eventCategory")
@@ -11,7 +15,6 @@ public class EventCategory {
 
     @Column(name = "eventCategoryName", nullable = false, length = 100)
     private String eventCategoryName;
-
     @Column(name = "eventCategoryDescription", length = 500)
     private String eventCategoryDescription;
 
