@@ -31,7 +31,7 @@ import jubby from '../components/icons/jubby.vue'
                     </div>
                     <kobfha/>
                 </div>
-                <h3>Sarin Weerakun</h3>
+                <h3>Sarin<br>Weerakun</h3>
                 <span>63130500115</span>
             </div>
          <div class="team_member">

@@ -26,19 +26,23 @@ const myEvent = computed(() => {
 
 const editEventStartTime = ref("");
 const editEventNotes = ref("");
+const fetchEventCategoryName = ref("");
 const clearInput = () => {
   editEventStartTime.value = "";
   editEventNotes.value = "";
 };
 
-const EventDetails = ref([]);
+const EventDetails = ref({});
 const getEventById = async (id) => {
-  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
-  const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
-  );
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
+  // const res = await fetch(
+  //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
+  // );
   if (res.status === 200) {
     EventDetails.value = await res.json();
+    editEventNotes.value = EventDetails.value.eventNotes;
+    fetchEventCategoryName.value =
+      EventDetails.value.eventCategory.eventCategoryName;
   } else console.log("Error, cannot get data");
 };
 </script>
@@ -46,7 +50,7 @@ const getEventById = async (id) => {
 <template>
   <div>
     <div class="overflow-x-auto w-full place-items-center">
-      <table class="table w-full" v-show="!isEmpty">
+      <table class="table w-full">
         <thead>
           <tr>
             <th>Name</th>
@@ -114,7 +118,7 @@ const getEventById = async (id) => {
         <h3 class="font-bold text-lg">Details</h3>
         <p class="py-4">Name: {{ EventDetails.bookingName }}</p>
         <p class="py-4">Email: {{ EventDetails.bookingEmail }}</p>
-        <p class="py-4">Category: {{ EventDetails.eventCategory }}</p>
+        <p class="py-4">Category: {{ fetchEventCategoryName }}</p>
         <!-- เกมาก -->
         <p class="py-4">
           Datetime:
