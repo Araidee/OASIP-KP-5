@@ -77,6 +77,7 @@ function emailValidate() {
           class="select select-success w-full max-w-xs"
           v-model="eventCategory"
           required
+          
         >
           <option disabled selected>-- Category --</option>
           <option
