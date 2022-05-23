@@ -4,6 +4,8 @@ import EventList from "../components/EventList.vue";
 const events = ref([]);
 const categoryIdTemp = ref('')
 const eventCategories = ref([]);
+const now = ref(new Date(Date.now()).toISOString());
+console.log(now.value)
 // const eventsByCategoryId = ref([]);
 onBeforeMount(async () => {
   await getEvents();
@@ -11,22 +13,36 @@ onBeforeMount(async () => {
 });
 //GET
 const getEvents = async () => {
-  // const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
-  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
+  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventsByCategoryId = async (id) => {
-  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
-  const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`);
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
+  // const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`);
+  if (res.status === 200) {
+    events.value = await res.json();
+  } else console.log("Error, cannot get data");
+};
+const getPastEvents = async (isotime) => {
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/past/${isotime}`);
+  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  if (res.status === 200) {
+    events.value = await res.json();
+  } else console.log("Error, cannot get data");
+};
+const getUpcomingEvents = async (isotime) => {
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/upcoming/${isotime}`);
+  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventCategories = async () => {
-  // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")
+  const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
+  //  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")
   if (res.status === 200) {
     eventCategories.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -36,10 +52,10 @@ const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false);
   confirmDelete.value = confirm(`Are you sure to delete this event?`);
   if (confirmDelete.value) {
-    // const res = await fetch(
-    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
-      const res = await fetch(
-        `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
+    const res = await fetch(
+      `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
+      // const res = await fetch(
+      //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
       {
         method: "DELETE",
       }
@@ -53,10 +69,10 @@ const removeEvent = async (removeEventId) => {
 };
 //PUT
 const editEvent = async (editingEvent) => {
-  // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
-    const res = await fetch(
-      `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
+  const res = await fetch(
+    `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
+    // const res = await fetch(
+    //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
     {
       method: "PUT",
       headers: {
@@ -99,7 +115,7 @@ const editEvent = async (editingEvent) => {
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <div class="card-body items-right">
+        <div class="card-body">
         <span>Filter by :
         <select
           class="select select-success w-full max-w-xs"
@@ -116,6 +132,14 @@ const editEvent = async (editingEvent) => {
             {{ eventCategory.eventCategoryName }}
           </option>
         </select>
+        <button
+          class="btn btn-primary"
+          @click="getPastEvents(now)"
+        >Past Event</button>
+        <button
+          class="btn btn-primary"
+          @click="getUpcomingEvents(now)"
+        >Upcoming Event</button>
         </span>
       </div>
         <EventList :events="events" @delete="removeEvent" @edit="editEvent" />
