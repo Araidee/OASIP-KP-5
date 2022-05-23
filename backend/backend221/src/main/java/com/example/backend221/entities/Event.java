@@ -3,6 +3,7 @@ package com.example.backend221.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Entity
@@ -20,7 +21,6 @@ public class Event {
     @Future(message = "eventStartTime must be future")
     @Column(name = "eventStartTime", nullable = false)
     private Instant eventStartTime;
-    @Max(value = 500,message = "Notes must be lower than 500 characters")
     @Column(name = "eventNotes", length = 500)
     private String eventNotes;
 
