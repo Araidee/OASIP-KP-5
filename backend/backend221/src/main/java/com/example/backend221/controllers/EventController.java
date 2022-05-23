@@ -59,16 +59,23 @@ public class EventController implements WebMvcConfigurer {
     public List<Event> getEventByCategoryId(@PathVariable Integer categoryId){
         return eventService.getEventByCategoryId(categoryId);
     }
-
+    //future
     @GetMapping("/upcoming/{current_datetime}")
     public List<Event> getAllFutureEvents(@PathVariable String current_datetime){
 
         return  repository.findAllFutureEvents(current_datetime);
     }
+    //Past
     @GetMapping("/past/{current_datetime}")
     public List<Event> getAllPastEvents(@PathVariable String current_datetime){
 
         return  repository.getAllPastEvents(current_datetime);
+    }
+    //
+    @GetMapping("/date/{justDate}")
+    public List<Event> getAllByDay(@PathVariable String justDate){
+
+        return  repository.getByDay(justDate);
     }
 
     @PostMapping("")
