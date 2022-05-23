@@ -18,23 +18,20 @@ const GoSearch = () => appRouter.push({ name: "Home" });
             class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
           >
             <li class="text-xl">
-              <router-link :to="{ name: 'Home' }">Home | </router-link>
+              <button @click="$router.push('/')" class="btnall btn1">Home </button>
             </li>
             <li class="text-xl">
-              <router-link :to="{ name: 'Schedules' }"
-                >Schedules |
-              </router-link>
+              <button @click="$router.push('Schedules')" class="btnall btn1">Schedules </button>
             </li>
             <li class="text-xl">
-              <router-link :to="{ name: 'EventCategory' }"
-                >Event category |
-              </router-link>
+              <button @click="$router.push('EventCategory')" class="btnall btn1">Event Categories </button>
             </li>
             <li class="text-xl">
-              <router-link :to="{ name: 'Booking' }">Booking | </router-link>
+              <button @click="$router.push('Booking')" class="btnall btn1">Booking</button>
             </li>
             <li class="text-xl">
-              <router-link :to="{ name: 'About' }">About us</router-link>
+              <button @click="$router.push('About')" class="btnall btn1">About us</button>
+              <!-- <router-link :to="{ name: 'About' }" class="btnall btn1">About us</router-link> -->
             </li>
           </ul>
         </div>
@@ -43,7 +40,7 @@ const GoSearch = () => appRouter.push({ name: "Home" });
   </div>
 </template>
 
-<style>
+<style scoped>
 body {
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #e5e7e5;
@@ -58,4 +55,87 @@ body {
   color: #2c3e50;
   Color: #E5E7E5;
 } */
+
+.custom-btn {
+  width: 130px;
+  padding: 5px 25px;
+  border: 2px #5C7F67;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.btn-10 {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-10:after {
+  position: absolute;
+  content: " ";
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  -webkit-transform: scale(.1);
+  transform: scale(.1);
+}
+.btn-10:hover {
+  color: #fff;
+}
+.btn-10:hover:after {
+  background: #5C7F67;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+p:hover input {
+text-decoration:underline;
+}
+
+.btnall {
+  position: relative;
+  background: #e9e7e7;
+  color: #5C7F67;
+  width: 170px;
+  height: 50px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  
+
+  box-shadow:
+  0px 0.7px 4px rgba(0, 0, 0, 0.045),
+  0px 1.9px 11.1px rgba(0, 0, 0, 0.065),
+  0px 4.5px 26.8px rgba(0, 0, 0, 0.085),
+  0px 15px 89px rgba(0, 0, 0, 0.13)
+;
+}
+ 
+.btnall::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.175rem;
+  background: #5C7F67;
+  left: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.btn1::after{
+  transform: scale(0, 1);
+  transition: transform 0.3s ease;
+}
+
+.btn1:hover::after {
+  transform: scale(1, 1);
+}
+
 </style>
+

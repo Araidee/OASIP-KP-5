@@ -103,7 +103,7 @@ import jubby from "../components/icons/jubby.vue";
   </div>
 </template>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;

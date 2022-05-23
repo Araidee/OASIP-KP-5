@@ -44,7 +44,7 @@ function emailValidate() {
 
 <template>
   <div>
-    <div class="card-compact w-3/4 bg-base-100 shadow-xl">
+    <div class="card-compact w-3/4 bg-base-100 shadow-xl position1">
       <div class="card-body items-center">
         <h1 class="text-2xl font-bold card-title">Booking</h1>
       </div>
@@ -149,4 +149,8 @@ function emailValidate() {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.position1{
+   position: relative;
+   left: 15%;
+ }</style>
