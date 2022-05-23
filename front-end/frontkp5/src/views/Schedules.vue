@@ -2,31 +2,31 @@
 import { ref, onBeforeMount, computed } from "vue";
 import EventList from "../components/EventList.vue";
 const events = ref([]);
+const categoryIdTemp = ref('')
 const eventCategories = ref([]);
-const eventsByCategoryId = ref([]);
+// const eventsByCategoryId = ref([]);
 onBeforeMount(async () => {
   await getEvents();
   await getEventCategories();
 });
-
 //GET
 const getEvents = async () => {
-  const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
-  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  // const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
+  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventsByCategoryId = async (id) => {
-  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
-  // const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`);
+  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
+  const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`);
   if (res.status === 200) {
-    eventsByCategoryId.value = await res.json();
+    events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventCategories = async () => {
-  const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  //  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")
+  // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
+   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")
   if (res.status === 200) {
     eventCategories.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -36,10 +36,10 @@ const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false);
   confirmDelete.value = confirm(`Are you sure to delete this event?`);
   if (confirmDelete.value) {
-    const res = await fetch(
-      `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
-      // const res = await fetch(
-      //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
+    // const res = await fetch(
+    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
+      const res = await fetch(
+        `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
       {
         method: "DELETE",
       }
@@ -53,10 +53,10 @@ const removeEvent = async (removeEventId) => {
 };
 //PUT
 const editEvent = async (editingEvent) => {
-  const res = await fetch(
-    `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
-    // const res = await fetch(
-    //   `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
+  // const res = await fetch(
+  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
+    const res = await fetch(
+      `http://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
     {
       method: "PUT",
       headers: {
@@ -103,14 +103,15 @@ const editEvent = async (editingEvent) => {
         <span>Filter by :
         <select
           class="select select-success w-full max-w-xs"
-          v-model="eventCategory"
+          v-model="categoryIdTemp"
           required
-          
+          @change="categoryIdTemp=='all'? getEvents():getEventsByCategoryId(categoryIdTemp)"
         >
           <option disabled selected>-- Choose to filter --</option>
+          <option value="all">All</option>
           <option
             v-for="eventCategory in eventCategories"
-            :value="{id: eventCategory.id}"
+            :value="eventCategory.id"
           >
             {{ eventCategory.eventCategoryName }}
           </option>
