@@ -132,7 +132,7 @@ function emailValidate() {
         </div>
         <div class-="card-actions justify-end">
           <button
-            class="btn btn-primary btn-success"
+            class="btn btn-primary btn-success "
             @click="
               emailValidate()
                 ? $emit('addEvent', {

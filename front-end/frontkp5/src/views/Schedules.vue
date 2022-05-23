@@ -116,7 +116,7 @@ const editEvent = async (editingEvent) => {
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
         <div class="card-body">
-        <span>Filter by :
+        <span class="button-space">Filter by :
         <select
           class="select select-success w-full max-w-xs"
           v-model="categoryIdTemp"
@@ -133,13 +133,14 @@ const editEvent = async (editingEvent) => {
           </option>
         </select>
         <button
-          class="btn btn-primary"
-          @click="getPastEvents(now)"
-        >Past Event</button>
-        <button
-          class="btn btn-primary"
+          class="btn btn-success right "
           @click="getUpcomingEvents(now)"
         >Upcoming Event</button>
+        <button
+          class="btn btn-success right "
+          @click="getPastEvents(now)"
+        >Past Event</button>
+        
         </span>
       </div>
         <EventList :events="events" @delete="removeEvent" @edit="editEvent" />
@@ -154,4 +155,11 @@ const editEvent = async (editingEvent) => {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+ .right{
+  float: right;
+}
+.button-space>button:not(:last-child) {
+ margin-left: 10px;
+}
+</style>
