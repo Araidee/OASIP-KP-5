@@ -3,6 +3,7 @@ import { ref, onBeforeMount, computed } from "vue";
 import EventList from "../components/EventList.vue";
 const events = ref([]);
 const eventCategories = ref([]);
+const eventsByCategoryId = ref([]);
 onBeforeMount(async () => {
   await getEvents();
   await getEventCategories();
@@ -14,6 +15,13 @@ const getEvents = async () => {
   // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   if (res.status === 200) {
     events.value = await res.json();
+  } else console.log("Error, cannot get data");
+};
+const getEventsByCategoryId = async (id) => {
+  const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
+  // const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`);
+  if (res.status === 200) {
+    eventsByCategoryId.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventCategories = async () => {
