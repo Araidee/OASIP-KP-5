@@ -14,19 +14,20 @@ services:
       - frontend
       - backend
   frontend:
-    image: frontend:frontend
+    image: frontend
     container_name: frontend
     build: ./backend
     restart: always
+    volumes:
+      - ~/front-end/frontkp5/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 3000:80
   backend:
-    image: backend:backend
+    image: backend
     build: ./front-end/frontkp5
+    container_name: backend
     ports:
       - 8080:8080
-    volumes:
-      - ./:/app
     environment:
       MYSQL_ROOT_PASSWORD: baslnwza007
       MYSQL_DATABASE: dbkp5
@@ -35,7 +36,8 @@ services:
   mysql:
     image: mysql:8.0
     volumes:
-      - todo-mysql-data:/var/lib/mysql
+      - ./db/script:/docker-entrypoint-initdb.d/
+      - ./db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: baslnwza007
       MYSQL_DATABASE: dbkp5
