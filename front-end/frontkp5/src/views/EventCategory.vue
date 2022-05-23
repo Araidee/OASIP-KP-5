@@ -16,9 +16,9 @@ const getEventCategories = async () => {
 //PUT
 const editEventCategory = async (editingEventCategory) => {
   // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/eventCategories/${editingEventCategory.eventCategoryId}`,
+  //   `http://202.44.9.103:8080/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
     const res = await fetch(
-      `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.eventCategoryId}`,
+      `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
     {
       method: "PUT",
       headers: {
@@ -35,7 +35,7 @@ const editEventCategory = async (editingEventCategory) => {
   if (res.status === 200) {
     const moddedEventCategory = await res.json();
     eventCategories.value = eventCategories.value.map((eventCategory) =>
-      eventCategory.id === moddedEventCategory.id
+      eventCategory.categoryId === moddedEventCategory.categoryId
         ? {
             ...eventCategory,
             eventCategoryName: moddedEventCategory.eventCategoryName,
