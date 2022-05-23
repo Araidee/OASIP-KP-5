@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -17,7 +18,8 @@ public class EventCategory {
     private String eventCategoryName;
     @Column(name = "eventCategoryDescription", length = 500)
     private String eventCategoryDescription;
-
+    @Min(value=1, message = "out of range")
+    @Max(value=480 , message = "out of range")
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
 

@@ -26,28 +26,46 @@ public class EventCategoriesController {
     }
     @GetMapping("")
     public List<EventCategory> getEventCategories(){
-        return repository.findAll(Sort.by(Sort.Direction.ASC,("id")));
+        return repository.findAll(Sort.by(Sort.Direction.DESC,("id")));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public EventCategoryDTO getEventDTOById(@PathVariable Integer id){
         return this.eventCategoryService.getEventCategoryDTO(id);
     }
-    @PatchMapping("/{id}")
-    public ResponseEntity<EventCategory> update(@Valid @PathVariable EventCategoryDTO updateEventCategory, @PathVariable Integer id){
-//        EventCategory eventCategory = repository.findById(id).map(o->mapEventCategory(o,updateEventCategory))
-//                .orElseGet(()->
-//                {
-//                    updateEventCategory.setId(id);
-//                    return updateEventCategory;
-//                });
-//        return repository.saveAndFlush(eventCategory);
-        EventCategory eventCategory= repository.findEventCategoryById(id);
-        eventCategory.setEventDuration(updateEventCategory.getEventDuration());
-        eventCategory.setEventCategoryDescription(updateEventCategory.getEventCategoryDescription());
-        eventCategory.setEventCategoryName(updateEventCategory.getEventCategoryName());
-          repository.saveAndFlush(eventCategory);
-        return ResponseEntity.ok(eventCategory);
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<EventCategory> update(@Valid @PathVariable EventCategoryDTO eventCategory, @PathVariable Integer id){
+////        EventCategory eventCategory = repository.findById(id).map(o->mapEventCategory(o,updateEventCategory))
+////                .orElseGet(()->
+////                {
+////                    updateEventCategory.setId(id);
+////                    return updateEventCategory;
+////                });
+////        return repository.saveAndFlush(eventCategory);
+////        EventCategory eventCategory= repository.findEventCategoryById(id);
+////        eventCategory.setEventDuration(updateEventCategory.getEventDuration());
+////        eventCategory.setEventCategoryDescription(updateEventCategory.getEventCategoryDescription());
+////        eventCategory.setEventCategoryName(updateEventCategory.getEventCategoryName());
+////          repository.saveAndFlush(eventCategory);
+////        return ResponseEntity.ok(eventCategory);
+//    }
+@PutMapping("/{id}")
+public EventCategory update(@RequestBody @Valid EventCategory updateEventCategory, @PathVariable Integer id){
+    EventCategory eventCategory = repository.findById(id).map(o->mapEventCategory(o,updateEventCategory))
+            .orElseGet(()->
+            {
+                updateEventCategory.setId(id);
+                return updateEventCategory;
+            });
+    return repository.saveAndFlush(eventCategory);
+}
+
+
+    private EventCategory mapEventCategory(EventCategory existingEventCategory, EventCategory updateEventCategory) {
+        existingEventCategory.setEventDuration(updateEventCategory.getEventDuration());
+        existingEventCategory.setEventCategoryDescription(updateEventCategory.getEventCategoryDescription());
+        existingEventCategory.setEventCategoryName(updateEventCategory.getEventCategoryName());
+        return existingEventCategory;
     }
 
 }

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant;
+
 @Service
 public class EventCategoryService {
     @Autowired
@@ -24,4 +27,12 @@ public class EventCategoryService {
         EventCategory eventCategory = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Events Category"));
         return this.modelMapper.map(eventCategory, EventCategoryDTO.class);
     }
+    public boolean instantTime(Instant eventStartTime){
+        long milliStartTime = eventStartTime.toEpochMilli(); //แปลงเป็นmilli second
+        long realTime = Instant.now().toEpochMilli();
+        if (milliStartTime > realTime){
+            return true;
+        }return false;
+    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.modelmapper.ModelMapper;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class EventService {
@@ -45,6 +46,8 @@ public class EventService {
         Event event = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Schedule Events"));
         return this.modelMapper.map(event, EventDTO.class);
     }
+
+
     public Event save(EventDTO newEvent) {
             newEvent.setEventDuration(eventCategoryRepository.getById(newEvent.getEventCategory().getId()).getEventDuration());
         Event e = modelMapper.map(newEvent,Event.class);
@@ -56,5 +59,8 @@ public class EventService {
             if (milliStartTime > realTime){
                 return true;
             }return false;
+    }
+    public List<Event> getEventByCategoryId(Integer categoryId){
+            return repository.findEventByEventCategory_IdOrderByEventStartTimeDesc(categoryId);
     }
 }

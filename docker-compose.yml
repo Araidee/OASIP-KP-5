@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  proxy:
+    image: nginx:1.21.6
+    build: ./proxy
+    container_name: proxy-dbkp5
+    ports:
+      - 80:80
+    restart: always  
+    volumes:
+      - ~/proxy/nginx.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - frontend
+      - backend
+  frontend:
+    image: frontend:frontend
+    container_name: frontend
+    build: ./backend
+    restart: always
+    ports:
+      - 3000:80
+  backend:
+    image: backend:backend
+    build: ./front-end/frontkp5
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_ROOT_PASSWORD: baslnwza007
+      MYSQL_DATABASE: dbkp5
+    links:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: baslnwza007
+      MYSQL_DATABASE: dbkp5

@@ -3,11 +3,11 @@ package com.example.backend221.controllers;
 import com.example.backend221.dtos.EventDTO;
 import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventRepository;
+import com.example.backend221.services.EventCategoryService;
 import com.example.backend221.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,10 +22,14 @@ import java.util.List;
 public class EventController implements WebMvcConfigurer {
     @Autowired
     private EventRepository repository;
+    @Autowired
     private final EventService eventService;
     @Autowired
-    public EventController(EventRepository repository, EventService eventService) {this.repository = repository;
+    private final EventCategoryService eventCategoryService;
+    @Autowired
+    public EventController(EventRepository repository, EventService eventService,EventCategoryService eventCategoryService) {this.repository = repository;
         this.eventService = eventService;
+        this.eventCategoryService = eventCategoryService;
     }
 
     @GetMapping("")
@@ -40,9 +44,36 @@ public class EventController implements WebMvcConfigurer {
         return this.eventService.getEventDTO(id);
     }
 
+
+//    @GetMapping("/category/{categoryId}")
+//    public Page<Event> getEvents(@PathVariable Integer categoryId){
+//        return (Page<Event>) eventCategoryService.findEventCategoryById(categoryId);
+//
+//
+//    }
+//    @GetMapping("/category/{id}")
+//    public EventCategoryDTO getEventDTOById(@PathVariable Integer id){
+//        return eventCategoryService.getEventCategoryDTO(id);
+//    }
+    @GetMapping("/category/{categoryId}")
+    public List<Event> getEventByCategoryId(@PathVariable Integer categoryId){
+        return eventService.getEventByCategoryId(categoryId);
+    }
+
+    @GetMapping("/upcoming/{current_datetime}")
+    public List<Event> getAllFutureEvents(@PathVariable String current_datetime){
+
+        return  repository.findAllFutureEvents(current_datetime);
+    }
+    @GetMapping("/past/{current_datetime}")
+    public List<Event> getAllPastEvents(@PathVariable String current_datetime){
+
+        return  repository.getAllPastEvents(current_datetime);
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event createEvent(@Valid @RequestBody EventDTO newEvent) {
+    public Event createEvent(@RequestBody @Valid  EventDTO newEvent) {
 //        return EventService.save(newEvent)
 //        return ResponseEntity.ok("User is valid");
 
@@ -57,7 +88,7 @@ public class EventController implements WebMvcConfigurer {
     }
 
     @PutMapping("/{id}")
-    public Event update(@RequestBody Event updateEvent,@PathVariable Integer id){
+    public Event update(@RequestBody @Valid  Event updateEvent,@PathVariable Integer id){
         Event event = repository.findById(id).map(o->mapEvent(o,updateEvent))
                 .orElseGet(()->
                 {

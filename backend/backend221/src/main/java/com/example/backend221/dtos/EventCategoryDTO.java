@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @Setter
@@ -17,6 +18,7 @@ public class EventCategoryDTO {
     private String eventCategoryName;
     @Max(value = 500,message = "CategoryDescription must be lower than 500 characters")
     private String eventCategoryDescription;
-    @Size(min=1,max = 480 , message = "event duration must be between 1 to 480 minutes")
+    @Min(value=1, message = "out of range")
+    @Max(value=480 , message = "out of range")
     private Integer eventDuration;
 }
