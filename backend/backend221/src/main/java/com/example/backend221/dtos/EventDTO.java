@@ -18,6 +18,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventDTO {
+        private Integer id;
         @NotNull(message = "must not be null")
         //  @Pattern(regexp = "^\\d{10}$")
         @Email(message = "An email must be well-formed as email address")
