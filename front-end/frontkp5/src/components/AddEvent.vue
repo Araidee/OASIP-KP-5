@@ -19,6 +19,8 @@ const eventNotes = ref("");
 const eventCategory = ref({});
 const notesMax = 500
 const bookingNameMax = 100
+const successInput = 'input input-bordered input-success w-full inputwdt'
+const errorInput = 'input input-bordered input-error w-full inputwdt'
 // const eventDuration = computed((id)=> {
 
 // })
@@ -41,44 +43,45 @@ function emailValidate() {
     return false;
   }
 }
+
+
 </script>
 
 <template>
   <div>
     <div class="card-compact w-3/4 bg-base-100 shadow-xl position1">
       <div class="card-body items-center">
-        <h1 class="text-2xl font-bold card-title">Booking</h1>
+        <h1 class="text-2xl font-bold center">Booking</h1>
       </div>
-      <div class="card-body items-center">
-        Name:
+      <div class="center font-bold">
+        Name: <span style="color: red;">*</span><br>
         <input
           type="text"
           v-model="bookingName"
           placeholder="Type Name here"
-          class="input input-bordered input-success w-full max-w-xs"
+          :class="bookingName=='' ? errorInput:successInput"
           maxlength="100"
           required
         />
-        <p class="text-sm">{{bookingName.length}}/{{bookingNameMax}}</p>
+        <p class="text-sm ">{{bookingName.length}}/{{bookingNameMax}}</p>
       </div>
-      <div class="card-body items-center">
-        Email:
+      <div class="center font-weight-bold">
+        Email: <span style="color: red;">*</span><br>
         <input
           type="text"
           id="email"
           v-model="bookingEmail"
           placeholder="Type Email here"
-          class="input input-bordered input-success w-full max-w-xs"
+          :class="bookingEmail=='' ? errorInput:successInput"
           required
         /><br />
       </div>
-      <div class="card-body items-center">
-        Category:
+      <div class="center font-weight-bold ">
+        Category: <span style="color: red;">*</span><br>
         <select
-          class="select select-success w-full max-w-xs"
+          :class="Object.keys(eventCategory).length==0 ? errorInput:successInput"
           v-model="eventCategory"
-          required
-          
+          required     
         >
           <option disabled selected>-- Category --</option>
           <option
@@ -92,8 +95,8 @@ function emailValidate() {
           </option>
         </select>
       </div>
-      <div class="card-body items-center">
-        <label for="appt">Select a time:</label>
+      <div class="center ">
+        <label for="appt">Select a time: </label><span style="color: red;">*</span><br>
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
         <input
           class="badge badge-green badge-outline"
@@ -115,15 +118,16 @@ function emailValidate() {
     <option disabled selected>Duration:</option>
     </select><br>
     </div> -->
-        <div class="card-body items-center">
+        <div class="inputwdt">
           Notes:
-          <input
+          <!-- <input
             type="text"
             placeholder="Note here... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
             v-model="eventNotes"
             maxlength="500"
-          />
+          /> -->
+          <textarea class="textarea textarea-success textareacss" placeholder="Note here... (Optional)" v-model="eventNotes" maxlength="500"></textarea>
           <p class="text-sm">{{eventNotes.length}}/{{notesMax}}</p>
         </div>
         <div class-="card-actions justify-end">
@@ -149,10 +153,30 @@ function emailValidate() {
       </div>
     </div>
   </div>
+  
 </template>
 
 <style scoped>
 .position1{
    position: relative;
    left: 15%;
- }</style>
+}
+
+.textareacss{
+  width: 500px;
+  height: 180px;
+  
+}
+
+.inputwdt {
+  width: 500px;
+}
+
+.center {
+  margin: auto;
+  width: 48%;
+  padding: 10px;
+  font-weight: bold;
+}
+
+ </style>
