@@ -58,7 +58,7 @@ const editEventCategory = async (editingEventCategory) => {
       <div
         class="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <h1 class="text-3xl font-bold">Event Category</h1>
+        <h1 class="text-3xl font-bold">Event Categories</h1>
       </div>
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
