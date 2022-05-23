@@ -15,12 +15,12 @@ const editEventCategoryName = ref("");
 const editEventCategoryDescription = ref("");
 const editEventCategoryDuration = ref("");
 const getEventCategoryById = async (id) => {
-  // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
-  // );
   const res = await fetch(
-    `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
+    `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
   );
+  // const res = await fetch(
+  //   `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
+  // );
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
     editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName;
