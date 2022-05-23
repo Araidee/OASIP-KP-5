@@ -11,8 +11,7 @@ const props = defineProps({
     default: [],
   },
 });
-const currentDate = ref(new Date(Date.now()).toISOString());
-console.log(currentDate);
+
 const bookingName = ref("");
 const bookingEmail = ref("");
 const eventStartTime = ref("");
@@ -45,7 +44,7 @@ function emailValidate() {
 
 <template>
   <div>
-    <div class="card-compact w-3/4 bg-base-100 shadow-xl">
+    <div class="card-compact w-3/4 bg-base-100 shadow-xl position1">
       <div class="card-body items-center">
         <h1 class="text-2xl font-bold card-title">Booking</h1>
       </div>
@@ -78,6 +77,7 @@ function emailValidate() {
           class="select select-success w-full max-w-xs"
           v-model="eventCategory"
           required
+          
         >
           <option disabled selected>-- Category --</option>
           <option
@@ -149,4 +149,8 @@ function emailValidate() {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.position1{
+   position: relative;
+   left: 15%;
+ }</style>

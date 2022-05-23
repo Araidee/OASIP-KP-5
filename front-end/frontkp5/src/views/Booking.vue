@@ -25,7 +25,8 @@ const getEventCategories = async () => {
 };
 //POST
 const createNewEvent = async (newEvent) => {
-  const res = await fetch("http://202.44.9.103:8080/kp5/api/events", {
+  if(new Date(newEvent.eventStartTime).getTime() > new Date(Date.now()).getTime()){
+    const res = await fetch("http://202.44.9.103:8080/kp5/api/events", {
     // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events", {
     method: "POST",
     headers: {
@@ -39,6 +40,7 @@ const createNewEvent = async (newEvent) => {
     alert('Booked!')
     console.log("created successfully");
   } else console.log("error, cannot create");
+  }else alert('Time is not future time')
 };
 </script>
 

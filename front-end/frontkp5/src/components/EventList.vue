@@ -6,6 +6,10 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+    eventCategories: {
+    type: Array,
+    default: [],
+  },
 });
 
 const myEvent = computed(() => {
