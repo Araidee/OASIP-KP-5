@@ -109,7 +109,7 @@ text-decoration:underline;
   position: absolute;
   width: 100%;
   height: 0.175rem;
-  background: #5C7F67;
+  background: white;
   left: 0;
   bottom: 0;
   cursor: pointer;
