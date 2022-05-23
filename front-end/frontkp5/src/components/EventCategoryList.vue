@@ -110,7 +110,7 @@ const getEventCategoryById = async (id) => {
               class="btn"
               @click="
                 $emit('editCategory', {
-                  eventCategoryId: eventCategoryDetails.eventCategoryId,
+                  categoryId: eventCategoryDetails.categoryId,
                   eventCategoryName: editEventCategoryName,
                   eventCategoryDescription: editEventCategoryDescription,
                   eventDuration: editEventCategoryDuration,

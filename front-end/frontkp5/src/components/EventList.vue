@@ -46,6 +46,7 @@ const getEventById = async (id) => {
   );
   if (res.status === 200) {
     EventDetails.value = await res.json();
+    console.log(EventDetails.value)
     editEventNotes.value = EventDetails.value.eventNotes;
     fetchEventCategoryName.value =
       EventDetails.value.eventCategory.eventCategoryName;
