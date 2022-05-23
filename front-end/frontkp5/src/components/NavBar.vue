@@ -14,26 +14,13 @@ const GoSearch = () => appRouter.push({ name: "Home" });
           <Araideeicon />
         </div>
         <div class="w-full order-last md:block md:w-auto" id="mobile-menu">
-          <ul
-            class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
-          >
-            <li class="text-xl">
-              <button @click="$router.push('/')" class="btnall btn1">Home </button>
-            </li>
-            <li class="text-xl">
-              <button @click="$router.push('Schedules')" class="btnall btn1">Schedules </button>
-            </li>
-            <li class="text-xl">
-              <button @click="$router.push('EventCategory')" class="btnall btn1">Event Categories </button>
-            </li>
-            <li class="text-xl">
-              <button @click="$router.push('Booking')" class="btnall btn1">Booking</button>
-            </li>
-            <li class="text-xl">
-              <button @click="$router.push('About')" class="btnall btn1">About us</button>
-              <!-- <router-link :to="{ name: 'About' }" class="btnall btn1">About us</router-link> -->
-            </li>
-          </ul>
+          <div class="btn-group">
+  <button @click="$router.push('/')" class="btn btn-active btnall btn1">Home</button>
+  <button @click="$router.push('Schedules')" class="btn btn-active btnall btn1">Schedules</button>
+  <button @click="$router.push('EventCategory')" class="btn btn-active btnall btn1">Event Categories </button>
+  <button @click="$router.push('Booking')" class="btn btn-active btnall btn1">Booking </button>
+  <button @click="$router.push('About')" class="btn btn-active btnall btn1">About us </button>
+</div>
         </div>
       </div>
     </nav>
