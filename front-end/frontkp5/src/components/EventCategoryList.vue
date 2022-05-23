@@ -7,6 +7,7 @@ const props = defineProps({
     default: [],
   },
 });
+const descriptionMax = 500
 const eventCategoryDetails = ref({});
 const editEventCategoryName = ref("");
 const editEventCategoryDescription = ref("");
@@ -98,7 +99,8 @@ const getEventCategoryById = async (id) => {
               v-model="editEventCategoryDescription"
               placeholder="Description..."
               class="input input-bordered input-success w-full max-w-xs"
-            /><br />
+            />
+            <p class="text-sm">{{editEventCategoryDescription.length}}/{{descriptionMax}}</p>
           </div>
           <div>
             <label

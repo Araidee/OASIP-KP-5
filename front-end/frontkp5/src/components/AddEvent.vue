@@ -17,7 +17,8 @@ const bookingEmail = ref("");
 const eventStartTime = ref("");
 const eventNotes = ref("");
 const eventCategory = ref({});
-
+const notesMax = 500
+const bookingNameMax = 100
 // const eventDuration = computed((id)=> {
 
 // })
@@ -58,7 +59,7 @@ function emailValidate() {
           maxlength="100"
           required
         />
-        <small></small>
+        <p class="text-sm">{{bookingName.length}}/{{bookingNameMax}}</p>
       </div>
       <div class="card-body items-center">
         Email:
@@ -122,7 +123,8 @@ function emailValidate() {
             class="input input-bordered input-success w-full max-w-xs"
             v-model="eventNotes"
             maxlength="500"
-          /><br />
+          />
+          <p class="text-sm">{{eventNotes.length}}/{{notesMax}}</p>
         </div>
         <div class-="card-actions justify-end">
           <button

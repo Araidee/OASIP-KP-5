@@ -36,6 +36,8 @@ const clearInput = () => {
   editEventNotes.value = "";
 };
 
+const notesMax = 500
+
 const EventDetails = ref({});
 const getEventById = async (id) => {
   const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
@@ -123,7 +125,6 @@ const getEventById = async (id) => {
         <p class="py-4">Name: {{ EventDetails.bookingName }}</p>
         <p class="py-4">Email: {{ EventDetails.bookingEmail }}</p>
         <p class="py-4">Category: {{ fetchEventCategoryName }}</p>
-        <!-- เกมาก -->
         <p class="py-4">
           Datetime:
           {{
@@ -176,7 +177,8 @@ const getEventById = async (id) => {
             v-model="editEventNotes"
             placeholder="Note here... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
-          /><br />
+          />
+          <p class="text-sm">{{editEventNotes.length}}/{{notesMax}}</p>
         </div>
         <div>
           <label
