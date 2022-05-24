@@ -104,7 +104,7 @@ function emailValidate() {
           id="meeting-time"
           name="meeting-time"
           v-model="eventStartTime"
-          min="2022-05-12T17:05"
+          min="2022-05-24T13:00"
           max="2022-12-31T00:00"
           required
         /><br />
@@ -132,7 +132,7 @@ function emailValidate() {
         </div>
         <div class-="card-actions justify-end">
           <button
-            class="btn btn-primary btn-success"
+            class="btn btn-primary btn-success "
             @click="
               emailValidate()
                 ? $emit('addEvent', {
