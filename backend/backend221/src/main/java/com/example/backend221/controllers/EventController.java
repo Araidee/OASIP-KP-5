@@ -54,7 +54,7 @@ public class EventController implements WebMvcConfigurer {
 //    public EventCategoryDTO getEventDTOById(@PathVariable Integer id){
 //        return eventCategoryService.getEventCategoryDTO(id);
 //    }
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     public List<Event> getEventByCategoryId(@PathVariable Integer categoryId){
         return eventService.getEventByCategoryId(categoryId);
     }
