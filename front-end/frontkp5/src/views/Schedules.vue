@@ -28,14 +28,14 @@ const getEventsByCategoryId = async (id) => {
 };
 const getPastEvents = async (isotime) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/past/${isotime}`);
-   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events/past/${isotime}")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getUpcomingEvents = async (isotime) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/upcoming/${isotime}`);
-   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+   const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events/upcoming/${isotime}")
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
