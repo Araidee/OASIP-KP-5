@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -86,7 +85,15 @@ public class EventController implements WebMvcConfigurer {
 
         return eventService.save(newEvent);
     }
-
+//    @PostMapping("")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Event createEvent(@RequestBody @Valid  EventDTO newEvent) {
+////        return EventService.save(newEvent)
+////        return ResponseEntity.ok("User is valid");
+//        if(eventService.isOverlap(newEvent)== true){
+//            return eventService.save(newEvent);
+//        }throw new RuntimeException(failed);
+//    }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
         repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,id+"Event does not exist"));

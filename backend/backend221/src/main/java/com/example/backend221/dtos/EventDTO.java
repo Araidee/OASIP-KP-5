@@ -26,6 +26,7 @@ public class EventDTO {
         @NotNull(message = "must not be null")
         @Size(min=1,max = 100 , message = "Booking name must be between 1 to 100 characters")
         private String bookingName;
+        @Size(max = 500 , message = "Booking name must lower than 500 characters")
         private String eventNotes;
         @Future(message = "eventStartTime must be future")
         @NotNull(message = "must not be null")

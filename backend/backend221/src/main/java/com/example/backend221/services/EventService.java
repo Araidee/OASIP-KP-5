@@ -63,4 +63,30 @@ public class EventService {
     public List<Event> getEventByCategoryId(Integer categoryId){
             return repository.findEventByEventCategory_IdOrderByEventStartTimeDesc(categoryId);
     }
+//    private List <Event> getAllByEventCategory_IdAndAndEventStartTime(Integer categoryId, LocalDateTime present,LocalDateTime tomorrow){
+//            return repository.findAllByEventCategory_IdAndAndEventStartTime(categoryId,present,tomorrow);
+//     }
+
+//     public boolean isOverlap(EventDTO eventDTO){
+//            boolean isOverlap = false;
+//            int eventCategoryId = eventDTO.getEventCategory().getId();
+//            LocalDateTime present = LocalDateTime.from(eventDTO.getEventStartTime().minusMillis(eventDTO.getEventStartTime().getEpochSecond()).minusMillis(eventDTO.getEventStartTime().getEpochSecond()));
+//            LocalDateTime tomorrow = present.plusDays(2);
+//            List<Event> check = getAllByEventCategory_IdAndAndEventStartTime(eventCategoryId,present,tomorrow);
+//            if(check ==null) isOverlap = false;
+//            else{
+//                for(Event event : check){
+//                    LocalDateTime start = LocalDateTime.from(event.getEventStartTime());
+//                    LocalDateTime end = LocalDateTime.from(event.getEventStartTime().plusMillis(event.getEventDuration().longValue()));
+//                    if(eventDTO.getEventStartTime().equals(start) ||
+//                            (eventDTO.getEventStartTime().isBefore(Instant.from(end)) && eventDTO.getEventStartTime().isAfter(Instant.from(start))) ||
+//                            (eventDTO.getEventStartTime().plusMillis(eventDTO.getEventDuration()).isBefore(Instant.from(end)) &&
+//                                    eventDTO.getEventStartTime().plusMillis(event.getEventDuration()).isAfter(Instant.from(start)))
+//                    ) {
+//                        isOverlap = true;
+//                        System.out.println(event);
+//                    }
+//                }
+//            } return isOverlap;
+//        }
 }
