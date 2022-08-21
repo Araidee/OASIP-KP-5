@@ -47,7 +47,7 @@ public class EventService {
         return this.modelMapper.map(event, EventDTO.class);
     }
 
-
+//edit
     public Event save(EventDTO newEvent) {
             newEvent.setEventDuration(eventCategoryRepository.getById(newEvent.getEventCategory().getId()).getEventDuration());
         Event e = modelMapper.map(newEvent,Event.class);
