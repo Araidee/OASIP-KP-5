@@ -11,7 +11,6 @@ const appRouter = useRouter()
              Welcome to <br> OASIP
         </h1></button>
         </div>
-        
         <h3 class="text-lg"> Online Appointment Scheduling System for Integrated Project Clinics</h3><br>
         <div class="button-space">
         <button class="btn btn-primary" @click="appRouter.push({ path: '/booking', replace: true})">Booking Now!</button>
