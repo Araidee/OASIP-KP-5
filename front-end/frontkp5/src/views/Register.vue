@@ -8,8 +8,8 @@ onBeforeMount(async () => {
 });
 //GET
 const getUsers = async () => {
-  const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
-  // const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  // const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
+  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/events")
   // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`)
   if (res.status === 200) {
     events.value = await res.json();
@@ -18,8 +18,8 @@ const getUsers = async () => {
 
 //POST
 const createNewUser = async (newUser) => {
-    const res = await fetch("http://202.44.9.103:8080/kp5/api/users", {
-    //  const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`, {
+    // const res = await fetch("http://202.44.9.103:8080/kp5/api/users", {
+     const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/events`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

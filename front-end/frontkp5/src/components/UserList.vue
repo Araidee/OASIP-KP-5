@@ -29,8 +29,8 @@ const editRole = ref("");
 const nameMax = 100;
 const UserDetails = ref({});
 const getUserById = async (id) => {
-  const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
-  // const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);
+  // const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
+  const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);
   if (res.status === 200) {
     UserDetails.value = await res.json();
     console.log(UserDetails.value)
@@ -63,14 +63,24 @@ const getUserById = async (id) => {
                     class="btn modal-button"
                     @click="getUserById(user.id)"
                     >Details</label>
-                   <button
+                </div>
+              </div>
+              <div class="px-4">
+                  <label
+                    for="edit-modal"
+                    class="btn btn-ghost btn-circle"
+                    @click="getUserById(user.id)"
+                  >
+                    <img src="/edit.svg" class="h-8 w-8" />
+                  </label>
+
+                  <button
                     class="btn btn-ghost btn-circle"
                     @click="$emit('delete', user.id)"
                   >
                     <img src="/delete.svg" class="h-8 w-8" />
-                  </button> 
+                  </button>
                 </div>
-              </div>
             </td>
           </tr>
         </tbody>
@@ -84,8 +94,32 @@ const getUserById = async (id) => {
         <p class="py-4">Name: {{ UserDetails.name }}</p>
         <p class="py-4">Email: {{ UserDetails.email }}</p>
         <p class="py-4">Role: {{ UserDetails.role }}</p>
-        <p class="py-4">Created On: {{ UserDetails.createdOn }}</p>
-        <p class="py-4">Updated On: {{ UserDetails.updatedOn }}</p>
+        <p class="py-4">
+          Created On:
+          {{
+            new Date(UserDetails.createdOn).toLocaleDateString("th-TH")
+          }},
+          {{
+            new Date(UserDetails.createdOn).toLocaleTimeString("en-TH", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })
+          }}
+        </p>
+        <p class="py-4">
+          Updated On:
+          {{
+            new Date(UserDetails.updatedOn).toLocaleDateString("th-TH")
+          }},
+          {{
+            new Date(UserDetails.updatedOn).toLocaleTimeString("en-TH", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })
+          }}
+        </p>
         <div class="modal-action">
           <label for="detail-modal" class="btn">Yay!</label>
         </div>
