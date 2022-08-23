@@ -33,6 +33,11 @@ public class UserController {
         return repository.findAll(Sort.by(Sort.Direction.ASC,"name"));
     }
 
+    GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable Integer id){
+        return this.UserService.getUserDTO(id);
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Valid UserDTO newUser){
