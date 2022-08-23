@@ -33,7 +33,7 @@ public class UserController {
         return repository.findAll(Sort.by(Sort.Direction.ASC,"name"));
     }
 
-    GetMapping("/{id}")
+    @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable Integer id){
         return this.UserService.getUserDTO(id);
     }
