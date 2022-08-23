@@ -1,6 +1,7 @@
 package com.example.backend221.controllers;
 
 import com.example.backend221.dtos.EventDTO;
+import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
 import com.example.backend221.entities.Event;
 import com.example.backend221.entities.User;
@@ -34,8 +35,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Integer id){
-        return this.userService.getUserDTO(id);
+    public UserAllDto getUserById(@PathVariable Integer id){
+        return this.userService.getUserAllDTO(id);
     }
 
     @PostMapping("")

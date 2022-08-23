@@ -2,6 +2,7 @@ package com.example.backend221.services;
 
 import com.example.backend221.dtos.EventDTO;
 import com.example.backend221.dtos.SimpleEventDTO;
+import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
 import com.example.backend221.entities.Event;
 import com.example.backend221.entities.User;
@@ -27,6 +28,10 @@ public class UserService {
     public UserDTO getUserDTO(Integer id){
         User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No Users"));
         return this.modelMapper.map(user,UserDTO.class);
+    }
+    public UserAllDto getUserAllDTO(Integer id){
+        User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No Users"));
+        return this.modelMapper.map(user, UserAllDto.class);
     }
     private UserDTO convertUserDTO(User user){
         UserDTO userDTO = new UserDTO();
