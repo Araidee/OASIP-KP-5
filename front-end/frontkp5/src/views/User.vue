@@ -15,7 +15,26 @@ const getUsers = async () => {
     users.value = await res.json();
   } else console.log("Error, cannot get data");
 };
-
+//DELETE
+const removeUser = async (removeUserId) => {
+  let confirmDelete = ref(false);
+  confirmDelete.value = confirm(`Are you sure to delete this user?`);
+  if (confirmDelete.value) {
+    // const res = await fetch(
+    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
+       const res = await fetch(
+       `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (res.status === 200) {
+      users.value = users.value.filter((user) => user.id !== removeUserId);
+      alert('User removed!')
+      console.log("deleted successfullly");
+    } else console.log("error, cannot delete");
+  } else console.log("Delete was canceled");
+};
 </script>
 
 <template>
@@ -31,7 +50,7 @@ const getUsers = async () => {
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
         <UserList
-          :users="users"
+          :users="users" @delete="removeUser"
         />
         <div
           class="overflow-x-auto w-4/5 place-items-center"

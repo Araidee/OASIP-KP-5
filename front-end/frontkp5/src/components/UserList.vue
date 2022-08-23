@@ -125,6 +125,7 @@ const getUserById = async (id) => {
         </div>
       </div>
     </div>
+    <input type="checkbox" id="edit-modal" class="modal-toggle" />
     <div class="modal">
       <div class="modal-box">
         <label
