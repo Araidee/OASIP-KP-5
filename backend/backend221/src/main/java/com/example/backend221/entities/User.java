@@ -11,23 +11,24 @@ public class User {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100 , unique = true)
     private String name;
 
     @Column(name = "password", length = 50)
     private String password;
 
-    @Column(name = "email", nullable = false, length = 50)
+    @Column(name = "email", nullable = false, length = 50 , unique = true)
     private String email;
 
     @Lob
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private String role;
 
-    @Column(name = "createdOn", nullable = false)
+    @Column(name = "createdOn", nullable = false, insertable = false , updatable = false)
     private Instant createdOn;
 
-    @Column(name = "updatedOn", nullable = false)
+    @Column(name = "updatedOn", nullable = false, insertable = false , updatable = false)
     private Instant updatedOn;
 
     public Integer getId() {
