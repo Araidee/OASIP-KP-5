@@ -60,9 +60,9 @@ const editUser = async (editingUser) => {
       users.id === moddedUser.id
         ? {
             ...user,
-            userName: editingUser.name,
-            userEmail: editingUser.email,
-            userRole: editingUser.role
+            name: editingUser.name,
+            email: editingUser.email,
+            role: editingUser.role
           }
         : user
     );
