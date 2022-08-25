@@ -47,9 +47,9 @@ const editUser = async (editingUser) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        userName: editingUser.name,
-        userEmail: editingUser.email,
-        userRole: editingUser.role
+        name: editingUser.name,
+        email: editingUser.email,
+        role: editingUser.role
       }),
     }
   );
