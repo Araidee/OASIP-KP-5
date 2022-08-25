@@ -28,6 +28,11 @@ const editEmail = ref("");
 const editRole = ref("");
 const nameMax = 100;
 const UserDetails = ref({});
+const clearInput = () => {
+  editName.value = "";
+  editEmail.value = "";
+  editRole.value = "";
+};
 const getUserById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
   const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);

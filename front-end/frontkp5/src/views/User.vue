@@ -35,6 +35,41 @@ const removeUser = async (removeUserId) => {
     } else console.log("error, cannot delete");
   } else console.log("Delete was canceled");
 };
+//PUT
+const editUser = async (editingUser) => {
+  // const res = await fetch(
+  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
+    const res = await fetch(
+      `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name: editingUser.name,
+        email: editingUser.email,
+        role: editingUser.role
+      }),
+    }
+  );
+
+  if (res.status === 200) {
+    const moddedUser = await res.json();
+    users.value = users.value.map((user) =>
+      users.id === moddedUser.id
+        ? {
+            ...user,
+            name: editingUser.name,
+            email: editingUser.email,
+            role: editingUser.role
+          }
+        : user
+    );
+    alert('Edited!')
+    console.log("edited successfully");
+  } else console.log("error, cannot edit");
+};
 </script>
 
 <template>
@@ -50,7 +85,7 @@ const removeUser = async (removeUserId) => {
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
         <UserList
-          :users="users" @delete="removeUser"
+          :users="users" @delete="removeUser" @edit="editUser"
         />
         <div
           class="overflow-x-auto w-4/5 place-items-center"
