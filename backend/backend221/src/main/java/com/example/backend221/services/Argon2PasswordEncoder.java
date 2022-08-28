@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         private static final int PARALLELISM = 1;
 
         /*
-         * Recommended argon2 type
+         * Recommended argon2 type             Argon2id
          */
         public static final Argon2Factory.Argon2Types TYPE = Argon2Factory.Argon2Types.ARGON2i;
 

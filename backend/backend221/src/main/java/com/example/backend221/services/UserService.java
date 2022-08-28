@@ -2,6 +2,7 @@ package com.example.backend221.services;
 
 import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
+import com.example.backend221.dtos.UserVerifiedDTO;
 import com.example.backend221.entities.User;
 import com.example.backend221.repositories.UserRepository;
 import de.mkammerer.argon2.Argon2;
@@ -73,6 +74,17 @@ public class UserService {
         return existingUser;
     }
 
+    public ResponseEntity matchPassword(UserVerifiedDTO userVerified) {
+        User user = (User) repository.findByEmail(userVerified.getEmail());
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email doesn't exists");
+        }
+        Argon2 argon2 = Argon2Factory.create();
+        if(argon2.verify(user.getPassword(),userVerified.getPassword())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Password Matched");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Not Matched");
+    }
 //    private UserDTO convertEntityToDto(Event event) {
 //        UserDTO userDTO = new UserDTO();
 //        UserDTO.setId(event.getId());
