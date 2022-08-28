@@ -5,6 +5,8 @@ import com.example.backend221.dtos.SimpleEventDTO;
 import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventCategoryRepository;
 import com.example.backend221.repositories.EventRepository;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -6,6 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -14,6 +15,9 @@ import java.io.Serializable;
 public class UserDTO  {
     private Integer id;
     private String name;
+    private String password;
     private String email;
     private String role;
+    private Instant createdOn;
+    private  Instant updatedOn;
 }

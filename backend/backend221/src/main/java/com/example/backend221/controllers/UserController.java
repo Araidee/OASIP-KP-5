@@ -10,6 +10,7 @@ import com.example.backend221.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -41,11 +42,9 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody @Valid UserDTO newUser){
-//        return EventService.save(newEvent)
-//        return ResponseEntity.ok("User is valid");
+    public ResponseEntity createUser(@RequestBody @Valid UserDTO newUser){
+        return userService.createUser(newUser);
 
-        return userService.save(newUser);
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +54,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public User update(@RequestBody @Valid  User updateUser,@PathVariable Integer id){
         User user = repository.findById(id).map(o->userService.mapUser(o,updateUser))
                 .orElseGet(()->
