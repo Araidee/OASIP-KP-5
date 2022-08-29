@@ -21,7 +21,7 @@ const removeUser = async (removeUserId) => {
   confirmDelete.value = confirm(`Are you sure to delete this user?`);
   if (confirmDelete.value) {
     // const res = await fetch(
-    //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
+    //   `http://202.44.9.103:8080/kp5/api/users/${removeUserId}`,
        const res = await fetch(
        `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
       {
@@ -38,7 +38,7 @@ const removeUser = async (removeUserId) => {
 //PUT
 const editUser = async (editingUser) => {
   // const res = await fetch(
-  //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
+  //   `http://202.44.9.103:8080/kp5/api/users/${editingUser.id}`,
     const res = await fetch(
       `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
     {
