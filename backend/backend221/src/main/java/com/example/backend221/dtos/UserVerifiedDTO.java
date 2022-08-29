@@ -13,6 +13,4 @@ import java.time.Instant;
 public class UserVerifiedDTO {
         private String email;
         private String password;
-
-
 }

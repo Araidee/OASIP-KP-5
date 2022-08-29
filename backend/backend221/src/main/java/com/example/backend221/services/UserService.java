@@ -75,7 +75,7 @@ public class UserService {
     }
 
     public ResponseEntity matchPassword(UserVerifiedDTO userVerified) {
-        User user = (User) repository.findByEmail(userVerified.getEmail());
+        User user =  repository.findByEmail(userVerified.getEmail());
         if(user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email doesn't exists");
         }
