@@ -30,6 +30,8 @@ const clearInput = () => {
   name.value = "";
   email.value = "";
   role.value = "";
+  password.value = "";
+  confirmPassword.value = "";
 };
 
 function emailValidate() {
