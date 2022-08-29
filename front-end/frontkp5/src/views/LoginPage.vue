@@ -1,9 +1,9 @@
 <script setup>
     import { ref, onBeforeMount } from "vue";
-    import AddUser from "../components/AddUser.vue";
-import Login from "../components/Login.vue";
+    import Login from "../components/Login.vue";
     
     const users = ref([]);
+    const isLogin = ref(false)
     onBeforeMount(async () => {
       await getUsers();
     });
@@ -17,29 +17,37 @@ import Login from "../components/Login.vue";
       } else console.log("Error, cannot get data");
     };
     
-    // //POST
-    // const createNewUser = async (newUser) => {
-    //     // const res = await fetch("http://202.44.9.103:8080/kp5/api/users", {
-    //      const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/users`, {
-    //     method: "POST",
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(newUser),
-    //   });
-    //   if (res.status === 201) {
-    //     const addedUser = await res.json();
-    //     users.value.push(addedUser);
-    //     alert('Registered!')
-    //     console.log("registered successfully");
-    //   } else console.log("error, cannot register");
-    // };
+    //POST
+    const login = async (user) => {
+        // const res = await fetch("http://202.44.9.103:8080/kp5/api/users", {
+         const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/match`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (res.status === 200) {
+        const addedUser = await res.json();
+        isLogin = true;
+        alert("Login successfully!")
+        console.log("login successfully");
+      } else if (res.status === 404){
+        alert("Email doesn't exist")
+        console.log("email doesn't exist");
+      }else if (res.status === 401){
+        alert("Password not match")
+        console.log("password not match");
+      }
+      console.log("error, something went wrong");
+    };
     </script>
     
     <template>
       <div>
         <Login
-          :users="users"/>
-          <!-- @login="login" -->
+          :users="users"
+          @login="login"
+          />
       </div>
     </template>
