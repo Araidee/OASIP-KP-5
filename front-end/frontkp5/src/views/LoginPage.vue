@@ -28,7 +28,6 @@
         body: JSON.stringify(user),
       });
       if (res.status === 200) {
-        const addedUser = await res.json();
         isLogin = true;
         alert("Login successfully!")
         console.log("login successfully");

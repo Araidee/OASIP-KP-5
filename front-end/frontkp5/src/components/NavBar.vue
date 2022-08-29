@@ -20,6 +20,7 @@ const GoSearch = () => appRouter.push({ name: "Home" });
   <button @click="$router.push('EventCategory')" class="btn btn-active btnall btn1">Event Categories </button>
   <button @click="$router.push('Booking')" class="btn btn-active btnall btn1">Booking </button>
   <button @click="$router.push('Users')" class="btn btn-active btnall btn1">Users </button>
+  <button @click="$router.push('Login')" class="btn btn-active btnall btn1">Login </button>
   <button @click="$router.push('Register')" class="btn btn-active btnall btn1">Register </button>
   <button @click="$router.push('About')" class="btn btn-active btnall btn1">About us </button>
 </div>

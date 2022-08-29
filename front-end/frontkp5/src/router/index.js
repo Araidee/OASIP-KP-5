@@ -7,6 +7,7 @@ import Booking from '../views/Booking.vue'
 import EventCategory from '../views/EventCategory.vue'
 import Users from '../views/User.vue'
 import Register from '../views/Register.vue'
+import Login from '../views/LoginPage.vue'
 
 const history = createWebHistory('/kp5/');
 const routes = [
@@ -47,7 +48,13 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register,
-        Comment: "register user"
+        Comment: "sign up"
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        Comment: "sign in"
     },
     {
         path: '/:catchNotMatchPath(.*)',
