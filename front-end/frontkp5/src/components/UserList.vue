@@ -105,7 +105,8 @@ const getUserById = async (id) => {
             new Date(UserDetails.createdOn).toLocaleDateString("th-TH")
           }},
           {{
-            new Date(UserDetails.createdOn).toLocaleTimeString("en-TH", {
+            new Date(UserDetails.createdOn).toLocaleTimeString("en-CA", {
+              timeZoneName: 'short',
               hour: "2-digit",
               minute: "2-digit",
               hour12: true,
@@ -114,14 +115,18 @@ const getUserById = async (id) => {
         </p>
         <p class="py-4">
           Updated On:
+          <!-- {{
+            new Date(UserDetails.updatedOn).toLocaleTimeString("en-CA",{timeZoneName: 'short'})
+          }} -->
           {{
             new Date(UserDetails.updatedOn).toLocaleDateString("th-TH")
           }},
           {{
-            new Date(UserDetails.updatedOn).toLocaleTimeString("en-TH", {
+            new Date(UserDetails.updatedOn).toLocaleTimeString("en-CA", {
+              timeZoneName: 'short',
               hour: "2-digit",
               minute: "2-digit",
-              hour12: true,
+              hour12: true
             })
           }}
         </p>
@@ -137,8 +142,7 @@ const getUserById = async (id) => {
           for="edit-modal"
           class="btn btn-sm btn-circle absolute right-2 top-2"
           @click="clearInput()"
-          >✕</label
-        >
+          >✕</label>
         <h3 class="font-bold text-lg">Edit UserDetails</h3>
         <div class="card-body items-center">
           Name:

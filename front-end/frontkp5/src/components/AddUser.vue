@@ -8,9 +8,17 @@ const props = defineProps({
   }
 });
 
+const roles = ({
+  Admin: "admin", 
+  Lecturer: "lecturer", 
+  Student: "student"
+})
 const name = ref("");
 const email = ref("");
 const role = ref("");
+const password = ref("")
+const confirmPassword = ref("")
+const passwordMax = 100
 const nameMax = 100
 const successInput = 'input input-bordered input-success w-full inputwdt'
 const errorInput = 'input input-bordered input-error w-full inputwdt'
@@ -22,6 +30,8 @@ const clearInput = () => {
   name.value = "";
   email.value = "";
   role.value = "";
+  password.value = "";
+  confirmPassword.value = "";
 };
 
 function emailValidate() {
@@ -67,13 +77,56 @@ function emailValidate() {
           required
         /><br />
       </div>
+      <div class="center font-bold">
+        Password: <span style="color: red;">*</span><br>
+        <input
+          type="password"
+          v-model="password"
+          placeholder="Type Password here"
+          :class="password=='' ? errorInput:successInput"
+          maxlength="100"
+          required
+        />
+        <p class="text-sm ">{{password.length}}/{{passwordMax}}</p>
+      </div>
+      <div class="center font-bold">
+        Confirm Password: <span style="color: red;">*</span><br>
+        <input
+          type="password"
+          v-model="confirmPassword"
+          placeholder="Re-Enter your Password"
+          :class="confirmPassword==''? errorInput : successInput"
+          maxlength="100"
+          required
+        />
+        <p class="text-sm ">{{confirmPassword.length}}/{{passwordMax}}</p>
+      </div>
+      <div class="center font-weight-bold">
+        Role: <span style="color: red;">*</span><br>
+        <select
+          :class="Object.keys(role).length==0 ? errorInput:successInput"
+          v-model="role"
+          required
+        >
+        <!-- selected -->
+          <option disabled>-- Role --</option>
+          <option
+            v-for="role in roles"
+            :value="role"
+          >
+            {{ role }}
+          </option>
+        </select>
+      </div>
         <div class-="card-actions justify-end">
           <button
             class="btn btn-primary btn-success "
             @click="
               emailValidate()
-                ? $emit('addUser', {
+                ? 
+                $emit('addUser', {
                     name: name,
+                    password: password,
                     email: email,
                     role: role 
                   })
