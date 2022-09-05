@@ -1,5 +1,7 @@
 package com.example.backend221.services;
 
+import com.example.backend221.component.JwtResponse;
+import com.example.backend221.component.JwtTokenUtil;
 import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
 import com.example.backend221.dtos.UserVerifiedDTO;
@@ -11,6 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +27,12 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
 
 //    @PostConstruct
@@ -32,15 +45,17 @@ public class UserService {
 //        userRepository.save(user);
 //    }
 
-    public UserDTO getUserDTO(Integer id){
-        User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No Users"));
-        return this.modelMapper.map(user,UserDTO.class);
+    public UserDTO getUserDTO(Integer id) {
+        User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Users"));
+        return this.modelMapper.map(user, UserDTO.class);
     }
-    public UserAllDto getUserAllDTO(Integer id){
-        User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No Users"));
+
+    public UserAllDto getUserAllDTO(Integer id) {
+        User user = this.repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Users"));
         return this.modelMapper.map(user, UserAllDto.class);
     }
-    private UserDTO convertUserDTO(User user){
+
+    private UserDTO convertUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
@@ -50,10 +65,12 @@ public class UserService {
 
         return userDTO;
     }
-   public String argon2Hashing(String stringToHash){
-       Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2i, 8, 16);
-       return argon2.hash(22, 65536, 1, stringToHash); //97 length of string
-   }
+
+    public String argon2Hashing(String stringToHash) {
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2i, 8, 16);
+        return argon2.hash(22, 65536, 1, stringToHash); //97 length of string
+    }
+
     private String securePassword(String password) {
         return null;
     }
@@ -61,7 +78,7 @@ public class UserService {
 
     public ResponseEntity createUser(UserDTO newUser) {
 //        newUser.setEventDuration(eventCategoryRepository.getById(newEvent.getEventCategory().getId()).getEventDuration());
-        User u = modelMapper.map(newUser,User.class);
+        User u = modelMapper.map(newUser, User.class);
         u.setPassword(argon2Hashing(u.getPassword()));
         repository.saveAndFlush(u);
         return ResponseEntity.status(HttpStatus.CREATED).body("CREATED");
@@ -74,18 +91,24 @@ public class UserService {
         return existingUser;
     }
 
-    public ResponseEntity matchPassword(UserVerifiedDTO userVerified) {
-        User user =  repository.findByEmail(userVerified.getEmail());
-        if(user == null) {
+    public ResponseEntity matchPassword(UserVerifiedDTO userVerified)  throws Exception{
+        User user = repository.findByEmail(userVerified.getEmail());
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email doesn't exists");
         }
         Argon2 argon2 = Argon2Factory.create();
-        if(argon2.verify(user.getPassword(),userVerified.getPassword())) {
-            return ResponseEntity.status(HttpStatus.OK).body("Password Matched");
+        if (argon2.verify(user.getPassword(), userVerified.getPassword())) {
+            authenticate(userVerified.getEmail(),userVerified.getPassword());
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(userVerified.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            return ResponseEntity.ok(new JwtResponse(token));
+//            return ResponseEntity.status(HttpStatus.OK).body("Password  Matched");
+
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Not Matched");
     }
-//    private UserDTO convertEntityToDto(Event event) {
+
+    //    private UserDTO convertEntityToDto(Event event) {
 //        UserDTO userDTO = new UserDTO();
 //        UserDTO.setId(event.getId());
 //        UserDTO.setBookingName(event.getBookingName());
@@ -97,4 +120,13 @@ public class UserService {
 //    public User registerUser(User user){
 //        user.setId();
 //    }
+    private void authenticate(String email, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+    }
 }

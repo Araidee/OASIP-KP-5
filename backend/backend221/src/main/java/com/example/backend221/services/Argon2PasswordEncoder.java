@@ -2,6 +2,7 @@ package com.example.backend221.services;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
     /**
@@ -30,6 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
          * Thread safe singleton instance
          */
         private static final Argon2 INSTANCE = Argon2Factory.create(TYPE);
+        public Argon2PasswordEncoder(int i, int i1, int i2, int i3, int i4) {
+        }
 
         /**
          * {@inheritDoc}

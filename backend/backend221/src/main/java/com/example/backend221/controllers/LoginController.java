@@ -31,8 +31,9 @@ public class LoginController {
 
         @PostMapping("/match")
         @ResponseStatus(HttpStatus.CREATED)
-        public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user){
+        public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
             return userService.matchPassword(user);
 
         }
+
 }
