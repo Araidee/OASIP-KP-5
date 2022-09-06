@@ -8,7 +8,7 @@ onBeforeMount(async () => {
 //GET
 const getUsers = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
-  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/users");
+  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/users");
     // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/users`)
     // const tres = await fetch(`${import.meta.env.LOCAL_URL}`)
   if (res.status === 200) {
@@ -23,7 +23,7 @@ const removeUser = async (removeUserId) => {
     // const res = await fetch(
     //   `http://202.44.9.103:8080/kp5/api/users/${removeUserId}`,
        const res = await fetch(
-       `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
+       `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
       {
         method: "DELETE",
       }
@@ -40,7 +40,7 @@ const editUser = async (editingUser) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/users/${editingUser.id}`,
     const res = await fetch(
-      `http://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
+      `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
     {
       method: "PUT",
       headers: {

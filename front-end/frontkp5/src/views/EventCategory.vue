@@ -8,7 +8,7 @@ onBeforeMount(async () => {
 //GET
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories");
+  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories");
     // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
   if (res.status === 200) {
     eventCategories.value = await res.json();
@@ -19,7 +19,7 @@ const editEventCategory = async (editingEventCategory) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
      const res = await fetch(
-       `http://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
+       `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
     {
       method: "PUT",
       headers: {

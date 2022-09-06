@@ -35,7 +35,7 @@ const clearInput = () => {
 };
 const getUserById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
-  const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);
+  const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);
   if (res.status === 200) {
     UserDetails.value = await res.json();
     console.log(UserDetails.value)

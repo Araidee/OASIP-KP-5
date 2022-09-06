@@ -10,7 +10,7 @@
     //GET
     const getUsers = async () => {
       // const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
-      const res = await fetch("http://intproj21.sit.kmutt.ac.th/kp5/api/users")
+      const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/users")
       // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`)
       if (res.status === 200) {
         users.value = await res.json();
@@ -20,7 +20,7 @@
     //POST
     const login = async (user) => {
         // const res = await fetch("http://202.44.9.103:8080/kp5/api/users", {
-         const res = await fetch(`http://intproj21.sit.kmutt.ac.th/kp5/api/match`, {
+         const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/match`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
