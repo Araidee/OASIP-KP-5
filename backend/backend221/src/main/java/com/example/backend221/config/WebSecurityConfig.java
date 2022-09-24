@@ -50,8 +50,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                     .authorizeRequests()
                     .antMatchers("/api/match","/api/match/*").permitAll()
                     .antMatchers("/api/events","/api/events/*").permitAll()
-                    .antMatchers("/api/login/","/api/login/*").permitAll()
-
+                    .antMatchers("/api/login","/api/login/*").permitAll()
+                    .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
 //                    .antMatchers("/api/users").authenticated()
 //                    .anyRequest("/users").authenticated()
                     .anyRequest().authenticated()
