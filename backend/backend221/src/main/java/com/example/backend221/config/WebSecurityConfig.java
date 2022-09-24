@@ -28,7 +28,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-    public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    public  class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Autowired
         private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -38,16 +38,6 @@ import java.util.Arrays;
     private JwtUserDetailsService jwtUserDetailsService;
 
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH","PUT","DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
     @Bean
         @Override
         public AuthenticationManager authenticationManagerBean() throws Exception {
