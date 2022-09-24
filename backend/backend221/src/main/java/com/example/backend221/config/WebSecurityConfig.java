@@ -46,11 +46,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         protected void configure(HttpSecurity httpSecurity) throws Exception{
             httpSecurity
                     .csrf().disable()
+                    .anonymous().and()
                     .authorizeRequests()
-                    .antMatchers("/api/match").permitAll()
-                    .antMatchers("/api/events").permitAll()
-                    .anyRequest().permitAll()
+                    .antMatchers("/api/match","/api/match/*").permitAll()
+                    .antMatchers("/api/events","/api/events/*").permitAll()
+                    .antMatchers("/api/login/*").permitAll()
+
+//                    .antMatchers("/api/users").authenticated()
+//                    .anyRequest("/users").authenticated()
+                    .anyRequest().authenticated()
                     .and()
+
 
                     .exceptionHandling()
                     .authenticationEntryPoint(jwtAuthenticationEntryPoint)

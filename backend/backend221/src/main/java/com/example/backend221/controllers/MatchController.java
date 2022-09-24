@@ -16,24 +16,24 @@ import javax.validation.Valid;
 import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/login")
-public class LoginController {
-        @Autowired
-        private UserRepository repository;
-        @Autowired
-        private final UserService userService;
+@RequestMapping("/api/match")
+public class MatchController {
+    @Autowired
+    private UserRepository repository;
+    @Autowired
+    private final UserService userService;
 
 
 
-    public LoginController(UserService userService) {
+    public MatchController(UserService userService) {
         this.userService = userService;
     }
 
-        @PostMapping("")
-        @ResponseStatus(HttpStatus.CREATED)
-        public ResponseEntity matchLoginPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
-            return userService.matchLoginPassword(user);
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
+        return userService.matchPassword(user);
 
-        }
+    }
 
 }
