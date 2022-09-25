@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 @RestController
@@ -35,5 +36,10 @@ public class LoginController {
             return userService.matchLoginPassword(user);
 
         }
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+    public ResponseEntity refreshToken(HttpServletRequest request) throws Exception {
+        // From the HttpRequest get the claims
+        return userService.refreshToken(request);
+    }
 
 }

@@ -9,6 +9,7 @@ import com.example.backend221.entities.User;
 import com.example.backend221.repositories.UserRepository;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import io.jsonwebtoken.impl.DefaultClaims;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -114,12 +119,32 @@ public class UserService {
         if (argon2.verify(user.getPassword(), userVerified.getPassword())) {
             authenticate(userVerified.getEmail(),userVerified.getPassword());
             final UserDetails userDetails = userDetailsService.loadUserByUsername(userVerified.getEmail());
-            final String token = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new JwtResponse(token));
+            final String token = jwtTokenUtil.generateToken(userDetails, user.getName());
+            HashMap<String, String> objectToResponse = new HashMap<String, String>();
+            objectToResponse.put("token", token);
+            objectToResponse.put("name", user.getName());
+            return ResponseEntity.ok(objectToResponse);
+//            return ResponseEntity.ok(new JwtResponse(token));
 //            return ResponseEntity.status(HttpStatus.OK).body("Password  Matched");
 
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Incorrect");
+    }
+    public ResponseEntity refreshToken(HttpServletRequest request) throws Exception {
+        // From the HttpRequest get the claims
+        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+        HashMap<String, String> objectToResponse = new HashMap<String, String>();
+        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+        String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
+        objectToResponse.put("token", token);
+        return ResponseEntity.ok(objectToResponse);
+    }
+    public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
+        Map<String, Object> expectedMap = new HashMap<String, Object>();
+        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+            expectedMap.put(entry.getKey(), entry.getValue());
+        }
+        return expectedMap;
     }
     //    private UserDTO convertEntityToDto(Event event) {
 //        UserDTO userDTO = new UserDTO();
@@ -142,4 +167,5 @@ public class UserService {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
+
 }
