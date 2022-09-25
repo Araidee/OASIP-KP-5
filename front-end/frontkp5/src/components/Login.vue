@@ -1,12 +1,7 @@
 <script setup>
-    import { ref, computed, defineAsyncComponent } from "vue";
+    import { ref } from "vue";
     defineEmits(["login"]);
-    const props = defineProps({
-      users: {
-        type: Array,
-        default: [],
-      }
-    });
+  
     
     // const roles = ({
     //   Admin: "admin", 
@@ -51,7 +46,7 @@
               required
             /><br />
           </div>
-          <div class="center font-bold">
+          <div class="center font-weight-bold">
             Password: <span style="color: red;">*</span><br>
             <input
               type="password"
