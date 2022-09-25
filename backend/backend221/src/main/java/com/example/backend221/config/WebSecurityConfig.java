@@ -59,7 +59,6 @@ import java.util.Arrays;
                     .csrf().disable()
                     .anonymous().and()
                     .authorizeRequests()
-                    .antMatchers("/api/match").permitAll()
                     .antMatchers("/api/events","/api/events/*").permitAll()
                     .antMatchers("/api/login").permitAll()
                     .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
