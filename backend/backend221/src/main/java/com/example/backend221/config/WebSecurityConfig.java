@@ -60,7 +60,7 @@ import java.util.Arrays;
                     .anonymous().and()
                     .authorizeRequests()
                     .antMatchers("/api/events","/api/events/*").permitAll()
-                    .antMatchers("/api/login").permitAll()
+                    .antMatchers("/api/jwt/login").permitAll()
                     .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
 //                    .antMatchers("/api/users").authenticated()
 //                    .anyRequest("/users").authenticated()

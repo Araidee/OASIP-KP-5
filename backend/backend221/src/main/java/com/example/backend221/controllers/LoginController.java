@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/login")
+@RequestMapping("/api/jwt")
 public class LoginController {
         @Autowired
         private UserRepository repository;
@@ -29,7 +29,7 @@ public class LoginController {
         this.userService = userService;
     }
 
-        @PostMapping("")
+        @PostMapping("/login")
         @ResponseStatus(HttpStatus.CREATED)
         public ResponseEntity matchLoginPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
             return userService.matchLoginPassword(user);
