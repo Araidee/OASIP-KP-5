@@ -24,6 +24,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -54,10 +55,16 @@ import java.util.Arrays;
 
     @Override
         protected void configure(HttpSecurity httpSecurity) throws Exception{
-            httpSecurity
-                    .cors().and()
-                    .csrf().disable()
-                    .anonymous().and()
+//            httpSecurity
+//                    .cors().and()
+//                    .csrf().disable()
+//                    .anonymous().and()
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(List.of("*"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "IsRefreshToken"));
+        httpSecurity.csrf().disable().cors().configurationSource(request -> corsConfiguration).and()
                     .authorizeRequests()
                     .antMatchers("/api/events","/api/events/*").permitAll()
                     .antMatchers("/api/jwt/login").permitAll()
