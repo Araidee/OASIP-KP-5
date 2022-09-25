@@ -1,13 +1,12 @@
 <script setup>
     import { ref } from "vue";
     import Login from "../components/Login.vue";
-    let isLogin = ref(false)
-    
+    let token = ref()
     //POST
     const login = async (user) => {
-        // const res = await fetch("http://localhost:8080/api/login", {
+        const res = await fetch("http://localhost:8080/api/jwt/login", {
         // const res = await fetch("http://202.44.9.103:8080/kp5/api/login", {
-        const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/login`, {
+        // const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -15,10 +14,10 @@
         body: JSON.stringify(user),
       });
       if (res.status === 200) {
-        isLogin = true;
+        token.value = await res.json();
         alert("Login successfully!")
+        console.log(token.value)
         console.log("login successfully");
-        console.log(isLogin)
       }else if (res.status === 404){
         alert("Email doesn't exist")
         console.log("email doesn't exist");
