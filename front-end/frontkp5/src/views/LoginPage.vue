@@ -1,13 +1,13 @@
 <script setup>
     import { ref } from "vue";
     import Login from "../components/Login.vue";
-  
     let isLogin = ref(false)
     
     //POST
     const login = async (user) => {
+        // const res = await fetch("http://localhost:8080/api/login", {
         // const res = await fetch("http://202.44.9.103:8080/kp5/api/login", {
-         const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/login`, {
+        const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
