@@ -1,6 +1,8 @@
 <script setup>
     import { ref } from "vue";
+    import VueCookies from "vue-cookies";
     import Login from "../components/Login.vue";
+
     let token = ref()
     //POST
     const login = async (user) => {
@@ -14,9 +16,9 @@
         body: JSON.stringify(user),
       });
       if (res.status === 200) {
-        token.value = await res.json();
+        token = await res.json();
+        VueCookies.set(Object.keys(token)[0], Object.values(token)[0], 7)
         alert("Login successfully!")
-        console.log(token.value)
         console.log("login successfully");
       }else if (res.status === 404){
         alert("Email doesn't exist")
