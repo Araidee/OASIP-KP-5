@@ -1,7 +1,12 @@
 package com.example.backend221.Enum;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ADMIN,
     LECTURER,
-    STUDENT
+    STUDENT;
+    public String getAuthority() {
+        return name();
+    }
 }

@@ -1,8 +1,14 @@
 package com.example.backend221.entities;
 
+import com.example.backend221.Enum.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.Instant;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
 public class User {
@@ -20,71 +26,17 @@ public class User {
     @Column(name = "email", nullable = false, length = 50 , unique = true)
     private String email;
 
-    @Lob
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private String role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
+    @JsonIgnore
     @Column(name = "createdOn", nullable = false, insertable = false , updatable = false)
     private Instant createdOn;
-
+    @JsonIgnore
     @Column(name = "updatedOn", nullable = false, insertable = false , updatable = false)
     private Instant updatedOn;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 
 }

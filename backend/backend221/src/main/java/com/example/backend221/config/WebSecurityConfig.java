@@ -69,6 +69,7 @@ import java.util.List;
                     .antMatchers("/api/events","/api/events/*").permitAll()
                     .antMatchers("/api/jwt/login").permitAll()
                     .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
+                    .antMatchers("/api/users","/api/users/*","/api/match").hasAuthority("admin")
 //                    .antMatchers("/api/users").authenticated()
 //                    .anyRequest("/users").authenticated()
                     .anyRequest().authenticated()

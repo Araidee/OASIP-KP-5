@@ -1,5 +1,6 @@
 package com.example.backend221.repositories;
 
+import com.example.backend221.Enum.Role;
 import com.example.backend221.entities.Event;
 import com.example.backend221.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByEmail(String email);
+    User findByRole(Role role);
 }

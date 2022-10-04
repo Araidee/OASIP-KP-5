@@ -1,5 +1,6 @@
 package com.example.backend221.dtos;
 
+import com.example.backend221.Enum.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -17,7 +18,7 @@ public class UserDTO  {
     private String name;
     private String password;
     private String email;
-    private String role;
+    private Role role;
     private Instant createdOn;
     private  Instant updatedOn;
 }
