@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-@RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/api/match")
-public class MatchController {
-    @Autowired
-    private UserRepository repository;
-    @Autowired
-    private final UserService userService;
-
-
-
-    public MatchController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
-        return userService.matchPassword(user);
-
-    }
-
-}
+//@RestController
+//@CrossOrigin(origins = "*")
+//@RequestMapping("/api/match")
+//public class MatchController {
+//    @Autowired
+//    private UserRepository repository;
+//    @Autowired
+//    private final UserService userService;
+//
+//
+//
+//    public MatchController(UserService userService) {
+//        this.userService = userService;
+//    }
+//
+//    @PostMapping("")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
+//        return userService.matchPassword(user);
+//
+//    }
+//
+//}

@@ -97,20 +97,20 @@ public class UserService {
         return existingUser;
     }
 
-    public ResponseEntity matchPassword(UserVerifiedDTO userVerified)  throws Exception{
-        User user = repository.findByEmail(userVerified.getEmail());
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email doesn't exists");
-        }
-        Argon2 argon2 = Argon2Factory.create();
-        if (argon2.verify(user.getPassword(), userVerified.getPassword())) {
-            authenticate(userVerified.getEmail(),userVerified.getPassword());
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(userVerified.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body("Password  Matched");
-
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Not Matched");
-    }
+//    public ResponseEntity matchPassword(UserVerifiedDTO userVerified)  throws Exception{
+//        User user = repository.findByEmail(userVerified.getEmail());
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email doesn't exists");
+//        }
+//        Argon2 argon2 = Argon2Factory.create();
+//        if (argon2.verify(user.getPassword(), userVerified.getPassword())) {
+//            authenticate(userVerified.getEmail(),userVerified.getPassword());
+//            final UserDetails userDetails = userDetailsService.loadUserByUsername(userVerified.getEmail());
+//            return ResponseEntity.status(HttpStatus.OK).body("Password  Matched");
+//
+//        }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Not Matched");
+//    }
     public ResponseEntity matchLoginPassword(UserVerifiedDTO userVerified)  throws Exception{
         User user = repository.findByEmail(userVerified.getEmail());
         if (user == null) {

@@ -66,7 +66,7 @@ import java.util.List;
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "IsRefreshToken"));
         httpSecurity.csrf().disable().cors().configurationSource(request -> corsConfiguration).and()
                     .authorizeRequests()
-                    .antMatchers("/api/events","/api/events/*").permitAll()
+                    .antMatchers("/api/events","/api/events/*").hasAnyAuthority("admin","student")
                     .antMatchers("/api/jwt/login").permitAll()
                     .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
                     .antMatchers("/api/users","/api/users/*","/api/match").hasAuthority("admin")
