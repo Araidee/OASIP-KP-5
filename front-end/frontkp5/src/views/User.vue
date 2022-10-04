@@ -9,8 +9,8 @@ onBeforeMount(async () => {
 const getUsers = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
   const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/users");
-    // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/users`)
-    // const tres = await fetch(`${import.meta.env.LOCAL_URL}`)
+  // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/users`)
+  // const tres = await fetch(`${import.meta.env.LOCAL_URL}`)
   if (res.status === 200) {
     users.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -22,15 +22,15 @@ const removeUser = async (removeUserId) => {
   if (confirmDelete.value) {
     // const res = await fetch(
     //   `http://202.44.9.103:8080/kp5/api/users/${removeUserId}`,
-       const res = await fetch(
-       `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
+    const res = await fetch(
+      `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${removeUserId}`,
       {
         method: "DELETE",
       }
     );
     if (res.status === 200) {
       users.value = users.value.filter((user) => user.id !== removeUserId);
-      alert('User removed!')
+      alert("User removed!");
       console.log("deleted successfullly");
     } else console.log("error, cannot delete");
   } else console.log("Delete was canceled");
@@ -39,8 +39,8 @@ const removeUser = async (removeUserId) => {
 const editUser = async (editingUser) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/users/${editingUser.id}`,
-    const res = await fetch(
-      `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
+  const res = await fetch(
+    `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${editingUser.id}`,
     {
       method: "PUT",
       headers: {
@@ -49,7 +49,7 @@ const editUser = async (editingUser) => {
       body: JSON.stringify({
         name: editingUser.name,
         email: editingUser.email,
-        role: editingUser.role
+        role: editingUser.role,
       }),
     }
   );
@@ -62,11 +62,11 @@ const editUser = async (editingUser) => {
             ...user,
             name: editingUser.name,
             email: editingUser.email,
-            role: editingUser.role
+            role: editingUser.role,
           }
         : user
     );
-    alert('Edited!')
+    alert("Edited!");
     console.log("edited successfully");
   } else console.log("error, cannot edit");
 };
@@ -84,9 +84,7 @@ const editUser = async (editingUser) => {
       <div
         class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
       >
-        <UserList
-          :users="users" @delete="removeUser" @edit="editUser"
-        />
+        <UserList :users="users" @delete="removeUser" @edit="editUser" />
         <div
           class="overflow-x-auto w-4/5 place-items-center"
           v-show="users.length == 0"

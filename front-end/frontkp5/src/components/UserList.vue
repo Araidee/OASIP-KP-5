@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 defineEmits(["delete, edit"]);
 const props = defineProps({
-    users: {
+  users: {
     type: Array,
     default: [],
   },
@@ -35,10 +35,12 @@ const clearInput = () => {
 };
 const getUserById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
-  const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`);
+  const res = await fetch(
+    `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`
+  );
   if (res.status === 200) {
     UserDetails.value = await res.json();
-    console.log(UserDetails.value)
+    console.log(UserDetails.value);
   } else console.log("Error, cannot get data");
 };
 </script>
@@ -67,25 +69,26 @@ const getUserById = async (id) => {
                     for="detail-modal"
                     class="btn modal-button"
                     @click="getUserById(user.id)"
-                    >Details</label>
+                    >Details</label
+                  >
                 </div>
               </div>
               <div class="px-4">
-                  <label
-                    for="edit-modal"
-                    class="btn btn-ghost btn-circle"
-                    @click="getUserById(user.id)"
-                  >
-                    <img src="/edit.svg" class="h-8 w-8" />
-                  </label>
+                <label
+                  for="edit-modal"
+                  class="btn btn-ghost btn-circle"
+                  @click="getUserById(user.id)"
+                >
+                  <img src="/edit.svg" class="h-8 w-8" />
+                </label>
 
-                  <button
-                    class="btn btn-ghost btn-circle"
-                    @click="$emit('delete', user.id)"
-                  >
-                    <img src="/delete.svg" class="h-8 w-8" />
-                  </button>
-                </div>
+                <button
+                  class="btn btn-ghost btn-circle"
+                  @click="$emit('delete', user.id)"
+                >
+                  <img src="/delete.svg" class="h-8 w-8" />
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -101,12 +104,10 @@ const getUserById = async (id) => {
         <p class="py-4">Role: {{ UserDetails.role }}</p>
         <p class="py-4">
           Created On:
-          {{
-            new Date(UserDetails.createdOn).toLocaleDateString("th-TH")
-          }},
+          {{ new Date(UserDetails.createdOn).toLocaleDateString("th-TH") }},
           {{
             new Date(UserDetails.createdOn).toLocaleTimeString("en-CA", {
-              timeZoneName: 'short',
+              timeZoneName: "short",
               hour: "2-digit",
               minute: "2-digit",
               hour12: true,
@@ -118,15 +119,13 @@ const getUserById = async (id) => {
           <!-- {{
             new Date(UserDetails.updatedOn).toLocaleTimeString("en-CA",{timeZoneName: 'short'})
           }} -->
-          {{
-            new Date(UserDetails.updatedOn).toLocaleDateString("th-TH")
-          }},
+          {{ new Date(UserDetails.updatedOn).toLocaleDateString("th-TH") }},
           {{
             new Date(UserDetails.updatedOn).toLocaleTimeString("en-CA", {
-              timeZoneName: 'short',
+              timeZoneName: "short",
               hour: "2-digit",
               minute: "2-digit",
-              hour12: true
+              hour12: true,
             })
           }}
         </p>
@@ -142,7 +141,8 @@ const getUserById = async (id) => {
           for="edit-modal"
           class="btn btn-sm btn-circle absolute right-2 top-2"
           @click="clearInput()"
-          >✕</label>
+          >✕</label
+        >
         <h3 class="font-bold text-lg">Edit UserDetails</h3>
         <div class="card-body items-center">
           Name:
@@ -152,7 +152,7 @@ const getUserById = async (id) => {
             placeholder="name... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
           />
-          <p class="text-sm">{{editName.length}}/{{nameMax}}</p>
+          <p class="text-sm">{{ editName.length }}/{{ nameMax }}</p>
         </div>
         <div class="card-body items-center">
           Email:
@@ -183,7 +183,7 @@ const getUserById = async (id) => {
                 id: UserDetails.id,
                 name: editName,
                 email: editEmail,
-                role: editRole
+                role: editRole,
               });
               clearInput();
             "

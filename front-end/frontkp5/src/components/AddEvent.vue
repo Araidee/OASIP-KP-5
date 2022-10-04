@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref } from "vue";
 defineEmits(["addEvent"]);
 const props = defineProps({
   events: {
@@ -17,10 +17,10 @@ const bookingEmail = ref("");
 const eventStartTime = ref("");
 const eventNotes = ref("");
 const eventCategory = ref({});
-const notesMax = 500
-const bookingNameMax = 100
-const successInput = 'input input-bordered input-success w-full inputwdt'
-const errorInput = 'input input-bordered input-error w-full inputwdt'
+const notesMax = 500;
+const bookingNameMax = 100;
+const successInput = "input input-bordered input-success w-full inputwdt";
+const errorInput = "input input-bordered input-error w-full inputwdt";
 // const eventDuration = computed((id)=> {
 
 // })
@@ -43,8 +43,6 @@ function emailValidate() {
     return false;
   }
 }
-
-
 </script>
 
 <template>
@@ -54,34 +52,36 @@ function emailValidate() {
         <h1 class="text-2xl font-bold center">Booking</h1>
       </div>
       <div class="center font-bold">
-        Name: <span style="color: red;">*</span><br>
+        Name: <span style="color: red">*</span><br />
         <input
           type="text"
           v-model="bookingName"
           placeholder="Type Name here"
-          :class="bookingName=='' ? errorInput:successInput"
+          :class="bookingName == '' ? errorInput : successInput"
           maxlength="100"
           required
         />
-        <p class="text-sm ">{{bookingName.length}}/{{bookingNameMax}}</p>
+        <p class="text-sm">{{ bookingName.length }}/{{ bookingNameMax }}</p>
       </div>
       <div class="center font-weight-bold">
-        Email: <span style="color: red;">*</span><br>
+        Email: <span style="color: red">*</span><br />
         <input
           type="text"
           id="email"
           v-model="bookingEmail"
           placeholder="Type Email here"
-          :class="bookingEmail=='' ? errorInput:successInput"
+          :class="bookingEmail == '' ? errorInput : successInput"
           required
         /><br />
       </div>
-      <div class="center font-weight-bold ">
-        Category: <span style="color: red;">*</span><br>
+      <div class="center font-weight-bold">
+        Category: <span style="color: red">*</span><br />
         <select
-          :class="Object.keys(eventCategory).length==0 ? errorInput:successInput"
+          :class="
+            Object.keys(eventCategory).length == 0 ? errorInput : successInput
+          "
           v-model="eventCategory"
-          required     
+          required
         >
           <option disabled selected>-- Category --</option>
           <option
@@ -95,8 +95,9 @@ function emailValidate() {
           </option>
         </select>
       </div>
-      <div class="center ">
-        <label for="appt">Select a time: </label><span style="color: red;">*</span><br>
+      <div class="center">
+        <label for="appt">Select a time: </label
+        ><span style="color: red">*</span><br />
         <!-- <input type="date" value="2022-05-08T" min="2022-05-10" max="2022-12-31" required> -->
         <input
           class="badge badge-green badge-outline"
@@ -127,12 +128,17 @@ function emailValidate() {
             v-model="eventNotes"
             maxlength="500"
           /> -->
-          <textarea class="textarea textarea-success textareacss" placeholder="Note here... (Optional)" v-model="eventNotes" maxlength="500"></textarea>
-          <p class="text-sm">{{eventNotes.length}}/{{notesMax}}</p>
+          <textarea
+            class="textarea textarea-success textareacss"
+            placeholder="Note here... (Optional)"
+            v-model="eventNotes"
+            maxlength="500"
+          ></textarea>
+          <p class="text-sm">{{ eventNotes.length }}/{{ notesMax }}</p>
         </div>
         <div class-="card-actions justify-end">
           <button
-            class="btn btn-primary btn-success "
+            class="btn btn-primary btn-success"
             @click="
               emailValidate()
                 ? $emit('addEvent', {
@@ -153,19 +159,17 @@ function emailValidate() {
       </div>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
-.position1{
-   position: relative;
-   left: 15%;
+.position1 {
+  position: relative;
+  left: 15%;
 }
 
-.textareacss{
+.textareacss {
   width: 500px;
   height: 180px;
-  
 }
 
 .inputwdt {
@@ -178,5 +182,4 @@ function emailValidate() {
   padding: 10px;
   font-weight: bold;
 }
-
- </style>
+</style>

@@ -7,9 +7,9 @@ const props = defineProps({
     default: [],
   },
 });
-const successInput = 'input input-bordered input-success w-full max-w-xs'
-const errorInput = 'input input-bordered input-error w-full max-w-xs'
-const descriptionMax = 500
+const successInput = "input input-bordered input-success w-full max-w-xs";
+const errorInput = "input input-bordered input-error w-full max-w-xs";
+const descriptionMax = 500;
 const eventCategoryDetails = ref({});
 const editEventCategoryName = ref("");
 const editEventCategoryDescription = ref("");
@@ -18,9 +18,9 @@ const getEventCategoryById = async (id) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
   // );
-   const res = await fetch(
-     `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
-   );
+  const res = await fetch(
+    `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
+  );
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
     editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName;
@@ -84,7 +84,7 @@ const getEventCategoryById = async (id) => {
               type="text"
               v-model="editEventCategoryName"
               placeholder="Category name..."
-              :class="editEventCategoryName=='' ? errorInput:successInput"
+              :class="editEventCategoryName == '' ? errorInput : successInput"
             />
             Duration:
             <input
@@ -93,7 +93,9 @@ const getEventCategoryById = async (id) => {
               min="1"
               max="480"
               placeholder="Duration... (1-480 mins)"
-              :class="editEventCategoryDuration=='' ? errorInput:successInput"
+              :class="
+                editEventCategoryDuration == '' ? errorInput : successInput
+              "
             />
             Description:
             <input
@@ -102,7 +104,9 @@ const getEventCategoryById = async (id) => {
               placeholder="Description..."
               class="input input-bordered input-success w-full max-w-xs"
             />
-            <p class="text-sm">{{editEventCategoryDescription.length}}/{{descriptionMax}}</p>
+            <p class="text-sm">
+              {{ editEventCategoryDescription.length }}/{{ descriptionMax }}
+            </p>
           </div>
           <div>
             <label

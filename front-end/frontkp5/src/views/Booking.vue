@@ -11,7 +11,7 @@ onBeforeMount(async () => {
 //GET
 const getEvents = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
-  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/events")
+  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/events");
   // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`)
   if (res.status === 200) {
     events.value = await res.json();
@@ -19,7 +19,9 @@ const getEvents = async () => {
 };
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories")
+  const res = await fetch(
+    "https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories"
+  );
   // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
   if (res.status === 200) {
     eventCategories.value = await res.json();
@@ -27,23 +29,28 @@ const getEventCategories = async () => {
 };
 //POST
 const createNewEvent = async (newEvent) => {
-  if(new Date(newEvent.eventStartTime).getTime() > new Date(Date.now()).getTime()){
+  if (
+    new Date(newEvent.eventStartTime).getTime() > new Date(Date.now()).getTime()
+  ) {
     // const res = await fetch("http://202.44.9.103:8080/kp5/api/events", {
-      const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/events", {
-    //  const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(newEvent),
-  });
-  if (res.status === 201) {
-    const addedEvent = await res.json();
-    events.value.push(addedEvent);
-    alert('Booked!')
-    console.log("created successfully");
-  } else console.log("error, cannot create");
-  }else alert('Time is not future time')
+    const res = await fetch(
+      "https://intproj21.sit.kmutt.ac.th/kp5/api/events",
+      {
+        //  const res = await fetch(`${import.meta.env.LOCAL_URL}/api/events`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newEvent),
+      }
+    );
+    if (res.status === 201) {
+      const addedEvent = await res.json();
+      events.value.push(addedEvent);
+      alert("Booked!");
+      console.log("created successfully");
+    } else console.log("error, cannot create");
+  } else alert("Time is not future time");
 };
 </script>
 

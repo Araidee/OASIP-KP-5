@@ -2,11 +2,11 @@
 import { ref, computed } from "vue";
 defineEmits(["delete", "edit"]);
 const props = defineProps({
-    events: {
+  events: {
     type: Array,
     default: [],
   },
-    eventCategories: {
+  eventCategories: {
     type: Array,
     default: [],
   },
@@ -36,7 +36,7 @@ const clearInput = () => {
   editEventNotes.value = "";
 };
 
-const notesMax = 500
+const notesMax = 500;
 
 const EventDetails = ref({});
 const getEventById = async (id) => {
@@ -46,7 +46,7 @@ const getEventById = async (id) => {
   );
   if (res.status === 200) {
     EventDetails.value = await res.json();
-    console.log(EventDetails.value)
+    console.log(EventDetails.value);
     editEventNotes.value = EventDetails.value.eventNotes;
     fetchEventCategoryName.value =
       EventDetails.value.eventCategory.eventCategoryName;
@@ -179,7 +179,7 @@ const getEventById = async (id) => {
             placeholder="Note here... (Optional)"
             class="input input-bordered input-success w-full max-w-xs"
           />
-          <p class="text-sm">{{editEventNotes.length}}/{{notesMax}}</p>
+          <p class="text-sm">{{ editEventNotes.length }}/{{ notesMax }}</p>
         </div>
         <div>
           <label

@@ -15,15 +15,55 @@ const GoSearch = () => appRouter.push({ name: "Home" });
         </div>
         <div class="w-full order-last md:block md:w-auto" id="mobile-menu">
           <div class="btn-group">
-  <button @click="$router.push('/')" class="btn btn-active btnall btn1">Home</button>
-  <button @click="$router.push('Schedules')" class="btn btn-active btnall btn1">Schedules</button>
-  <button @click="$router.push('EventCategory')" class="btn btn-active btnall btn1">Event Categories </button>
-  <button @click="$router.push('Booking')" class="btn btn-active btnall btn1">Booking </button>
-  <button @click="$router.push('Users')" class="btn btn-active btnall btn1">Users </button>
-  <button @click="$router.push('Login')" class="btn btn-active btnall btn1">Login </button>
-  <button @click="$router.push('Register')" class="btn btn-active btnall btn1">Register </button>
-  <button @click="$router.push('About')" class="btn btn-active btnall btn1">About us </button>
-</div>
+            <button
+              @click="$router.push('/')"
+              class="btn btn-active btnall btn1"
+            >
+              Home
+            </button>
+            <button
+              @click="$router.push('Schedules')"
+              class="btn btn-active btnall btn1"
+            >
+              Schedules
+            </button>
+            <button
+              @click="$router.push('EventCategory')"
+              class="btn btn-active btnall btn1"
+            >
+              Event Categories
+            </button>
+            <button
+              @click="$router.push('Booking')"
+              class="btn btn-active btnall btn1"
+            >
+              Booking
+            </button>
+            <button
+              @click="$router.push('Users')"
+              class="btn btn-active btnall btn1"
+            >
+              Users
+            </button>
+            <button
+              @click="$router.push('Login')"
+              class="btn btn-active btnall btn1"
+            >
+              Login
+            </button>
+            <button
+              @click="$router.push('Register')"
+              class="btn btn-active btnall btn1"
+            >
+              Register
+            </button>
+            <button
+              @click="$router.push('About')"
+              class="btn btn-active btnall btn1"
+            >
+              About us
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -49,8 +89,8 @@ body {
 .custom-btn {
   width: 130px;
   padding: 5px 25px;
-  border: 2px #5C7F67;
-  font-family: 'Lato', sans-serif;
+  border: 2px #5c7f67;
+  font-family: "Lato", sans-serif;
   font-weight: 500;
   background: transparent;
   cursor: pointer;
@@ -72,43 +112,39 @@ body {
   width: 100%;
   height: 100%;
   transition: all 0.3s ease;
-  -webkit-transform: scale(.1);
-  transform: scale(.1);
+  -webkit-transform: scale(0.1);
+  transform: scale(0.1);
 }
 .btn-10:hover {
   color: #fff;
 }
 .btn-10:hover:after {
-  background: #5C7F67;
+  background: #5c7f67;
   -webkit-transform: scale(1);
   transform: scale(1);
 }
 
 p:hover input {
-text-decoration:underline;
+  text-decoration: underline;
 }
 
 .btnall {
   position: relative;
   background: #e9e7e7;
-  color: #5C7F67;
+  color: #5c7f67;
   width: 170px;
   height: 50px;
   border: none;
   outline: none;
   border-radius: 10px;
-  
 
-  box-shadow:
-  0px 0.7px 4px rgba(0, 0, 0, 0.045),
-  0px 1.9px 11.1px rgba(0, 0, 0, 0.065),
-  0px 4.5px 26.8px rgba(0, 0, 0, 0.085),
-  0px 15px 89px rgba(0, 0, 0, 0.13)
-;
+  box-shadow: 0px 0.7px 4px rgba(0, 0, 0, 0.045),
+    0px 1.9px 11.1px rgba(0, 0, 0, 0.065), 0px 4.5px 26.8px rgba(0, 0, 0, 0.085),
+    0px 15px 89px rgba(0, 0, 0, 0.13);
 }
- 
-.btnall::after{
-  content: '';
+
+.btnall::after {
+  content: "";
   position: absolute;
   width: 100%;
   height: 0.175rem;
@@ -118,7 +154,7 @@ text-decoration:underline;
   cursor: pointer;
 }
 
-.btn1::after{
+.btn1::after {
   transform: scale(0, 1);
   transition: transform 0.3s ease;
 }
@@ -126,6 +162,4 @@ text-decoration:underline;
 .btn1:hover::after {
   transform: scale(1, 1);
 }
-
 </style>
-

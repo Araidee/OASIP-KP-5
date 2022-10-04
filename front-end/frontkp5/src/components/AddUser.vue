@@ -5,23 +5,23 @@ const props = defineProps({
   users: {
     type: Array,
     default: [],
-  }
+  },
 });
 
-const roles = ({
-  Admin: "admin", 
-  Lecturer: "lecturer", 
-  Student: "student"
-})
+const roles = {
+  Admin: "admin",
+  Lecturer: "lecturer",
+  Student: "student",
+};
 const name = ref("");
 const email = ref("");
 const role = ref("");
-const password = ref("")
-const confirmPassword = ref("")
-const passwordMax = 100
-const nameMax = 100
-const successInput = 'input input-bordered input-success w-full inputwdt'
-const errorInput = 'input input-bordered input-error w-full inputwdt'
+const password = ref("");
+const confirmPassword = ref("");
+const passwordMax = 100;
+const nameMax = 100;
+const successInput = "input input-bordered input-success w-full inputwdt";
+const errorInput = "input input-bordered input-error w-full inputwdt";
 // const eventDuration = computed((id)=> {
 
 // })
@@ -44,8 +44,6 @@ function emailValidate() {
     return false;
   }
 }
-
-
 </script>
 
 <template>
@@ -55,103 +53,97 @@ function emailValidate() {
         <h1 class="text-2xl font-bold center">Register</h1>
       </div>
       <div class="center font-bold">
-        Name: <span style="color: red;">*</span><br>
+        Name: <span style="color: red">*</span><br />
         <input
           type="text"
           v-model="name"
           placeholder="Type Name here"
-          :class="name=='' ? errorInput:successInput"
+          :class="name == '' ? errorInput : successInput"
           maxlength="100"
           required
         />
-        <p class="text-sm ">{{name.length}}/{{nameMax}}</p>
+        <p class="text-sm">{{ name.length }}/{{ nameMax }}</p>
       </div>
       <div class="center font-weight-bold">
-        Email: <span style="color: red;">*</span><br>
+        Email: <span style="color: red">*</span><br />
         <input
           type="text"
           id="email"
           v-model="email"
           placeholder="Type Email here"
-          :class="email=='' ? errorInput:successInput"
+          :class="email == '' ? errorInput : successInput"
           required
         /><br />
       </div>
       <div class="center font-bold">
-        Password: <span style="color: red;">*</span><br>
+        Password: <span style="color: red">*</span><br />
         <input
           type="password"
           v-model="password"
           placeholder="Type Password here"
-          :class="password=='' ? errorInput:successInput"
+          :class="password == '' ? errorInput : successInput"
           maxlength="100"
           required
         />
-        <p class="text-sm ">{{password.length}}/{{passwordMax}}</p>
+        <p class="text-sm">{{ password.length }}/{{ passwordMax }}</p>
       </div>
       <div class="center font-bold">
-        Confirm Password: <span style="color: red;">*</span><br>
+        Confirm Password: <span style="color: red">*</span><br />
         <input
           type="password"
           v-model="confirmPassword"
           placeholder="Re-Enter your Password"
-          :class="confirmPassword==''? errorInput : successInput"
+          :class="confirmPassword == '' ? errorInput : successInput"
           maxlength="100"
           required
         />
-        <p class="text-sm ">{{confirmPassword.length}}/{{passwordMax}}</p>
+        <p class="text-sm">{{ confirmPassword.length }}/{{ passwordMax }}</p>
       </div>
       <div class="center font-weight-bold">
-        Role: <span style="color: red;">*</span><br>
+        Role: <span style="color: red">*</span><br />
         <select
-          :class="Object.keys(role).length==0 ? errorInput:successInput"
+          :class="Object.keys(role).length == 0 ? errorInput : successInput"
           v-model="role"
           required
         >
-        <!-- selected -->
+          <!-- selected -->
           <option disabled>-- Role --</option>
-          <option
-            v-for="role in roles"
-            :value="role"
-          >
+          <option v-for="role in roles" :value="role">
             {{ role }}
           </option>
         </select>
       </div>
-        <div class-="card-actions justify-end">
-          <button
-            class="btn btn-primary btn-success "
-            @click="
-              emailValidate()
-                ? 
-                $emit('addUser', {
-                    name: name,
-                    password: password,
-                    email: email,
-                    role: role 
-                  })
-                : '';
-              clearInput();
-            "
-          >
-            Register
-          </button>
+      <div class="card-actions center">
+        <button
+          class="btn btn-primary btn-success"
+          @click="
+            emailValidate()
+              ? $emit('addUser', {
+                  name: name,
+                  password: password,
+                  email: email,
+                  role: role,
+                })
+              : '';
+            clearInput();
+          "
+        >
+          Register
+        </button>
       </div>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
-.position1{
-   position: relative;
-   left: 15%;
+.position1 {
+  position: relative;
+  left: 15%;
 }
 
-.textareacss{
+.textareacss {
   width: 500px;
   height: 180px;
-  
 }
 
 .inputwdt {
@@ -164,5 +156,4 @@ function emailValidate() {
   padding: 10px;
   font-weight: bold;
 }
-
- </style>
+</style>

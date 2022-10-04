@@ -8,8 +8,10 @@ onBeforeMount(async () => {
 //GET
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  const res = await fetch("https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories");
-    // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
+  const res = await fetch(
+    "https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories"
+  );
+  // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
   if (res.status === 200) {
     eventCategories.value = await res.json();
   } else console.log("Error, cannot get data");
@@ -18,8 +20,8 @@ const getEventCategories = async () => {
 const editEventCategory = async (editingEventCategory) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
-     const res = await fetch(
-       `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
+  const res = await fetch(
+    `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
     {
       method: "PUT",
       headers: {
@@ -46,7 +48,7 @@ const editEventCategory = async (editingEventCategory) => {
           }
         : eventCategory
     );
-    alert('Edited!')
+    alert("Edited!");
     console.log("edited successfully");
   } else console.log("error, cannot edit");
 };
