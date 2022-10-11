@@ -57,14 +57,14 @@ function emailValidate() {
           required
         />
       </div>
-      <div class="center font-weight-bold">
+      <!-- <div class="center font-weight-bold">
         <span
           >Didn't have an account?
           <router-link to="/register" class="underline text-blue-700"
             >SignUp</router-link
           ></span
         >
-      </div>
+      </div> -->
       <div class="card-actions center">
         <button
           class="btn btn-primary btn-success"

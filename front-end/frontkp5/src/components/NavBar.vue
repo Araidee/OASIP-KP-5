@@ -52,7 +52,7 @@ const GoSearch = () => appRouter.push({ name: "Home" });
               Login
             </button>
             <button
-              @click="$router.push('Register')"
+              @click="$router.push('AddUser')"
               class="btn btn-active btnall btn1"
             >
               Register

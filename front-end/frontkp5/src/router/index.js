@@ -45,9 +45,9 @@ const routes = [
     Comment: "list component",
   },
   {
-    path: "/register",
-    name: "Register",
-    component: Register,
+    path: "/adduser",
+    name: "AddUser",
+    component: AddUser,
     Comment: "sign up",
   },
   {

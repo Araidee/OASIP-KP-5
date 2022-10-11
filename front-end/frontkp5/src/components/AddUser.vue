@@ -50,7 +50,7 @@ function emailValidate() {
   <div>
     <div class="card-compact w-3/4 bg-base-100 shadow-xl position1">
       <div class="card-body items-center">
-        <h1 class="text-2xl font-bold center">Register</h1>
+        <h1 class="text-2xl font-bold center">Add User</h1>
       </div>
       <div class="center font-bold">
         Name: <span style="color: red">*</span><br />
@@ -128,7 +128,7 @@ function emailValidate() {
             clearInput();
           "
         >
-          Register
+          Add user
         </button>
       </div>
     </div>
