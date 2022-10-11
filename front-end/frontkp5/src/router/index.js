@@ -6,7 +6,7 @@ import Schedules from "../views/Schedules.vue";
 import Booking from "../views/Booking.vue";
 import EventCategory from "../views/EventCategory.vue";
 import Users from "../views/User.vue";
-import Register from "../views/Register.vue";
+import AddUser from "../views/AddUser.vue";
 import Login from "../views/LoginPage.vue";
 
 const history = createWebHistory("/kp5/");
