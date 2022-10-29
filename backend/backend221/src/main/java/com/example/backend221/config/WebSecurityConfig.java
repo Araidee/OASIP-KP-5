@@ -7,6 +7,7 @@ import com.example.backend221.services.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -64,10 +65,11 @@ import java.util.List;
         corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "IsRefreshToken"));
-        httpSecurity.csrf().disable().cors().configurationSource(request -> corsConfiguration).and()
-                    .authorizeRequests()
-                    .antMatchers("/api/events","/api/events/*").hasAnyAuthority("admin","student")
-                    .antMatchers("/api/jwt/login").permitAll()
+        httpSecurity.csrf().disable().cors().configurationSource(request -> corsConfiguration.applyPermitDefaultValues()).and()
+                    .authorizeRequests().antMatchers("/api/jwt/login").permitAll()
+                .and().authorizeRequests().antMatchers("/api/jwt/refresh").permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/users").permitAll()
+                .antMatchers("/api/events","/api/events/*").hasAnyAuthority("admin","student")
                     .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
                     .antMatchers("/api/users","/api/users/*","/api/match").hasAuthority("admin")
 //                    .antMatchers("/api/users").authenticated()
