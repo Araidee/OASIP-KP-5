@@ -69,11 +69,13 @@ import java.util.List;
                     .authorizeRequests().antMatchers("/api/jwt/login").permitAll()
                 .and().authorizeRequests().antMatchers("/api/jwt/refresh").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/users").permitAll()
-                .antMatchers("/api/events","/api/events/*").hasAnyAuthority("admin","student")
-                    .antMatchers("/api/eventCategories","/api/eventCategories/*").permitAll()
-                    .antMatchers("/api/users","/api/users/*","/api/match").hasAuthority("admin")
-//                    .antMatchers("/api/users").authenticated()
-//                    .anyRequest("/users").authenticated()
+                //adding every role
+                .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("ADMIN","STUDENT",null,"")
+                //event get all 3 roles
+                .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("ADMIN","STUDENT","LECTURER")
+                //admin can get users
+                .and().authorizeRequests().antMatchers("/api/users").hasAnyAuthority("ADMIN")
+                
                     .anyRequest().authenticated()
                     .and()
 

@@ -31,7 +31,7 @@ public class EventController implements WebMvcConfigurer {
         this.eventCategoryService = eventCategoryService;
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<Event> getEvents(){
         return repository.findAll(Sort.by(Sort.Direction.ASC,"eventStartTime"));
 
@@ -77,7 +77,7 @@ public class EventController implements WebMvcConfigurer {
         return  repository.getByDay(justDate);
     }
 
-    @PostMapping("")
+    @PostMapping("/adding")
     @ResponseStatus(HttpStatus.CREATED)
     public Event createEvent(@RequestBody @Valid  EventDTO newEvent) {
 //        return EventService.save(newEvent)
