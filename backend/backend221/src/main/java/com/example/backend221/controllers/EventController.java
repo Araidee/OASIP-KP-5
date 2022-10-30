@@ -1,6 +1,8 @@
 package com.example.backend221.controllers;
 
+import com.example.backend221.dtos.EditEventDTO;
 import com.example.backend221.dtos.EventDTO;
+import com.example.backend221.dtos.SimpleEventDTO;
 import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.services.EventCategoryService;
@@ -8,11 +10,15 @@ import com.example.backend221.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -39,8 +45,8 @@ public class EventController implements WebMvcConfigurer {
     }
 
     @GetMapping("/{id}")
-    public EventDTO getEventById(@PathVariable Integer id){
-        return this.eventService.getEventDTO(id);
+    public ResponseEntity getEventById(@PathVariable Integer id , HttpServletRequest request) {
+        return eventService.getSimpleEventById(id,request);
     }
 
 
@@ -79,11 +85,11 @@ public class EventController implements WebMvcConfigurer {
 
     @PostMapping("/adding")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event createEvent(@RequestBody @Valid  EventDTO newEvent) {
+    public ResponseEntity createEvent(@RequestBody @Valid  EventDTO newEvent, HttpServletRequest request) throws MethodArgumentNotValidException, MessagingException, IOException {
 //        return EventService.save(newEvent)
 //        return ResponseEntity.ok("User is valid");
-
-        return eventService.save(newEvent);
+        System.out.println("postmapping");
+        return eventService.create(newEvent, request);
     }
 //    @PostMapping("")
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -95,29 +101,29 @@ public class EventController implements WebMvcConfigurer {
 //        }throw new RuntimeException(failed);
 //    }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){
-        repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,id+"Event does not exist"));
-        repository.deleteById(id);
-
+    public ResponseEntity delete(@PathVariable Integer id, HttpServletRequest request){
+        return eventService.deleteEventById(id, request);
     }
 
     @PutMapping("/{id}")
-    public Event update(@RequestBody @Valid  Event updateEvent,@PathVariable Integer id){
-        Event event = repository.findById(id).map(o->mapEvent(o,updateEvent))
-                .orElseGet(()->
-                {
-                    updateEvent.setId(id);
-                    return updateEvent;
-                });
-        return repository.saveAndFlush(event);
+    public ResponseEntity update(@Valid @RequestBody EditEventDTO update, @PathVariable int id, HttpServletRequest request) {
+        return eventService.editEvent(update, id, request);
     }
-
     private Event mapEvent(Event existingEvent, Event updateEvent) {
         existingEvent.setEventStartTime(updateEvent.getEventStartTime());
         existingEvent.setEventNotes(updateEvent.getEventNotes());
         return existingEvent;
     }
-
+    @GetMapping("/filtration")
+    public List<SimpleEventDTO> getEventByFilterCategory(@RequestParam(defaultValue = "0") int eventCategoryId,
+                                                         @RequestParam(defaultValue = "all") String pastOrFutureOrAll,
+                                                         @RequestParam(defaultValue = "") String date,
+                                                         @RequestParam(defaultValue = "0") int offsetMin,
+                                                         @RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "4") int pageSize,
+                                                         HttpServletRequest request) {
+        return eventService.getAllEventFilterByEventCategoryAndPassOrFutureOrAll(request, eventCategoryId, pastOrFutureOrAll, date, offsetMin, page, pageSize);
+    }
 }
 
 

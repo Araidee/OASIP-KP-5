@@ -19,7 +19,7 @@ public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
 
     public static final long JWT_TOKEN_30MIN = 30 * 60 * 1000;
-    public static final long JWT_TOKEN_DAYONE = 24 * 60 * 60 * 1000;
+    public static final long JWT_TOKEN_DAY = 24 * 60 * 60 * 1000;
     private int refreshExpirationDateInMs;
 
     @Value("${jwt.secret}")
@@ -63,7 +63,7 @@ public class JwtTokenUtil implements Serializable {
 //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject, Collection<? extends GrantedAuthority> roles, String name,long time) {
         if(time==1){
-            time = JWT_TOKEN_DAYONE;
+            time = JWT_TOKEN_DAY;
         }else {
             time = JWT_TOKEN_30MIN;
         }
