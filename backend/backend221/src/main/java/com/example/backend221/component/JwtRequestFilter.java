@@ -43,9 +43,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 String requestURL = request.getRequestURL().toString();
                 // allow for Refresh Token creation if following conditions are true.
                 Claims claims = getAllClaimsFromToken(jwtToken);
-                if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refresh")) {
+                if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refresh"))
+                {
+                    System.out.println("1");
                     if(claims.getExpiration().getTime() - claims.getIssuedAt().getTime() == 86400000){
+                        System.out.println("2");
                         if(claims.getExpiration().getTime() > Instant.now().toEpochMilli()) {
+                            System.out.println("3");
                             allowForRefreshToken(claims, request);
                         }
                     }

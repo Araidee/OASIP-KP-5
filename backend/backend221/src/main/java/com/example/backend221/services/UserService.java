@@ -131,22 +131,22 @@ public class UserService {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password Incorrect");
     }
-    public ResponseEntity refreshToken(HttpServletRequest request) throws Exception {
-        // From the HttpRequest get the claims
-        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
-        HashMap<String, String> objectToResponse = new HashMap<String, String>();
-        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
-        String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
-        objectToResponse.put("token", token);
-        return ResponseEntity.ok(objectToResponse);
-    }
-    public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
-        Map<String, Object> expectedMap = new HashMap<String, Object>();
-        for (Map.Entry<String, Object> entry : claims.entrySet()) {
-            expectedMap.put(entry.getKey(), entry.getValue());
-        }
-        return expectedMap;
-    }
+//    public ResponseEntity refreshToken(HttpServletRequest request) throws Exception {
+//        // From the HttpRequest get the claims
+//        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+//        HashMap<String, String> objectToResponse = new HashMap<String, String>();
+//        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+//        String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
+//        objectToResponse.put("token", token);
+//        return ResponseEntity.ok(objectToResponse);
+//    }
+//    public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
+//        Map<String, Object> expectedMap = new HashMap<String, Object>();
+//        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+//            expectedMap.put(entry.getKey(), entry.getValue());
+//        }
+//        return expectedMap;
+//    }
     //    private UserDTO convertEntityToDto(Event event) {
 //        UserDTO userDTO = new UserDTO();
 //        UserDTO.setId(event.getId());

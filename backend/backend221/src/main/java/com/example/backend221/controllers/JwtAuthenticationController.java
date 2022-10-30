@@ -60,7 +60,7 @@ public class JwtAuthenticationController {
             final String token2 = jwtTokenUtil.generateRefreshToken(user, myUser.getName());
             HashMap<String, String> objectToResponse = new HashMap<String, String>();
             objectToResponse.put("token", token);
-//            objectToResponse.put("refreshtoken", token2);
+            objectToResponse.put("refreshToken", token2);
             return ResponseEntity.ok(objectToResponse);
         }
         else  return ResponseEntity.status(404).body("Password Invaild");
@@ -77,14 +77,14 @@ public class JwtAuthenticationController {
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
         HashMap<String, String> objectToResponse = new HashMap<String, String>();
         // From the HttpRequest get the claims
+        System.out.println(request);
         DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
         if(claims == null){
             return ResponseEntity.status(403).body("Claims == null, Can't Refresh");
         }
-
         Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
         String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
         objectToResponse.put("token", token);
