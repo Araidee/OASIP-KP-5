@@ -30,7 +30,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
         List<Event> findAllByBookingEmail(String bookingEmail, Sort sort);
 
-        @Query(value = "select e.* from event e join eventCategory ec on e.event_category_id = ec.event_category_id join event_category_owner eco on ec.event_category_id = eco.event_category_id where eco.user_id = :lecturer_id order by e.event_start_time desc", nativeQuery = true)
+        @Query(value = "select e.* from event e join eventCategory ec on e.eventCategory = ec.categoryId join eventCategoryOwner eco on ec.categoryId = eco.eventCategoryID where eco.userID = :lecturer_id order by e.eventStartTime desc", nativeQuery = true)
         List<Event> findAllEventByLecturerCategory(Integer lecturer_id);
         List<Event> findAllByEventCategoryId(Integer eventCategoryId, Pageable pageable);
         List<Event> findAllByBookingEmailAndEventCategoryId(String email, Integer eventCategoryId, Pageable pageable);

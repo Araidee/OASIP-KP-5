@@ -30,11 +30,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String requestTokenHeader = request.getHeader("Authorization");
-        System.out.println("header: "+ requestTokenHeader);
+        System.out.println("header: "+ requestTokenHeader + "  " + "No Token or Token is Invalid");
         String email = null;
         String jwtToken = null;
         // JWT Token is in the form "Bearer token". Remove Bearer word and get
         // only the Token
+
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
@@ -97,6 +98,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     .getBody();
         } catch (Exception e) {
             claims = null;
+
         }
         return claims;
     }

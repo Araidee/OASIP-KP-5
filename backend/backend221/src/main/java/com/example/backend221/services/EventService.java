@@ -83,12 +83,8 @@ public class EventService {
             return getEventByEmail(userName);
         }
         if (user.getRole().name() == "lecturer") {
-            List<Event> bookingList = eventRepository.findAll(Sort.by("eventStartTime").descending());
-            List<EventCategoryOwner> ownerList = eventCategoryOwnerRepository.findByUserID(user.getName());
-            List<Event> bookings = new ArrayList<>();
-            checkConditionLecturer(bookingList, ownerList, bookings);
-            bookings.sort(Comparator.comparing(Event::getEventStartTime).reversed());
-            return listMapper.mapList(bookings, SimpleEventDTO.class, modelMapper);
+            int lecturerId = user.getId();
+            return listMapper.mapList(eventRepository.findAllEventByLecturerCategory(lecturerId), SimpleEventDTO.class, modelMapper);
         }
         if (user.getRole().name() == "admin") {
             List<Event> EventList = eventRepository.findAll(Sort.by("eventStartTime").descending());
