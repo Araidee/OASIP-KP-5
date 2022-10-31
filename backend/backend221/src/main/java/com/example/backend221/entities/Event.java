@@ -1,11 +1,15 @@
 package com.example.backend221.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.time.Instant;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "event")
 public class Event {
@@ -31,59 +35,4 @@ public class Event {
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
 
-    public Integer getEventDuration() {
-        return eventDuration;
-    }
-
-    public void setEventDuration(Integer eventDuration) {
-        this.eventDuration = eventDuration;
-    }
-
-    public EventCategory getEventCategory() {
-        return eventCategory;
-    }
-
-    public void setEventCategory(EventCategory eventCategory) {
-        this.eventCategory = eventCategory;
-    }
-
-    public String getEventNotes() {
-        return eventNotes;
-    }
-
-    public void setEventNotes(String eventNotes) {
-        this.eventNotes = eventNotes;
-    }
-
-    public Instant getEventStartTime() {
-        return eventStartTime;
-    }
-
-    public void setEventStartTime(Instant eventStartTime) {
-        this.eventStartTime = eventStartTime;
-    }
-
-    public String getBookingName() {
-        return bookingName;
-    }
-
-    public void setBookingName(String bookingName) {
-        this.bookingName = bookingName;
-    }
-
-    public String getBookingEmail() {
-        return bookingEmail;
-    }
-
-    public void setBookingEmail(String bookingEmail) {
-        this.bookingEmail = bookingEmail;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

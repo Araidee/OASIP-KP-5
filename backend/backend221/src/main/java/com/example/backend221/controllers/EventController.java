@@ -38,9 +38,8 @@ public class EventController implements WebMvcConfigurer {
     }
 
     @GetMapping("/all")
-    public List<Event> getEvents(){
-        return repository.findAll(Sort.by(Sort.Direction.ASC,"eventStartTime"));
-
+    public List<SimpleEventDTO> getAllEvent(HttpServletRequest request) {
+        return eventService.getAllEvent(request);
 
     }
 

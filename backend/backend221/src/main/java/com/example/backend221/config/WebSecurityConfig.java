@@ -53,14 +53,18 @@ import java.util.List;
     private PasswordEncoder argon2PasswordEncoder() {
             return new Argon2PasswordEncoder(16,29,1,16,2);
     }
-
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH","PUT","DELETE"));
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
     @Override
         protected void configure(HttpSecurity httpSecurity) throws Exception{
-//            httpSecurity
-//                    .cors().and()
-//                    .csrf().disable()
-//                    .anonymous().and()
-
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
@@ -72,9 +76,9 @@ import java.util.List;
                 //adding every role
                 .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("admin","student",null,"")
                 //event get all 3 roles
-                .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","LECTURER")
+                .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users
-                .and().authorizeRequests().antMatchers("/api/users").hasAnyAuthority("admin")
+                .and().authorizeRequests().antMatchers("/api/users","/api/match").hasAnyAuthority("admin")
 
                     .anyRequest().authenticated()
                     .and()
