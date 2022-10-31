@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, computed } from "vue";
 import { cookieData } from "../stores/cookieData.js";
+import { loginState } from "../stores/loginState";
 import EventList from "../components/EventList.vue";
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
@@ -8,13 +9,15 @@ const events = ref([]);
 const categoryIdTemp = ref("");
 const eventCategories = ref([]);
 const cookie = cookieData();
+const isLogin = loginState();
 const now = ref(new Date(Date.now()).toISOString());
 // const eventsByCategoryId = ref([]);
 onBeforeMount(async () => {
-  await getEvents();
   await getEventCategories();
+  await getEvents();
 });
 //GET
+
 const getEvents = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
   const res = await fetch(`${url}/events/all`, {
@@ -26,6 +29,17 @@ const getEvents = async () => {
   // const res = await fetch(`${import.meta.env.VUE_APP_BASE_URL}/events`);
   if (res.status === 200) {
     events.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 const getEventsByCategoryId = async (id) => {
@@ -38,6 +52,17 @@ const getEventsByCategoryId = async (id) => {
   });
   if (res.status === 200) {
     events.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 const getPastEvents = async (isotime) => {
@@ -50,6 +75,17 @@ const getPastEvents = async (isotime) => {
   });
   if (res.status === 200) {
     events.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 const getUpcomingEvents = async (isotime) => {
@@ -62,6 +98,17 @@ const getUpcomingEvents = async (isotime) => {
   });
   if (res.status === 200) {
     events.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 const getEventCategories = async () => {
@@ -74,6 +121,17 @@ const getEventCategories = async () => {
   });
   if (res.status === 200) {
     eventCategories.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 
@@ -95,6 +153,17 @@ const removeEvent = async (removeEventId) => {
       alert("Event removed!");
       console.log("deleted successfullly");
     } else console.log("error, cannot delete");
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Delete was canceled");
 };
 //PUT
@@ -126,9 +195,21 @@ const editEvent = async (editingEvent) => {
     );
     alert("Edited!");
     console.log("edited successfully");
-  } if (res.status === 400) {
+  }
+  if (res.status === 400) {
     alert("You cannot update other user's events");
-  } else console.log("error, cannot edit"); 
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
+  } else console.log("error, cannot edit");
 };
 </script>
 

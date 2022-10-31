@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, defineAsyncComponent } from "vue";
-import { cookieData } from  "../stores/cookieData.js" ;
+import { cookieData } from "../stores/cookieData.js";
+import { loginState } from "../stores/loginState.js";
 defineEmits(["editCategory"]);
 const props = defineProps({
   eventCategories: {
@@ -11,6 +12,7 @@ const props = defineProps({
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
 const cookie = cookieData();
+const isLogin = loginState();
 const successInput = "input input-bordered input-success w-full max-w-xs";
 const errorInput = "input input-bordered input-error w-full max-w-xs";
 const descriptionMax = 500;
@@ -34,6 +36,17 @@ const getEventCategoryById = async (id) => {
     editEventCategoryDescription.value =
       eventCategoryDetails.value.eventCategoryDescription;
     editEventCategoryDuration.value = eventCategoryDetails.value.eventDuration;
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 // const clearInput = () => {

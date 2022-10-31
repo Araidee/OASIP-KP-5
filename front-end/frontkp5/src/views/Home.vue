@@ -1,5 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { loginState } from "../stores/loginState";
+const isLogin = loginState();
 const appRouter = useRouter();
 </script>
 
@@ -19,7 +21,7 @@ const appRouter = useRouter();
     </div>
     <div class="button-space">
       <button
-        class="btn btn-primary"
+        :class="isLogin.loginUser.role == 'lecturer'? 'hidden':'btn btn-primary'"
         @click="appRouter.push({ path: '/booking', replace: true })"
       >
         Booking Now!
