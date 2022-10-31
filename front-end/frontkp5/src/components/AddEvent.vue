@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { loginState } from "../stores/loginState.js";
 defineEmits(["addEvent"]);
 const props = defineProps({
   events: {
@@ -11,7 +12,7 @@ const props = defineProps({
     default: [],
   },
 });
-
+const isLogin = loginState();
 const bookingName = ref("");
 const bookingEmail = ref("");
 const eventStartTime = ref("");
@@ -70,9 +71,9 @@ function emailValidate() {
           id="email"
           v-model="bookingEmail"
           placeholder="Type Email here"
-          :class="bookingEmail == '' ? errorInput : successInput"
+          :class="((bookingEmail != '') && (bookingEmail == isLogin.loginUser.email)) ? successInput : errorInput"
           required
-        /><br />
+        /><p :class="bookingEmail == isLogin.loginUser.email ? 'hidden' : 'text-sm text-red-500' ">Booking email must be the same email as the student's email</p>
       </div>
       <div class="center font-weight-bold">
         Category: <span style="color: red">*</span><br />

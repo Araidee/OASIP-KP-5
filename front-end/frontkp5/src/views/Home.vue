@@ -5,18 +5,18 @@ const appRouter = useRouter();
 
 <template>
   <div>
-    <div class="tooltip tooltip-secondary" data-tip="Hello We from KP05 :D">
+    <div class="tooltip tooltip-secondary" data-tip="Hello We're from KP05 :D">
       <button>
         <h1 class="text-9xl font-bold">
           Welcome to <br />
           OASIP
         </h1>
       </button>
+      <h3 class="text-lg">
+        Online Appointment Scheduling System for Integrated Project Clinics
+      </h3>
+      <br />
     </div>
-    <h3 class="text-lg">
-      Online Appointment Scheduling System for Integrated Project Clinics
-    </h3>
-    <br />
     <div class="button-space">
       <button
         class="btn btn-primary"

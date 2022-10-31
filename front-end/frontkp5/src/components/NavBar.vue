@@ -1,9 +1,65 @@
 <script setup>
+import { computed } from "@vue/reactivity";
 import { useRouter } from "vue-router";
+import { cookieData } from "../stores/cookieData.js";
+import { loginState } from "../stores/loginState.js";
 import Araideeicon from "./icons/araideeicon.vue";
 
 const appRouter = useRouter();
-const GoSearch = () => appRouter.push({ name: "Home" });
+const cookie = cookieData();
+let isLogin = loginState();
+const signOut = () => {
+  if (confirm("Are you sure you want to sign out?")) {
+    isLogin.setLogin();
+    isLogin.clearLoginUser();
+    cookie.eraseCookie("token");
+    cookie.eraseCookie("refreshToken");
+    alert("Successfully Sign Out");
+    appRouter.push("/login");
+  }
+};
+let btnVisibleClass = "btn btn1 btn-active btnall";
+let invisibleClass = "hidden";
+const adminNav = computed(() => {
+  switch (isLogin.loginUser.role) {
+    case "admin":
+      return btnVisibleClass;
+    case "user":
+      return invisibleClass;
+    case "lecturer":
+      return invisibleClass;
+    default:
+      return invisibleClass;
+  }
+});
+
+const lecturerNav = computed(() => {
+  switch (isLogin.loginUser.role) {
+    case "admin":
+      return btnVisibleClass;
+    case "user":
+      return btnVisibleClass;
+    case "lecturer":
+      return invisibleClass;
+    default:
+      return btnVisibleClass;
+  }
+});
+
+const guestNav = computed(() => {
+  switch (isLogin.loginUser.role) {
+    case "admin":
+      return btnVisibleClass;
+    case "user":
+      return btnVisibleClass;
+    case "lecturer":
+      return btnVisibleClass;
+    case "Guest":
+      return invisibleClass;
+    default:
+      return btnVisibleClass;
+  }
+});
 </script>
 
 <template>
@@ -29,39 +85,71 @@ const GoSearch = () => appRouter.push({ name: "Home" });
             </button>
             <button
               @click="$router.push('EventCategory')"
-              class="btn btn-active btnall btn1"
+              :class="guestNav"
             >
               Event Categories
             </button>
             <button
               @click="$router.push('Booking')"
-              class="btn btn-active btnall btn1"
+              :class="lecturerNav"
             >
               Booking
             </button>
             <button
               @click="$router.push('Users')"
-              class="btn btn-active btnall btn1"
+              :class="adminNav"
             >
               Users
-            </button>
-            <button
-              @click="$router.push('Login')"
-              class="btn btn-active btnall btn1"
-            >
-              Login
-            </button>
-            <button
-              @click="$router.push('AddUser')"
-              class="btn btn-active btnall btn1"
-            >
-              Add User
             </button>
             <button
               @click="$router.push('About')"
               class="btn btn-active btnall btn1"
             >
               About us
+            </button>
+          </div>
+        </div>
+        <!-- right header section -->
+        <div class="flex items-center order-last space-x-2">
+          <a href="#" class="p-2 rounded-full bg-blue-50">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6 text-gray-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </a>
+          <h1 class="userText">Welcome {{ isLogin.loginUser.name }}</h1>
+          <div>
+            <button
+              :class="
+                isLogin.isLogin == false ? btnVisibleClass  : invisibleClass
+              "
+              @click="$router.push('Login')"
+            >
+              Sign in
+            </button>
+            <button
+              :class="
+                isLogin.isLogin == true ? btnVisibleClass : invisibleClass
+              "
+              @click="signOut"
+            >
+              Sign Out
+            </button>
+            <button
+              :class="adminNav"
+              @click="$router.push('AddUser')"
+            >
+              Add User
             </button>
           </div>
         </div>
@@ -97,6 +185,13 @@ body {
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
+}
+
+.userText {
+  color: #5c7f67;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: "Lato", sans-serif;
 }
 
 .btn-10 {

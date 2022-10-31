@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import { cookieData } from "../stores/cookieData.js";
 defineEmits(["delete, edit"]);
 const props = defineProps({
   users: {
@@ -7,7 +8,9 @@ const props = defineProps({
     default: [],
   },
 });
-
+const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
+const cookie = cookieData();
+// const url = "http://202.44.9.103:8080/kp5/api";
 const myUser = computed(() => {
   let userList = [];
   props.users.forEach((element) => {
@@ -35,12 +38,18 @@ const clearInput = () => {
 };
 const getUserById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/users/${id}`);
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/users/${id}`
-  );
+  const res = await fetch(`${url}/users/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     UserDetails.value = await res.json();
     console.log(UserDetails.value);
+  } else if (res.status === 401) {
+    alert("Please login first");
+    window.location.href = "/login";
   } else console.log("Error, cannot get data");
 };
 </script>

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, defineAsyncComponent } from "vue";
+import { cookieData } from  "../stores/cookieData.js" ;
 defineEmits(["editCategory"]);
 const props = defineProps({
   eventCategories: {
@@ -7,6 +8,9 @@ const props = defineProps({
     default: [],
   },
 });
+const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
+// const url = "http://202.44.9.103:8080/kp5/api";
+const cookie = cookieData();
 const successInput = "input input-bordered input-success w-full max-w-xs";
 const errorInput = "input input-bordered input-error w-full max-w-xs";
 const descriptionMax = 500;
@@ -18,9 +22,12 @@ const getEventCategoryById = async (id) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${id}`
   // );
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${id}`
-  );
+  const res = await fetch(`${url}/eventCategories/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     eventCategoryDetails.value = await res.json();
     editEventCategoryName.value = eventCategoryDetails.value.eventCategoryName;
