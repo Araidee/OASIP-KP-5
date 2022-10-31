@@ -11,7 +11,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OverLapDTO {
+public class OverLabDTO {
     private Instant eventStartTime;
     private EventCategory eventCategory;
     private Integer eventDuration;

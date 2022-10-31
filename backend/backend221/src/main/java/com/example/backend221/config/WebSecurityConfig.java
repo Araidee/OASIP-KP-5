@@ -72,6 +72,7 @@ import java.util.List;
         httpSecurity.csrf().disable().cors().configurationSource(request -> corsConfiguration.applyPermitDefaultValues()).and()
                     .authorizeRequests().antMatchers("/api/jwt/login").permitAll()
                 .and().authorizeRequests().antMatchers("/api/jwt/refresh").permitAll()
+                .and().authorizeRequests().antMatchers("/api/eventCategories").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/users").permitAll()
                 //adding every role
                 .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("admin","student",null,"")
@@ -79,7 +80,7 @@ import java.util.List;
                 .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users
                 .and().authorizeRequests().antMatchers("/api/users","/api/match","/api/events").hasAnyAuthority("admin")
-
+//                .and().authorizeRequests().antMatchers(HttpMethod.PUT,"/api/events").hasAnyAuthority("admin")
                     .anyRequest().authenticated()
                     .and()
 

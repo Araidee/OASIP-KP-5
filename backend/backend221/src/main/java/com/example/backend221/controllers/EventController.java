@@ -100,19 +100,15 @@ public class EventController implements WebMvcConfigurer {
 //        }throw new RuntimeException(failed);
 //    }
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Integer id, HttpServletRequest request){
-        return eventService.deleteEventById(id, request);
+    public void deleteEventById(@PathVariable Integer id, HttpServletRequest request){
+        eventService.deleteEventById(id, request);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@Valid @RequestBody EditEventDTO update, @PathVariable int id, HttpServletRequest request) {
-        return eventService.editEvent(update, id, request);
+    public EditEventDTO editEvent(@Valid @RequestBody EditEventDTO editEvent, @PathVariable int id, HttpServletRequest request) {
+        return eventService.editEvent(request,editEvent,id);
     }
-    private Event mapEvent(Event existingEvent, Event updateEvent) {
-        existingEvent.setEventStartTime(updateEvent.getEventStartTime());
-        existingEvent.setEventNotes(updateEvent.getEventNotes());
-        return existingEvent;
-    }
+
     @GetMapping("/filtration")
     public List<SimpleEventDTO> getEventByFilterCategory(@RequestParam(defaultValue = "0") int eventCategoryId,
                                                          @RequestParam(defaultValue = "all") String pastOrFutureOrAll,

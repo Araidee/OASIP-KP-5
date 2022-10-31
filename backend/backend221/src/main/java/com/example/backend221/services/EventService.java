@@ -4,8 +4,9 @@ import com.example.backend221.Enum.Role;
 import com.example.backend221.component.JwtTokenUtil;
 import com.example.backend221.dtos.*;
 import com.example.backend221.entities.Event;
-import com.example.backend221.entities.EventCategory;
+import com.example.backend221.entities.EventCategoryOwner;
 import com.example.backend221.entities.User;
+import com.example.backend221.repositories.EventCategoryOwnerRepository;
 import com.example.backend221.repositories.EventCategoryRepository;
 import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.repositories.UserRepository;
@@ -29,9 +30,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -53,50 +52,79 @@ public class EventService {
         private EventRepository eventRepository;
         public EventService() {
         }
+        @Autowired
+        private EventCategoryOwnerRepository eventCategoryOwnerRepository;
 
-    public List<SimpleEventDTO> getAllEvent(HttpServletRequest request){
-        String requestTokenHeader = request.getHeader("Authorization");
-        if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
-            String header = requestTokenHeader.substring(7);
-            String email = jwtTokenUtil.getUsernameFromToken(header);
-            User user = userRepository.findByEmail(email);
-            Role myRole = user.getRole();
-            System.out.println(myRole.equals((Role.student).toString()));
-            System.out.println(email);
-            if(myRole.equals(Role.student.toString())){
-                return listMapper.mapList(eventRepository.findAllByBookingEmail(email , Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
-            } else if (myRole.equals(Role.admin.toString())){
-                return listMapper.mapList(eventRepository.findAll(Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
-            } else if(myRole.equals(Role.lecturer.toString())) {
-                int lecturerId = user.getId();
-                return listMapper.mapList(eventRepository.findAllEventByLecturerCategory(lecturerId), SimpleEventDTO.class, modelMapper);
+//    public List<SimpleEventDTO> getAllEvent(HttpServletRequest request){
+//        String requestTokenHeader = request.getHeader("Authorization");
+//        if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
+//            String header = requestTokenHeader.substring(7);
+//            String email = jwtTokenUtil.getUsernameFromToken(header);
+//            User user = userRepository.findByEmail(email);
+//            Role myRole = user.getRole();
+//            System.out.println(myRole.equals((Role.student).toString()));
+//            System.out.println(email);
+//            if(myRole.equals(Role.student.toString())){
+//                return listMapper.mapList(eventRepository.findAllByBookingEmail(email , Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
+//            } else if (myRole.equals(Role.admin.toString())){
+//                return listMapper.mapList(eventRepository.findAll(Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
+//            } else if(myRole.equals(Role.lecturer.toString())) {
+//                int lecturerId = user.getId();
+//                return listMapper.mapList(eventRepository.findAllEventByLecturerCategory(lecturerId), SimpleEventDTO.class, modelMapper);
+//            }
+//        }
+//        return listMapper.mapList(eventRepository.findAll(Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
+//    }
+    public List<SimpleEventDTO> getAllEvent(HttpServletRequest request) {
+        String requestToken = request.getHeader("Authorization").substring(7);
+        String userName = jwtTokenUtil.getUsernameFromToken(requestToken);
+        User user = userRepository.findByEmail(userName);
+        if (user.getRole().name() == "student") {
+            return getEventByEmail(userName);
+        }
+        if (user.getRole().name() == "lecturer") {
+            List<Event> bookingList = eventRepository.findAll(Sort.by("eventStartTime").descending());
+            List<EventCategoryOwner> ownerList = eventCategoryOwnerRepository.findByUserID(user.getName());
+            List<Event> bookings = new ArrayList<>();
+            checkConditionLecturer(bookingList, ownerList, bookings);
+            bookings.sort(Comparator.comparing(Event::getEventStartTime).reversed());
+            return listMapper.mapList(bookings, SimpleEventDTO.class, modelMapper);
+        }
+        if (user.getRole().name() == "admin") {
+            List<Event> EventList = eventRepository.findAll(Sort.by("eventStartTime").descending());
+            return listMapper.mapList(EventList, SimpleEventDTO.class, modelMapper);
+        } else {
+            List<SimpleEventDTO> emptyEvent = new ArrayList<>();
+            return emptyEvent;
+        }
+    }
+        //get all Event with student role
+
+    private List<SimpleEventDTO> getEventByEmail(String user) {
+        List<Event> EventList = eventRepository.findEventByBookingEmailOrderByEventStartTimeDesc(user);
+        return listMapper.mapList(EventList, SimpleEventDTO.class, modelMapper);
+    }
+
+
+    private void checkConditionLecturer(List<Event> events, List<EventCategoryOwner> owners, List<Event> filter) {
+        if (events != null && owners != null) {
+            for (EventCategoryOwner owner : owners) {
+                for (Event e : events) {
+                    if(owner.getEventCategoryID().getId() == e.getEventCategory().getId()) {
+                        filter.add(e);
+                    }
+                }
             }
         }
-        return listMapper.mapList(eventRepository.findAll(Sort.by(Sort.Direction.DESC, "eventStartTime")), SimpleEventDTO.class, modelMapper);
     }
-//    public List<SimpleEventDTO> getEvent(HttpServletRequest request){
-//            String requestToken = request.getHeader("Authorization").substring(7);
-//            String userName = jwtTokenUtil.getUsernameFromToken(requestToken);
-//            User user = userRepository.findByEmail(userName);
-//            if(user.getRole().name() == "student"){
-//                return getEventByEmail(userName);
-//            } if (user.getRole().name() == "admin"){
-//                List<Event> EventList = eventRepository.findAll(Sort.by(Sort.Direction.DESC, "eventStartTime"));
-//                return listMapper.mapList(eventRepository.findAllEventByLecturerCategory(lecturerId), SimpleEventDTO.class, modelMapper);
-//        }
-//    }
-    //get all Event with student role
-    public List<SimpleEventDTO> getEventByEmail(String user){
-        List<Event> EventList = eventRepository.findEventByBookingEmailOrderByEventStartTimeDesc(user);
-        return  listMapper.mapList(EventList,SimpleEventDTO.class,modelMapper);
-    }
+
     //get Event with student role
-    public List<SimpleEventDTO> getBookingByEmail(HttpServletRequest request){
-        String requestToken = request.getHeader("Authorization").substring(7);
-        String user = jwtTokenUtil.getUsernameFromToken(requestToken);
-        List<Event> EventList = eventRepository.findEventByBookingEmailOrderByEventStartTimeDesc(user);
-        return  listMapper.mapList(EventList,SimpleEventDTO.class,modelMapper);
-    }
+//    public List<SimpleEventDTO> getEventByEmail(HttpServletRequest request){
+//        String requestToken = request.getHeader("Authorization").substring(7);
+//        String user = jwtTokenUtil.getUsernameFromToken(requestToken);
+//        List<Event> EventList = eventRepository.findEventByBookingEmailOrderByEventStartTimeDesc(user);
+//        return  listMapper.mapList(EventList,SimpleEventDTO.class,modelMapper);
+//    }
     public List<SimpleEventDTO> getAllEventFilterByEventCategoryAndPassOrFutureOrAll(HttpServletRequest request, Integer eventCategoryId, String pastOrFutureOrAll, String date, int offsetMin, int page, int pageSize) {
         String requestTokenHeader = request.getHeader("Authorization");
         String myRole = "";
@@ -177,27 +205,24 @@ public class EventService {
         }
 
         //delete
-        public ResponseEntity deleteEventById(Integer id, HttpServletRequest request) {
+        public void deleteEventById(Integer id, HttpServletRequest request) {
 
-            String requestTokenHeader = request.getHeader("Authorization");
-            if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-                String header = requestTokenHeader.substring(7);
-                String email = jwtTokenUtil.getUsernameFromToken(header);
-                Role myRole = userRepository.findByEmail(email).getRole();
-                Event event = eventRepository.findById(id)
-                        .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, " id " + id +
-                                "Does Not Exist !!!"
-                        ));
-                if(!myRole.equals((Role.admin).toString())){
-                    if(!email.equals(event.getBookingEmail())){
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your Booking Email is not match with your account");
-                    }
-                }
-                eventRepository.deleteById(id);
-                return ResponseEntity.status(HttpStatus.OK).body(id);
+            String requestToken = request.getHeader("Authorization").substring(7);
+            String userName = jwtTokenUtil.getUsernameFromToken(requestToken);
+            User user = userRepository.findByEmail(userName);
+            try{
+                if ( (user.getRole().name() == "admin") ||
+                        (user.getRole().name() == "student" && eventRepository.findEventByIdAndBookingEmail(id,userName).size() != 0) ) {
+                    eventRepository.findById(id).orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                    "Can't Found This Booking"));
+                    eventRepository.deleteById(id);
+                } else eventRepository.findById(null);
+            } catch (Exception ex) {
+                if(user.getRole().name() == "student"){
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,"The booking email must be the same as the student's email !",ex);
+                } else throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
-            else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You dont login pls login");
         }
 
         public ResponseEntity getSimpleEventById(Integer id , HttpServletRequest request) {
@@ -283,36 +308,55 @@ private void sendmail(Event event) throws AddressException, MessagingException, 
     Transport.send(msg);
 }
     //edit
-    public ResponseEntity editEvent(EditEventDTO editEvent , int id , HttpServletRequest request) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, " id " + id +
-                        "Does Not Exist !!!"
-                ));
+//    public ResponseEntity editEvent(EditEventDTO editEvent , int id , HttpServletRequest request) {
+//        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(
+//                        HttpStatus.NOT_FOUND, " id " + id +
+//                        "Does Not Exist !!!"
+//                ));
+//
+//        String requestTokenHeader = request.getHeader("Authorization");
+//        String jwtToken = requestTokenHeader.substring(7);
+//        String email = jwtTokenUtil.getUsernameFromToken(jwtToken);
+//        if(!event.getBookingEmail().equals(email)){
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Deleted Event booking email is not match with your email");
+//        }
+//        if(!checkTimeFuture(editEvent.getEventStartTime().toEpochMilli())){
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time Future Pls");
+//        }
+//
+//        int eventDuration = event.getEventDuration();
+//        EventCategory eventCategory = event.getEventCategory();
+//        if(!isOverLap(new OverLabDTO(editEvent.getEventStartTime(), eventCategory, eventDuration), id)){
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OverLab");
+//        }
+//
+//        event.setEventStartTime(editEvent.getEventStartTime());
+//        event.setEventNotes(editEvent.getEventNotes());
+//
+//        eventRepository.saveAndFlush(event);
+//
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(event);
+//    }
 
-        String requestTokenHeader = request.getHeader("Authorization");
-        String jwtToken = requestTokenHeader.substring(7);
-        String email = jwtTokenUtil.getUsernameFromToken(jwtToken);
-        if(!event.getBookingEmail().equals(email)){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Deleted Event booking email is not match with your email");
-        }
-        if(!checkTimeFuture(editEvent.getEventStartTime().toEpochMilli())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time Future Pls");
-        }
+    public EditEventDTO editEvent(HttpServletRequest request,EditEventDTO editEvent, Integer id) {
+        String requestToken = request.getHeader("Authorization").substring(7);
+        String userName = jwtTokenUtil.getUsernameFromToken(requestToken);
+        User user = userRepository.findByEmail(userName);
 
-        int eventDuration = event.getEventDuration();
-        EventCategory eventCategory = event.getEventCategory();
-        if(!isOverLap(new OverLapDTO(editEvent.getEventStartTime(), eventCategory, eventDuration), id)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OverLaped");
-        }
-
-        event.setEventStartTime(editEvent.getEventStartTime());
-        event.setEventNotes(editEvent.getEventNotes());
-
-        eventRepository.saveAndFlush(event);
-
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(event);
+        if ( user.getRole().name() == "admin" || (user.getRole().name() == "student" && eventRepository.findEventByIdAndBookingEmail(id,userName).size() != 0)) {
+            Event event = eventRepository.findById(id).map(o->mapEvent(o, editEvent))
+                    .orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.FORBIDDEN, "No ID : " + id));
+            eventRepository.saveAndFlush(event);
+            return modelMapper.map(event, EditEventDTO.class);
+        }else throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    }
+    private Event mapEvent(Event existingEvent, EditEventDTO updateEvent) {
+        existingEvent.setEventStartTime(updateEvent.getEventStartTime());
+        existingEvent.setEventNotes(updateEvent.getEventNotes());
+        return existingEvent;
     }
     public List<EventCheckDTO> getAllEventForOverLabFront(Integer eventId, Integer categoryId, String startTime){
         if(eventId != 0){
@@ -352,7 +396,7 @@ private void sendmail(Event event) throws AddressException, MessagingException, 
 //    private List <Event> getAllByEventCategory_IdAndAndEventStartTime(Integer categoryId, LocalDateTime present,LocalDateTime tomorrow){
 //            return repository.findAllByEventCategory_IdAndAndEventStartTime(categoryId,present,tomorrow);
 //     }
-public boolean isOverLap(OverLapDTO event, int id){
+public boolean isOverLap(OverLabDTO event, int id){
     long newEventStartTimeMilli = event.getEventStartTime().toEpochMilli();
     long newDurationMilli =  eventCategoryRepository.findEventCategoryById(event.getEventCategory().getId()).getEventDuration() * 60 * 1000;
 

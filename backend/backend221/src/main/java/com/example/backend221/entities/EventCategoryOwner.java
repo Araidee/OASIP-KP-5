@@ -2,10 +2,15 @@ package com.example.backend221.entities;
 
 import com.example.backend221.entities.EventCategory;
 import com.example.backend221.entities.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "eventCategoryOwner")
 public class EventCategoryOwner {
     @Id
@@ -16,8 +21,8 @@ public class EventCategoryOwner {
     @JoinColumn(name = "userID", nullable = false)
     private User userID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "eventCategoryID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "eventCategoryID", nullable = false)
     private EventCategory eventCategoryID;
 
     public Integer getId() {

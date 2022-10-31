@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
@@ -54,4 +55,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
 
         List<Event> findEventByBookingEmailOrderByEventStartTimeDesc(String user);
+
+        List<Event> findEventByIdAndBookingEmail(Integer id, String email);
 }
