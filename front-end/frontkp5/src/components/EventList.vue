@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import { cookieData } from "../stores/cookieData.js";
 defineEmits(["delete", "edit"]);
 const props = defineProps({
   events: {
@@ -11,7 +12,9 @@ const props = defineProps({
     default: [],
   },
 });
-
+const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
+// const url = "http://202.44.9.103:8080/kp5/api";
+const cookie = cookieData();
 const myEvent = computed(() => {
   let eventList = [];
   props.events.forEach((element) => {
@@ -41,15 +44,19 @@ const notesMax = 500;
 const EventDetails = ref({});
 const getEventById = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/${id}`);
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/events/${id}`
-  );
+  const res = await fetch(`${url}/events/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     EventDetails.value = await res.json();
-    console.log(EventDetails.value);
     editEventNotes.value = EventDetails.value.eventNotes;
     fetchEventCategoryName.value =
       EventDetails.value.eventCategory.eventCategoryName;
+  } else if (res.status === 401) {
+    alert("Please login first");
   } else console.log("Error, cannot get data");
 };
 </script>
@@ -142,7 +149,11 @@ const getEventById = async (id) => {
         <p class="py-4">Duration: {{ EventDetails.eventDuration }} minutes</p>
         <p class="py-4">
           Notes :
-          {{ EventDetails.eventNotes === null ? "-" : EventDetails.eventNotes }}
+          {{
+            EventDetails.eventNotes == null || EventDetails.eventNotes == ""
+              ? "-"
+              : EventDetails.eventNotes
+          }}
         </p>
         <div class="modal-action">
           <label for="detail-modal" class="btn">Yay!</label>

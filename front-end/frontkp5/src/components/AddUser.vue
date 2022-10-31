@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref } from "vue";
 defineEmits(["addUser"]);
 const props = defineProps({
   users: {

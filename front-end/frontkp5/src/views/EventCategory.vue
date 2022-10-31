@@ -1,16 +1,23 @@
 <script setup>
 import EventCategoryList from "../components/EventCategoryList.vue";
 import { ref, onBeforeMount } from "vue";
+import { cookieData } from "../stores/cookieData.js";
 const eventCategories = ref([]);
+const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
+// const url = "http://202.44.9.103:8080/kp5/api";
+const cookie = cookieData();
 onBeforeMount(async () => {
   await getEventCategories();
 });
 //GET
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  const res = await fetch(
-    "https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories"
-  );
+  const res = await fetch(`${url}/eventCategories`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
   if (res.status === 200) {
     eventCategories.value = await res.json();
@@ -21,11 +28,12 @@ const editEventCategory = async (editingEventCategory) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
   const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories/${editingEventCategory.categoryId}`,
+    `${url}/eventCategories/${editingEventCategory.categoryId}`,
     {
       method: "PUT",
       headers: {
         "content-type": "application/json",
+        Authorization: "Bearer " + cookie.getCookie("token"),
       },
       body: JSON.stringify({
         eventCategoryName: editingEventCategory.eventCategoryName,

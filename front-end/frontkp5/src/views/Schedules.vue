@@ -1,11 +1,14 @@
 <script setup>
 import { ref, onBeforeMount, computed } from "vue";
+import { cookieData } from "../stores/cookieData.js";
 import EventList from "../components/EventList.vue";
+const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
+// const url = "http://202.44.9.103:8080/kp5/api";
 const events = ref([]);
 const categoryIdTemp = ref("");
 const eventCategories = ref([]);
+const cookie = cookieData();
 const now = ref(new Date(Date.now()).toISOString());
-console.log(now.value);
 // const eventsByCategoryId = ref([]);
 onBeforeMount(async () => {
   await getEvents();
@@ -14,47 +17,66 @@ onBeforeMount(async () => {
 //GET
 const getEvents = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/events");
-  const res = await fetch(`https://intproj21.sit.kmutt.ac.th/kp5/api/events`);
+  const res = await fetch(`${url}/events/all`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
+  // const res = await fetch(`${import.meta.env.VUE_APP_BASE_URL}/events`);
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventsByCategoryId = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/events/category/${id}`
-  );
+  const res = await fetch(`${url}/events/category/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getPastEvents = async (isotime) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/past/${isotime}`);
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/events/past/${isotime}`
-  );
+  const res = await fetch(`${url}/events/past/${isotime}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getUpcomingEvents = async (isotime) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/upcoming/${isotime}`);
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/events/upcoming/${isotime}`
-  );
+  const res = await fetch(`${url}/events/upcoming/${isotime}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     events.value = await res.json();
   } else console.log("Error, cannot get data");
 };
 const getEventCategories = async () => {
   // const res = await fetch("http://202.44.9.103:8080/kp5/api/eventCategories");
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/eventCategories`
-  );
+  const res = await fetch(`${url}/eventCategories`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    },
+  });
   if (res.status === 200) {
     eventCategories.value = await res.json();
   } else console.log("Error, cannot get data");
 };
+
 //DELETE
 const removeEvent = async (removeEventId) => {
   let confirmDelete = ref(false);
@@ -62,12 +84,12 @@ const removeEvent = async (removeEventId) => {
   if (confirmDelete.value) {
     // const res = await fetch(
     //   `http://202.44.9.103:8080/kp5/api/events/${removeEventId}`,
-    const res = await fetch(
-      `https://intproj21.sit.kmutt.ac.th/kp5/api/events/${removeEventId}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const res = await fetch(`${url}/events/${removeEventId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + cookie.getCookie("token"),
+      },
+    });
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== removeEventId);
       alert("Event removed!");
@@ -79,21 +101,19 @@ const removeEvent = async (removeEventId) => {
 const editEvent = async (editingEvent) => {
   // const res = await fetch(
   //   `http://202.44.9.103:8080/kp5/api/events/${editingEvent.id}`,
-  const res = await fetch(
-    `https://intproj21.sit.kmutt.ac.th/kp5/api/events/${editingEvent.id}`,
-    {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        eventStartTime: editingEvent.eventStartTime,
-        eventNotes: editingEvent.eventNotes,
-      }),
-    }
-  );
+  const res = await fetch(`${url}/events/${editingEvent.id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      eventStartTime: editingEvent.eventStartTime,
+      eventNotes: editingEvent.eventNotes,
+    }),
+  });
 
-  if (res.status === 200) {
+  if (res.status === 201) {
     const moddedEvent = await res.json();
     events.value = events.value.map((event) =>
       event.id === moddedEvent.id
@@ -106,7 +126,9 @@ const editEvent = async (editingEvent) => {
     );
     alert("Edited!");
     console.log("edited successfully");
-  } else console.log("error, cannot edit");
+  } if (res.status === 400) {
+    alert("You cannot update other user's events");
+  } else console.log("error, cannot edit"); 
 };
 </script>
 
