@@ -1,39 +1,25 @@
 package com.example.backend221.controllers;
 
-import com.example.backend221.dtos.UserAllDto;
-import com.example.backend221.dtos.UserDTO;
-import com.example.backend221.dtos.UserVerifiedDTO;
-import com.example.backend221.entities.User;
-import com.example.backend221.repositories.UserRepository;
-import com.example.backend221.services.UserService;
+import com.example.backend221.dtos.UserMatchDTO;
+import com.example.backend221.services.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-//@RestController
-//@CrossOrigin(origins = "*")
-//@RequestMapping("/api/match")
-//public class MatchController {
-//    @Autowired
-//    private UserRepository repository;
-//    @Autowired
-//    private final UserService userService;
-//
-//
-//
-//    public MatchController(UserService userService) {
-//        this.userService = userService;
-//    }
-//
-//    @PostMapping("")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ResponseEntity matchPassword(@RequestBody @Valid UserVerifiedDTO user) throws Exception {
-//        return userService.matchPassword(user);
-//
-//    }
-//
-//}
+@RestController
+@RequestMapping("/api/match")
+@CrossOrigin(origins = "*")
+public class MatchController {
+        @Autowired
+        private final MatchService matchService;
+
+        public MatchController(MatchService matchService) {
+                this.matchService = matchService;
+        }
+
+        @PostMapping("")
+        public ResponseEntity<Object> matchPassword(@RequestBody @Valid UserMatchDTO matchDTO) throws Exception {
+                return matchService.matchPassword(matchDTO);
+        }
+}

@@ -11,7 +11,6 @@ import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.repositories.UserRepository;
 import com.example.backend221.utils.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -303,7 +302,7 @@ private void sendmail(Event event) throws AddressException, MessagingException, 
 
         int eventDuration = event.getEventDuration();
         EventCategory eventCategory = event.getEventCategory();
-        if(!isOverLab(new OverLabDTO(editEvent.getEventStartTime(), eventCategory, eventDuration), id)){
+        if(!isOverLap(new OverLapDTO(editEvent.getEventStartTime(), eventCategory, eventDuration), id)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OverLaped");
         }
 
@@ -353,7 +352,7 @@ private void sendmail(Event event) throws AddressException, MessagingException, 
 //    private List <Event> getAllByEventCategory_IdAndAndEventStartTime(Integer categoryId, LocalDateTime present,LocalDateTime tomorrow){
 //            return repository.findAllByEventCategory_IdAndAndEventStartTime(categoryId,present,tomorrow);
 //     }
-public boolean isOverLab(OverLabDTO event, int id){
+public boolean isOverLap(OverLapDTO event, int id){
     long newEventStartTimeMilli = event.getEventStartTime().toEpochMilli();
     long newDurationMilli =  eventCategoryRepository.findEventCategoryById(event.getEventCategory().getId()).getEventDuration() * 60 * 1000;
 
