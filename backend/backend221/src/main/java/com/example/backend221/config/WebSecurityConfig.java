@@ -78,7 +78,7 @@ import java.util.List;
                 //event get all 3 roles
                 .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users
-                .and().authorizeRequests().antMatchers("/api/users","/api/match","/api/users/events").hasAnyAuthority("admin")
+                .and().authorizeRequests().antMatchers("/api/users","/api/match","/api/events").hasAnyAuthority("admin")
 
                     .anyRequest().authenticated()
                     .and()
