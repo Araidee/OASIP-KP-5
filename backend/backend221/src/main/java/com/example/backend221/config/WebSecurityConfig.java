@@ -75,7 +75,8 @@ import java.util.List;
                 .and().authorizeRequests().antMatchers("/api/eventCategories").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/users").permitAll()
                 //adding every role
-                .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("admin","student",null,"")
+//                .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("admin","student",null,"")
+                .and().authorizeRequests().antMatchers("/api/events/adding").permitAll()
                 //event get all 3 roles
                 .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users

@@ -260,14 +260,14 @@ public class EventService {
         e.setEventDuration(newEventDuration);
 
         eventRepository.saveAndFlush(e);
-        Event event2Send = eventRepository.findById(e.getId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, " id " +
-                        "Does Not Exist !!!"
-                ));
-        sendmail(event2Send);
-
-        System.out.println("Created");
+//        Event event2Send = eventRepository.findById(e.getId())
+//                .orElseThrow(() -> new ResponseStatusException(
+//                        HttpStatus.NOT_FOUND, " id " +
+//                        "Does Not Exist !!!"
+//                ));
+//        sendmail(event2Send);
+//
+//        System.out.println("Created");
         return ResponseEntity.status(HttpStatus.CREATED).body(e);
 
     }
