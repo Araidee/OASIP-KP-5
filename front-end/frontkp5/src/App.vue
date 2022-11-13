@@ -1,5 +1,18 @@
 <script setup>
+import { onBeforeMount } from "vue";
+import jwt_decode from "jwt-decode";
+import { cookieData } from "./stores/cookieData.js";
 import NavBar from "./components/NavBar.vue";
+import { loginState } from "./stores/loginState";
+const cookie = cookieData();
+const isLogin = loginState();
+onBeforeMount(() => {
+  isLogin.checkLogin();
+  if (isLogin.isLogin) {
+    let decoded = jwt_decode(cookie.getCookie("token"));
+    isLogin.setLoginUser(decoded);
+  }
+});
 </script>
 
 <template>

@@ -2,10 +2,12 @@
 import EventCategoryList from "../components/EventCategoryList.vue";
 import { ref, onBeforeMount } from "vue";
 import { cookieData } from "../stores/cookieData.js";
+import { loginState } from "../stores/loginState";
 const eventCategories = ref([]);
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
 const cookie = cookieData();
+const isLogin = loginState();
 onBeforeMount(async () => {
   await getEventCategories();
 });
@@ -21,6 +23,17 @@ const getEventCategories = async () => {
   // const res = await fetch(`${import.meta.env.LOCAL_URL}/api/eventCategories`)
   if (res.status === 200) {
     eventCategories.value = await res.json();
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 //PUT
@@ -58,6 +71,17 @@ const editEventCategory = async (editingEventCategory) => {
     );
     alert("Edited!");
     console.log("edited successfully");
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("error, cannot edit");
 };
 </script>

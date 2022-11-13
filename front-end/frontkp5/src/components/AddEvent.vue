@@ -71,9 +71,9 @@ function emailValidate() {
           id="email"
           v-model="bookingEmail"
           placeholder="Type Email here"
-          :class="((bookingEmail != '') && (bookingEmail == isLogin.loginUser.email)) ? successInput : errorInput"
+          :class="((bookingEmail != '') && (bookingEmail == isLogin.loginUser.email || isLogin.loginUser.role == 'Guest'))  ? successInput : errorInput"
           required
-        /><p :class="bookingEmail == isLogin.loginUser.email ? 'hidden' : 'text-sm text-red-500' ">Booking email must be the same email as the student's email</p>
+        /><p :class="(bookingEmail == isLogin.loginUser.email || isLogin.loginUser.role == 'Guest') ? 'hidden' : 'text-sm text-red-500' ">Booking email must be the same email as the student's email</p>
       </div>
       <div class="center font-weight-bold">
         Category: <span style="color: red">*</span><br />

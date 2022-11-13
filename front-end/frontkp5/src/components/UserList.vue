@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { cookieData } from "../stores/cookieData.js";
+import { loginState } from "../stores/loginState.js";
 defineEmits(["delete, edit"]);
 const props = defineProps({
   users: {
@@ -10,6 +11,7 @@ const props = defineProps({
 });
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 const cookie = cookieData();
+const isLogin = loginState();
 // const url = "http://202.44.9.103:8080/kp5/api";
 const myUser = computed(() => {
   let userList = [];
@@ -48,8 +50,16 @@ const getUserById = async (id) => {
     UserDetails.value = await res.json();
     console.log(UserDetails.value);
   } else if (res.status === 401) {
-    alert("Please login first");
-    window.location.href = "/login";
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else console.log("Error, cannot get data");
 };
 </script>

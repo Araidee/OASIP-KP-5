@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
+import { loginState } from "../stores/loginState";
 import { cookieData } from "../stores/cookieData.js";
 import AddUser from "../components/AddUser.vue";
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
 const users = ref([]);
 const cookie = cookieData();
+const isLogin = loginState();
 onBeforeMount(async () => {
   await getUsers();
 });
@@ -22,7 +24,16 @@ const getUsers = async () => {
   if (res.status === 200) {
     users.value = await res.json();
   } else if (res.status === 401) {
-    alert("You are not authorized to access this page.");
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
   } else if (res.status === 403) {
     alert("You are not authorized to access this page.")
   }else console.log("Error, cannot get data");
@@ -44,7 +55,18 @@ const createNewUser = async (newUser) => {
     users.value.push(addedUser);
     alert("Registered!");
     console.log("registered successfully");
-  } else console.log("error, cannot register");
+  } else if (res.status === 401) {
+    let res = await res.json();
+    if (
+      res.message
+        .toLowerCase()
+        .match(
+          "please send refresh token to /refresh to refresh token".toLowerCase()
+        )
+    ) {
+      isLogin.refreshToken();
+    } else alert("please login");
+  }else console.log("error, cannot register");
 };
 </script>
 
