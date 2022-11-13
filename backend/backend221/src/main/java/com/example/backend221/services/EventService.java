@@ -260,14 +260,15 @@ public class EventService {
         e.setEventDuration(newEventDuration);
 
         eventRepository.saveAndFlush(e);
-//        Event event2Send = eventRepository.findById(e.getId())
-//                .orElseThrow(() -> new ResponseStatusException(
-//                        HttpStatus.NOT_FOUND, " id " +
-//                        "Does Not Exist !!!"
-//                ));
-//        sendmail(event2Send);
-//
-//        System.out.println("Created");
+        System.out.println(e.getId());
+        Event event2Send = eventRepository.findById(e.getId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, " id " +
+                        "Does Not Exist !!!"
+                ));
+        sendmail(event2Send);
+
+        System.out.println("Created");
         return ResponseEntity.status(HttpStatus.CREATED).body(e);
 
     }
@@ -283,20 +284,20 @@ private void sendmail(Event event) throws AddressException, MessagingException, 
     Session session = Session.getInstance(props, new javax.mail.Authenticator() {
         protected PasswordAuthentication getPasswordAuthentication() {
             //คือออ
-            return new PasswordAuthentication("amornpong.213@gmail.com", "vrplkwnpfhpqhldt");
+            return new PasswordAuthentication("oasipkp5@gmail.com", "mppcbbtgmwubtnla");
         }
     });
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm").withZone(ZoneId.of("UTC"));
 
     Message msg = new MimeMessage(session);
-    msg.setFrom(new InternetAddress("amornpong.213@gmail.com", false));
+    msg.setFrom(new InternetAddress("oasipkp5@gmail.com", false));
 
     msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(event.getBookingEmail()));
     msg.setSubject("Your booking is complete.");
     msg.setContent("Your booking name : " + event.getBookingName() +
                     "<br> Event category : " + event.getEventCategory() +
                     "<br>Start date and time : " + formatter.format(event.getEventStartTime()) +
-                    "<br>Event duration : " + event.getEventDuration() + " minitues"+
+                    "<br>Event duration : " + event.getEventDuration() + " minutes"+
                     "<br>Event note : " + event.getEventNotes()
             , "text/html; charset=utf-8");
     msg.setSentDate(new Date());

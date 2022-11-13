@@ -21,8 +21,8 @@ public class EventCategoryOwner {
     @JoinColumn(name = "userID", nullable = false)
     private User userID;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "eventCategoryID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eventCategoryID")
     private EventCategory eventCategoryID;
 
     public Integer getId() {
