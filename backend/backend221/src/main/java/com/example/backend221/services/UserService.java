@@ -3,6 +3,7 @@ package com.example.backend221.services;
 import com.example.backend221.Enum.Role;
 import com.example.backend221.component.JwtResponse;
 import com.example.backend221.component.JwtTokenUtil;
+import com.example.backend221.dtos.UserAddDTO;
 import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
 import com.example.backend221.dtos.UserVerifiedDTO;
@@ -82,7 +83,7 @@ public class UserService {
     }
 
 
-    public ResponseEntity createUser(UserDTO newUser) {
+    public ResponseEntity createUser(UserAddDTO newUser) {
 //        newUser.setEventDuration(eventCategoryRepository.getById(newEvent.getEventCategory().getId()).getEventDuration());
         User u = modelMapper.map(newUser, User.class);
         u.setPassword(argon2Hashing(u.getPassword()));

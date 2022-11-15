@@ -1,6 +1,7 @@
 package com.example.backend221.controllers;
 
 import com.example.backend221.dtos.EventDTO;
+import com.example.backend221.dtos.UserAddDTO;
 import com.example.backend221.dtos.UserAllDto;
 import com.example.backend221.dtos.UserDTO;
 import com.example.backend221.entities.Event;
@@ -42,7 +43,7 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createUser(@RequestBody @Valid UserDTO newUser){
+    public ResponseEntity createUser(@RequestBody @Valid UserAddDTO newUser){
         return userService.createUser(newUser);
 
     }
