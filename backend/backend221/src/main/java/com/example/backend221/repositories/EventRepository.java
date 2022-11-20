@@ -4,8 +4,10 @@ import com.example.backend221.entities.Event;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -57,4 +59,10 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
         List<Event> findEventByBookingEmailOrderByEventStartTimeDesc(String user);
 
         List<Event> findEventByIdAndBookingEmail(Integer id, String email);
+
+        Event findEventByAttachment(String attachment);
+        @Query(value = "update event set attachment = :eAttachment where booking_id = :eId",nativeQuery = true)
+        @Transactional
+        @Modifying
+        void updateAttachment(@Param("eId") Integer id, @Param("eAttachment") String attachment);
 }

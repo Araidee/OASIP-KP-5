@@ -35,4 +35,7 @@ public class Event {
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
 
+    @Column(name = "attachment")
+    private String attachment;
+
 }

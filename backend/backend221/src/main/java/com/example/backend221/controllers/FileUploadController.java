@@ -1,10 +1,12 @@
 package com.example.backend221.controllers;
 
+import com.example.backend221.entities.Event;
 import com.example.backend221.repositories.EventRepository;
 import com.example.backend221.services.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -33,9 +36,9 @@ public class FileUploadController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
-    @GetMapping("/download/{filename:.+}")
+    @GetMapping("/get/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) {
 
         Resource resource = storageService.loadAsResource(filename);
         String contentType = null;
@@ -50,27 +53,31 @@ public class FileUploadController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 
-
-
-
-
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public String fileSizeExceptionHandler(RedirectAttributes ra) {
         return "File size should be less than 10MB!";
     }
 
     @PostMapping("/upload-file")
-    @ResponseBody
-    public FileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String name = storageService.store(file);
-
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(name)
-                .toUriString();
-
-        return new FileResponse(name, uri, file.getContentType(), file.getSize());
+    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = storageService.storeFile(file);
+        System.out.println(fileName);
+        return ResponseEntity.status(HttpStatus.OK).body(fileName + " uploaded!");
     }
+    @DeleteMapping("/{filename:.+}")
+    public ResponseEntity deleteFile(@PathVariable String filename) {
+        System.out.println(filename);
+        Event event = eventRepository.findEventByAttachment(filename);
+        System.out.println(event.getId());
+        if(event != null){
+            eventRepository.updateAttachment(event.getId(),null);
+        }
+        String ans = storageService.deleteFile(filename);
+//                StorageService.deleteFile(filename);
+        return ResponseEntity.status(HttpStatus.OK).body(ans);
+
+    }
+
 
 }
 
