@@ -9,10 +9,12 @@
     "backend": "json-server --watch ./data/db.json --port 5000"
   },
   "dependencies": {
+    "@microsoft/microsoft-graph-client": "^3.0.4",
     "cors": "^2.8.5",
     "daisyui": "^2.14.3",
     "json-server": "^0.17.0",
     "jwt-decode": "^3.1.2",
+    "msal": "^1.4.17",
     "pinia": "^2.0.22",
     "vue": "^3.2.25",
     "vue-cookies": "^1.8.1",

@@ -4,12 +4,18 @@ import { cookieData } from "../stores/cookieData.js";
 import jwt_decode from "jwt-decode";
 import { loginState } from "../stores/loginState.js";
 import Login from "../components/Login.vue";
+import { msData } from "../stores/loginMs";
 const cookie = cookieData();
+const loginMs = msData();
 const appRouter = useRouter();
 const isLogin = loginState();
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
 //POST
+async function loginWithMs(){
+  await loginMs.loginMs();
+}
+
 const login = async (user) => {
   // const res = await fetch("http://localhost:8080/api/jwt/login", {
   const res = await fetch(`${url}/jwt/login`, {
@@ -30,8 +36,8 @@ const login = async (user) => {
     appRouter.push({ path: '/', replace: true });
     console.log("login successfully");
   } else if (res.status === 404) {
-    alert("Email doesn't exist");
-    console.log("email doesn't exist");
+    alert("Email or password doesn't exist");
+    console.log("email or password doesn't exist");
   } else if (res.status === 401) {
     alert("Password not match");
     console.log("password not match");
@@ -41,6 +47,6 @@ const login = async (user) => {
 
 <template>
   <div>
-    <Login @login="login" />
+    <Login @login="login" @loginMs="loginWithMs"/>
   </div>
 </template>

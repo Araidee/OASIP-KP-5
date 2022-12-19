@@ -12,12 +12,19 @@ export const loginState = defineStore("loginState", () => {
     loginUser.value = user;
     loginUser.value.email = user.sub;
   }
+
+  function setLoginMsUser(user){
+    loginUser.value.name = user.name;
+    loginUser.value.role = user.idToken.roles[0];
+    loginUser.value.email = user.userName;
+  }
+
   function clearLoginUser() {
     loginUser.value = { name: "Guest", role: "Guest" };
   }
   const checkLogin = async () => {
     cookie.getCookie("token");
-    if (cookie.getCookie("token") != "") {
+    if (cookie.getCookie("token") != "" ) {
       isLogin.value = true;
     } else {
       isLogin.value = false;
@@ -25,7 +32,8 @@ export const loginState = defineStore("loginState", () => {
   }
 
   const refreshToken = async () => {
-    const url = "http://202.44.9.103:8080/kp5/api";
+    const url = "http://intproj21.sit.kmutt.ac.th/kp5/api";
+    // const url = "http://202.44.9.103:8080/kp5/api";
     // const res = await fetch("http://202.44.9.103:8080/kp5/api/users");
     const res = await fetch(`${url}/jwt/refresh`, {
       method: "GET",
@@ -57,7 +65,7 @@ export const loginState = defineStore("loginState", () => {
     }
   };
   
-  return { isLogin, loginUser, setLogin, setLoginUser, clearLoginUser, refreshToken, checkLogin };
+  return { isLogin, loginUser, setLogin, setLoginUser, clearLoginUser, refreshToken, checkLogin, setLoginMsUser };
 });
 
 if (import.meta.hot) {

@@ -18,6 +18,7 @@ const bookingEmail = ref("");
 const eventStartTime = ref("");
 const eventNotes = ref("");
 const eventCategory = ref({});
+const attachment = ref("")
 const notesMax = 500;
 const bookingNameMax = 100;
 const successInput = "input input-bordered input-success w-full inputwdt";
@@ -43,6 +44,19 @@ function emailValidate() {
     alert("Sorry! Incorrect Email Address");
     return false;
   }
+}
+
+const checkFile = () => {
+  let currentTime = new Date(new Date().toISOString()).getTime();
+  attachment.value = currentTime + "_" + document.getElementById("uploadFile").files[0].name
+  alert(attachment.value)
+  console.log(document.getElementById("uploadFile").files[0].size)
+  document.getElementById("uploadFile").disabled = true;
+}
+const clearFile = () => {
+  attachment.value = ""
+  document.getElementById("uploadFile").disabled = false;
+  document.getElementById("uploadFile").value = null;
 }
 </script>
 
@@ -71,9 +85,25 @@ function emailValidate() {
           id="email"
           v-model="bookingEmail"
           placeholder="Type Email here"
-          :class="((bookingEmail != '') && (bookingEmail == isLogin.loginUser.email || isLogin.loginUser.role == 'Guest'))  ? successInput : errorInput"
+          :class="
+            bookingEmail != '' &&
+            (bookingEmail == isLogin.loginUser.email ||
+              isLogin.loginUser.role == 'Guest')
+              ? successInput
+              : errorInput
+          "
           required
-        /><p :class="(bookingEmail == isLogin.loginUser.email || isLogin.loginUser.role == 'Guest') ? 'hidden' : 'text-sm text-red-500' ">Booking email must be the same email as the student's email</p>
+        />
+        <p
+          :class="
+            bookingEmail == isLogin.loginUser.email ||
+            isLogin.loginUser.role == 'Guest'
+              ? 'hidden'
+              : 'text-sm text-red-500'
+          "
+        >
+          Booking email must be the same email as the student's email
+        </p>
       </div>
       <div class="center font-weight-bold">
         Category: <span style="color: red">*</span><br />
@@ -109,7 +139,7 @@ function emailValidate() {
           min="2022-05-24T13:00"
           max="2022-12-31T00:00"
           required
-        /><br />
+        /><br /><br />
         <!-- <input type="time" id="appt" name="appt"
        value="22:00" required>
         </div> -->
@@ -137,6 +167,26 @@ function emailValidate() {
           ></textarea>
           <p class="text-sm">{{ eventNotes.length }}/{{ notesMax }}</p>
         </div>
+        <div class="flex">
+          <div class="mb-3 w-96">
+            <label
+              for="uploadFile"
+              class="form-label inline-block mb-2 text-gray-700"
+              >Upload File</label
+            >
+            <input
+              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              type="file"
+              @change="checkFile"
+              id="uploadFile"
+              multiple
+            />
+            <button
+                  class="btn bg-red-400 my-2"
+                  @click="clearFile">Clear File</button>
+        </div>
+          </div>
+          
         <div class-="card-actions justify-end">
           <button
             class="btn btn-primary btn-success"
@@ -149,6 +199,7 @@ function emailValidate() {
                     eventNotes: eventNotes,
                     eventCategory: { id: eventCategory.id },
                     eventDuration: eventCategory.eventDuration,
+                    attachment: attachment
                   })
                 : '';
               clearInput();

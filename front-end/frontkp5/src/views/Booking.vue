@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from "vue";
 import { cookieData } from "../stores/cookieData.js";
 import { loginState } from "../stores/loginState";
+import { useRouter } from "vue-router";
 import AddEvent from "../components/AddEvent.vue";
 const url = "https://intproj21.sit.kmutt.ac.th/kp5/api"
 // const url = "http://202.44.9.103:8080/kp5/api";
@@ -63,6 +64,37 @@ const getEventCategories = async () => {
     } else alert("please login");
   } else console.log("Error, cannot get data");
 };
+//POST file
+const uploadFile = async (newEvent) => {
+  if (
+    !(((document.getElementById("uploadFile").files[0].size / 1024) / 1024) > 10)
+  ) {
+    let formData = new FormData();
+    formData.append(
+      "file",
+      document.getElementById("uploadFile").files[0],
+      newEvent.attachment
+    );
+
+    const res = await fetch(`${url}/file/upload-file`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + cookie.getCookie("token"),
+      },
+      body: formData,
+    });
+    if (res.status === 200) {
+      alert("file uploaded");
+      document.getElementById("uploadFile").value = null;
+      return true;
+    } else {
+      alert("File exceed maximum size of 10MB");
+      document.getElementById("uploadFile").value = null;
+      return false;
+    }
+  }
+};
+
 //POST
 const createNewEvent = async (newEvent) => {
   if (
@@ -79,6 +111,7 @@ const createNewEvent = async (newEvent) => {
       body: JSON.stringify(newEvent),
     });
     if (res.status === 201) {
+      uploadFile(newEvent);
       const addedEvent = await res.json();
       events.value.push(addedEvent);
       alert("Booked!");
@@ -102,6 +135,10 @@ const createNewEvent = async (newEvent) => {
     } else console.log("error, cannot create");
   } else alert("Time is not future time");
 };
+
+
+
+
 </script>
 
 <template>

@@ -70,6 +70,35 @@ const getEventById = async (id) => {
     } else alert("please login");
   } else console.log("Error, cannot get data");
 };
+
+const deleteFile = async (fileName) =>{
+  const res = await fetch(`${url}/file/${fileName}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    }
+  })
+  if(res.status === 200){
+    console.log("delete file success")
+  }else{
+    alert("delete file fail")
+  }
+}
+
+const getFile = async (fileName) =>{
+  const res = await fetch(`${url}/file/get/${fileName}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + cookie.getCookie("token"),
+    }
+  })
+  if(res.status === 200){
+    //do generate file in DOM
+    console.log("get file success")
+  }else{
+    alert("get file fail")
+  }
+}
 </script>
 
 <template>

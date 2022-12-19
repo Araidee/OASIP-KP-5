@@ -127,7 +127,7 @@ const guestNav = computed(() => {
               />
             </svg>
           </a>
-          <h1 class="userText">Welcome {{ isLogin.loginUser.name }}</h1>
+          <h1 class="userText">Welcome {{ isLogin.loginUser.name }} </h1>
           <div>
             <button
               :class="

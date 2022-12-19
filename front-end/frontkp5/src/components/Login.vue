@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-defineEmits(["login"]);
+defineEmits(["login", "loginMs"]);
 
 // const roles = ({
 //   Admin: "admin",
@@ -67,7 +67,7 @@ function emailValidate() {
       </div> -->
       <div class="card-actions center">
         <button
-          class="btn btn-primary btn-success"
+          class="btn btn-primary btn-success hover:bg-green-700"
           @click="
             emailValidate()
               ? $emit('login', {
@@ -79,6 +79,23 @@ function emailValidate() {
           "
         >
           Login
+        </button>
+        <button
+          class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          @click="$emit('loginMs')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="inline-block fill-current h-4 w-4 mr-2"
+            viewBox="0 0 23 23"
+          >
+            <path fill="#f3f3f3" d="M0 0h23v23H0z" />
+            <path fill="#f35325" d="M1 1h10v10H1z" />
+            <path fill="#81bc06" d="M12 1h10v10H12z" />
+            <path fill="#05a6f0" d="M1 12h10v10H1z" />
+            <path fill="#ffba08" d="M12 12h10v10H12z" />
+          </svg>
+          Login with Microsoft
         </button>
       </div>
     </div>

@@ -4,6 +4,8 @@ import jwt_decode from "jwt-decode";
 import { cookieData } from "./stores/cookieData.js";
 import NavBar from "./components/NavBar.vue";
 import { loginState } from "./stores/loginState";
+
+
 const cookie = cookieData();
 const isLogin = loginState();
 onBeforeMount(() => {
@@ -13,11 +15,16 @@ onBeforeMount(() => {
     isLogin.setLoginUser(decoded);
   }
 });
+
+
+
+
 </script>
 
 <template>
   <div>
     <NavBar />
+
   </div>
   <div>
     <router-view></router-view>
