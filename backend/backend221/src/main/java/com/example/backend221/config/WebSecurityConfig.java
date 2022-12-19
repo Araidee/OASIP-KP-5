@@ -77,6 +77,7 @@ import java.util.List;
                 //adding every role
 //                .and().authorizeRequests().antMatchers("/api/events/adding").hasAnyAuthority("admin","student",null,"")
                 .and().authorizeRequests().antMatchers("/api/events/adding").permitAll()
+                .and().authorizeRequests().antMatchers("/api/jwt/loginms").permitAll()
                 //event get all 3 roles
                 .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users
