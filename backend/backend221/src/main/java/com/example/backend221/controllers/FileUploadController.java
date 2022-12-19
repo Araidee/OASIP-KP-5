@@ -25,16 +25,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 @RestController
-@RequestMapping("api/file")
+@RequestMapping("/api/file")
 @CrossOrigin(origins = "*")
 @RestControllerAdvice
 public class FileUploadController {
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
     @Autowired
     private StorageService storageService;
     @Autowired
     private EventRepository eventRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+
 
     @GetMapping("/get/{filename:.+}")
     @ResponseBody
@@ -53,10 +54,7 @@ public class FileUploadController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public String fileSizeExceptionHandler(RedirectAttributes ra) {
-        return "File size should be less than 10MB!";
-    }
+
 
     @PostMapping("/upload-file")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
@@ -77,7 +75,10 @@ public class FileUploadController {
         return ResponseEntity.status(HttpStatus.OK).body(ans);
 
     }
-
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public String fileSizeExceptionHandler(RedirectAttributes ra) {
+        return "File size should be less than 10MB!";
+    }
 
 }
 

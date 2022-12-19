@@ -21,8 +21,8 @@ public class StorageService {
     private final Path fileStorageLocation;
 
     @Autowired
-    public StorageService(StorageProperties StorageProperties) {
-        this.fileStorageLocation = Paths.get(StorageProperties.getUploadDir()).toAbsolutePath().normalize();
+    public StorageService(StorageProperties storageProperties) {
+        this.fileStorageLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath().normalize();
 
         try {
             Files.createDirectories(this.fileStorageLocation);
