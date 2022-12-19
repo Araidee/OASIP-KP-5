@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -64,15 +65,13 @@ public class FileUploadController {
     }
     @DeleteMapping("/{filename:.+}")
     public ResponseEntity deleteFile(@PathVariable String filename) {
-        System.out.println(filename);
         Event event = eventRepository.findEventByAttachment(filename);
-        System.out.println(event.getId());
         if(event != null){
             eventRepository.updateAttachment(event.getId(),null);
         }
         String ans = storageService.deleteFile(filename);
-//                StorageService.deleteFile(filename);
         return ResponseEntity.status(HttpStatus.OK).body(ans);
+
 
     }
     @ExceptionHandler(MaxUploadSizeExceededException.class)

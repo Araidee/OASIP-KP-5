@@ -61,7 +61,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
         List<Event> findEventByIdAndBookingEmail(Integer id, String email);
 
         Event findEventByAttachment(String attachment);
-        @Query(value = "update event set attachment = :eAttachment where booking_id = :eId",nativeQuery = true)
+        @Query(value = "update event set attachment = :eAttachment where bookingId = :eId",nativeQuery = true)
         @Transactional
         @Modifying
         void updateAttachment(@Param("eId") Integer id, @Param("eAttachment") String attachment);
