@@ -80,8 +80,9 @@ function emailValidate() {
         >
           Login
         </button>
+        <p>OR</p><br><br>
         <button
-          class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
           @click="$emit('loginMs')"
         >
           <svg
@@ -119,7 +120,7 @@ function emailValidate() {
 
 .center {
   margin: auto;
-  width: 48%;
+  width: 35%;
   padding: 10px;
   font-weight: bold;
 }

@@ -39,7 +39,9 @@ onBeforeMount(() => {
   color: #2d353d;
 }
 body {
-  background-color: #e5e7e5;
+  background-color: #ADC2A9;
+  min-height: 100vh;
+  min-width: 100vh;
 }
 
 h1 {

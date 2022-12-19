@@ -182,14 +182,14 @@ const clearFile = () => {
               multiple
             />
             <button
-                  class="btn bg-red-400 my-2"
+                  class="btn bg-red-400 my-2 "
                   @click="clearFile">Clear File</button>
         </div>
           </div>
           
         <div class-="card-actions justify-end">
           <button
-            class="btn btn-primary btn-success"
+            class="btn btn-primary btn-success center "
             @click="
               emailValidate()
                 ? $emit('addEvent', {
@@ -230,7 +230,7 @@ const clearFile = () => {
 
 .center {
   margin: auto;
-  width: 48%;
+  width: 35%;
   padding: 10px;
   font-weight: bold;
 }

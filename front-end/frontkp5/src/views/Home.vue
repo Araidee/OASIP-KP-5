@@ -38,9 +38,7 @@ const appRouter = useRouter();
 </template>
 
 <style scoped>
-body {
-  background-color: #e5e7e5;
-}
+
 
 img {
   width: 300px;

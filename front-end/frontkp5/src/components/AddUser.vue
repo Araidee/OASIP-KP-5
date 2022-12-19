@@ -152,7 +152,7 @@ function emailValidate() {
 
 .center {
   margin: auto;
-  width: 48%;
+  width: 35%;
   padding: 10px;
   font-weight: bold;
 }
