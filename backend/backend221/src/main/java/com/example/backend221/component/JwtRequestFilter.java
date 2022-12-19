@@ -1,22 +1,39 @@
 package com.example.backend221.component;
 
 import java.io.IOException;
+import java.net.URL;
+import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.auth0.jwk.Jwk;
+import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.backend221.services.JwtUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.SneakyThrows;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 @Component
@@ -69,6 +86,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }else {
             logger.warn("JWT Token does not begin with Bearer String");
             }
+        //เอาtoken มาแกะค่าแล้ว check token แต่ไม่ได้เช็คms โดยตรง
+        if (StringUtils.hasText(jwtToken)) {
+            List<GrantedAuthority> role = new ArrayList<GrantedAuthority>();
+            role.add(new SimpleGrantedAuthority(getAllClaimsFromToken(jwtToken).get("role").toString().split("_")[0]));
+
+            UserDetails userDetails = new User(jwtTokenUtil.getUsernameFromToken(jwtToken), "", role);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        } else {
+            System.out.println("Please log in for get Token again.");
+            request.setAttribute("message", "Please log in for get Token again.");
+        }
 // Once we get the token validate it.
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(email);
@@ -115,5 +144,30 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Set the claims so that in controller we will be using it to create
         // new JWT
         request.setAttribute("claims", claims);
+    }
+    @SneakyThrows
+    public JSONObject extractMSJwt(String token) {
+        String[] chunks = token.split("\\.");
+
+        JSONObject header = new JSONObject(decode(chunks[0]));
+        JSONObject payload = new JSONObject(decode(chunks[1]));
+        String signature = decode(chunks[2]);
+        if (payload.getString("iss").equals("https://login.microsoftonline.com/6f4432dc-20d2-441d-b1db-ac3380ba633d/v2.0")) {
+            System.out.println("BEFORE CONFIG");
+
+            DecodedJWT jwt = JWT.decode(token);
+            JwkProvider provider = new UrlJwkProvider(new URL("https://login.microsoftonline.com/common/discovery/keys"));
+            Jwk jwk = provider.get(jwt.getKeyId());
+            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) jwk.getPublicKey(), null);
+            algorithm.verify(jwt);
+
+            System.out.println("AFTER CONFIG");
+        }
+        System.out.println("PAYLOAD : " + payload);
+        return payload;
+    }
+
+    private static String decode(String encodedString) {
+        return new String(Base64.getUrlDecoder().decode(encodedString));
     }
 }

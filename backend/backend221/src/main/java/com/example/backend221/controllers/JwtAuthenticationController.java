@@ -1,5 +1,6 @@
 package com.example.backend221.controllers;
 
+import com.example.backend221.component.JwtRequestFilter;
 import com.example.backend221.component.JwtTokenUtil;
 
 import com.example.backend221.dtos.UserMatchDTO;
@@ -8,6 +9,8 @@ import com.example.backend221.repositories.UserRepository;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import io.jsonwebtoken.impl.DefaultClaims;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +50,8 @@ public class JwtAuthenticationController {
     private UserDetailsService userDetailsService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody UserMatchDTO authenticationRequest) throws Exception {
@@ -75,7 +80,34 @@ public class JwtAuthenticationController {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
+    @RequestMapping(value = "/loginms", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationTokenMS(@RequestBody String MsJwtToken) throws Exception {
+        System.out.println("loginmsstart :");
+        System.out.println("MsJwtToken: " + MsJwtToken);
+        JSONObject payload = jwtRequestFilter.extractMSJwt(MsJwtToken);
+        System.out.println(payload.get("roles"));
+        String role = "";
+        String email = "";
+        String name = "";
+        HashMap<String, Object> claims = new HashMap<>();
+        try {
+//            role = payload.getString("roles").replaceAll("[^a-zA-Z]+", "");
+            role = payload.getString("roles").replaceAll("[^a-zA-Z]+", "");
 
+        } catch (JSONException ex) {
+            role = "GUEST";
+        }
+
+        email = payload.getString("preferred_username");
+        name = payload.getString("name");
+        final String token = jwtTokenUtil.doGenerateTokenForMs(claims, email, role, name, 0);
+        final String token2 = jwtTokenUtil.doGenerateTokenForMs(claims, email, role, name, 1);
+        HashMap<String, String> objectToResponse = new HashMap<String, String>();
+        objectToResponse.put("token", token);
+        objectToResponse.put("refreshtoken", token2);
+        return ResponseEntity.ok(objectToResponse);
+
+    }
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
         HashMap<String, String> objectToResponse = new HashMap<String, String>();

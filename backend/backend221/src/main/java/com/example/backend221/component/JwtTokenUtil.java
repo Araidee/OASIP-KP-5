@@ -89,4 +89,20 @@ public class JwtTokenUtil implements Serializable {
     public void setRefreshExpirationDateInMs(int refreshExpirationDateInMs) {
         this.refreshExpirationDateInMs = refreshExpirationDateInMs;
     }
+    public String doGenerateTokenForMs(Map<String, Object> claims, String email, String role, String name, long time) {
+        if(time == 1){
+            time = JWT_TOKEN_DAY;
+        } else {
+            time = JWT_TOKEN_30MIN;
+        }
+
+        claims.put("name", name);
+        claims.put("role", role);
+        System.out.println(claims);
+        return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000)) // 5 ชั่วโมง
+                .setExpiration(new Date(System.currentTimeMillis() + time)) // 30 นาที or 1 day
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
+
+    }
 }
