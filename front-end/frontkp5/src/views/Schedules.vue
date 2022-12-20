@@ -44,7 +44,7 @@ const getEvents = async () => {
 };
 const getEventsByCategoryId = async (id) => {
   // const res = await fetch(`http://202.44.9.103:8080/kp5/api/events/category/${id}`);
-  const res = await fetch(`${url}/events/category/${id}`, {
+  const res = await fetch(`${url}/events/categories/${id}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + cookie.getCookie("token"),
