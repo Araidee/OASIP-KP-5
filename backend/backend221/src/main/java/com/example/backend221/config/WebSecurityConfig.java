@@ -79,7 +79,7 @@ import java.util.List;
                 .and().authorizeRequests().antMatchers("/api/events/adding","/api/file", "/api/file/***", "/api/file/***/***").hasAnyAuthority("admin","student")
                 .and().authorizeRequests().antMatchers("/api/jwt/loginms").permitAll()
                 //event get all 3 roles
-                .and().authorizeRequests().antMatchers("/api/events/all").hasAnyAuthority("admin","student","lecturer")
+                .and().authorizeRequests().antMatchers("/api/events/all","/api/events/***").hasAnyAuthority("admin","student","lecturer")
                 //admin can get users
                 .and().authorizeRequests().antMatchers("/api/users","/api/match","/api/events").hasAnyAuthority("admin")
 //                .and().authorizeRequests().antMatchers(HttpMethod.PUT,"/api/events").hasAnyAuthority("admin")
